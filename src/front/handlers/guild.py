@@ -66,9 +66,9 @@ class CreateHandler(ApiHandler):
         uid = self.uid
         # print uid
         user = yield self.get_user(uid)
-        query = "SELECT id, name, notice, creator, president, vice_presidents, members, timestamp FROM core_guild ORDER" \
-                " BY timestamp WHERE creator=%s"
-        params = (uid,)
+        query = "SELECT id, name, notice, creator, president, vice_presidents, members, timestamp FROM core_guild" \
+                " ORDER BY timestamp WHERE creator=%s"
+        params = (uid, )
         res = yield self.sql.runQuery(query, params)
         if res:
             self.write(dict(err=E.ERR_DISSATISFY_MAXENTRY, msg=E.errmsg(E.ERR_DISSATISFY_MAXENTRY)))
