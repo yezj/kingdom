@@ -63,8 +63,11 @@ class CreateHandler(ApiHandler):
         Param('_sign', True, str, 'gGRwMApTJ3VpZCcKcDEKUyc5JwpwMgpzLK', '4GRwMApTJ3VpZCcKcDEKUyc4NycKcDIKcyK', '_sign'),
     ], filters=[ps_filter], description="Guild create")
     def post(self):
+        try:
+            name = self.get_argument("name")
+        except Exception:
+            raise web.HTTPError(400, "Argument error")
         uid = self.uid
-        # print uid
         user = yield self.get_user(uid)
         query = "SELECT id, name, notice, creator, president, vice_presidents, members, timestamp FROM core_guild" \
                 " ORDER BY timestamp WHERE creator=%s"
@@ -74,7 +77,7 @@ class CreateHandler(ApiHandler):
             self.write(dict(err=E.ERR_DISSATISFY_MAXENTRY, msg=E.errmsg(E.ERR_DISSATISFY_MAXENTRY)))
             return
         else:
-            pass
+            yield self.create_guild(uid, name)
         ret = dict(timestamp=int(time.time()))
         reb = zlib.compress(escape.json_encode(ret))
         self.write(ret)
