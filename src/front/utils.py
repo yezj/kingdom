@@ -207,6 +207,11 @@ class E(object):
     ERR_NOTENOUGH_VERSUSCOIN = 4001
     ERR_VERSUSSTATE_ALREADY = 4002
     ERR_VERSUSSTATE_NOTFOUND = 4003
+
+    ERR_CREATE_GUILD_REPEAT = 5000
+    ERR_JOIN_GUILD_REPEAT = 5001
+    ERR_QUIT_GUILD_REPEAT = 5002
+    ERR_NOTEXIST_GUILD_USER = 5003
     _errmsg = {
         ERR_UNKNOWN: u'未知错误',
         ERR_INVALID: u'非法请求',
@@ -288,6 +293,11 @@ class E(object):
         ERR_NOTENOUGH_VERSUSCOIN: u'群雄争霸币不足',
         ERR_VERSUSSTATE_ALREADY: u'您已经在一个州了，不能重复加入',
         ERR_VERSUSSTATE_NOTFOUND: u'您不在当前州',
+
+        ERR_CREATE_GUILD_REPEAT: u'每个账号仅能创建一个公会',
+        ERR_JOIN_GUILD_REPEAT: u'不能重复加入工会',
+        ERR_QUIT_GUILD_REPEAT: u'不能重复退出工会',
+        ERR_NOTEXIST_GUILD_USER: u'该工会不存在此玩家',
     }
 
     @staticmethod

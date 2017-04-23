@@ -19,7 +19,7 @@ from front.wiapi import handler, api, Param
 from front.handlers.base import ApiHandler
 from local_settings import ZONE_ID
 
-from M2Crypto import RSA, BIO, EVP
+#from M2Crypto import RSA, BIO, EVP
 
 PRODUCT_SEQUENCE_FIRST = 0
 PRODUCT_SEQUENCE_SECOND = 1

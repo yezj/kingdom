@@ -16,7 +16,7 @@ from twisted.internet import defer
 from twisted.python import log
 from front import storage, D
 from front.utils import E
-from M2Crypto import RSA, BIO, EVP
+#from M2Crypto import RSA, BIO, EVP
 from local_settings import ZONE_ID
 
 
@@ -2969,42 +2969,22 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
     @defer.inlineCallbacks
     def create_guild(self, uid, name):
         query = "INSERT INTO core_guild (creator, name, notice, members, president, vice_presidents, timestamp) VALUES" \
-                " (%s, %s, NULL, %s, NULL, NULL, %s) RETURNING id"
-        params = (uid, name, escape.json_encode([uid]), int(time.time()))
+                " (%s, %s, NULL, %s, %s, %s, %s) RETURNING id"
+        params = (uid, name, escape.json_encode([uid]), uid, escape.json_encode([]), int(time.time()))
         for i in range(5):
             try:
-                gid = yield self.sql.runOperation(query, params)
+                gid = yield self.sql.runQuery(query, params)
                 break
             except storage.IntegrityError:
                 log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
                 continue
-        defer.returnValue(gid)
+        defer.returnValue(gid[0][0])
 
     @storage.databaseSafe
     @defer.inlineCallbacks
-    def join_guild(self, uid, gid, members):
-        members = escape.json_decode(members)
-        members.append(uid)
-        query = "UPDATE core_guild SET members=%s WHERE id=%s"
-        params = (escape.json_encode(members), gid)
-        for i in range(5):
-            try:
-                yield self.sql.runOperation(query, params)
-                break
-            except storage.IntegrityError:
-                log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
-                continue
-        defer.returnValue(None)
-
-    @storage.databaseSafe
-    @defer.inlineCallbacks
-    def leave_guild(self, uid, gid, members):
-        members = escape.json_decode(members)
-        if len(members) == 1 and uid in members:
-            pass
-        del members[uid]
-        query = "UPDATE core_guild SET members=%s WHERE id=%s"
-        params = (escape.json_encode(members), gid)
+    def update_guild_members(self, gid, president, vice_presidents, members):
+        query = "UPDATE core_guild SET members=%s,  president=%s, vice_presidents=%s WHERE id=%s"
+        params = (escape.json_encode(members), president, escape.json_encode(vice_presidents), gid)
         for i in range(5):
             try:
                 yield self.sql.runOperation(query, params)

@@ -52,7 +52,7 @@ from front.handlers import versus
 
 from front.handlers import fourteenseal
 from front.handlers import atet
-#from front.handlers import test
+from front.handlers import guild
 from front.debug import gmprod
 from front.debug import gmaccount
 from front.debug import gmhero
