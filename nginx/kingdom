@@ -10,22 +10,22 @@ upstream kingdom {
 server {
     listen 80;
 
-    access_log /home/deploy/srv/PtKingdom/var/nginx.kingdom.access.log access.kingdom;
-    error_log /home/deploy/srv/PtKingdom/var/nginx.kingdom.error.log;
+    access_log /root/srv/kingdom/var/nginx.kingdom.access.log access.kingdom;
+    error_log /root/srv/kingdom/var/nginx.kingdom.error.log;
 
     server_name kingdom.putaogame.com;
 
     client_max_body_size 200m;
 
     location /static {
-        alias /home/deploy/srv/PtKingdom/src/static;
+        alias /root/srv/kingdom/src/static;
         if ($query_string) {
             expires max;
         }
     }
 
     location /media {
-        alias /home/deploy/srv/PtKingdom/src/media;
+        alias /root/srv/kingdom/src/media;
         if ($query_string) {
             expires max;
         }

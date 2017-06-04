@@ -12,21 +12,21 @@ upstream front.kingdom {
 server {
     listen 80;
 
-    access_log /home/deploy/srv/PtKingdom/var/nginx.front.kingdom.access.log access.front.kingdom;
-    error_log /home/deploy/srv/PtKingdom/var/nginx.front.kingdom.error.log;
+    access_log /root/srv/kingdom/var/nginx.front.kingdom.access.log access.front.kingdom;
+    error_log /root/srv/kingdom/var/nginx.front.kingdom.error.log;
 
     server_name front.kingdom.putaogame.com;
     client_max_body_size 10m;
 
     location /static {
-        alias /home/deploy/srv/PtKingdom/src/front/static;
+        alias /root/srv/kingdom/src/front/static;
         if ($query_string) {
             expires max;
         }
     }
 
     location /media {
-        alias /home/deploy/srv/PtKingdom/src/front/media;
+        alias /root/srv/kingdom/src/front/media;
         if ($query_string) {
             expires max;
         }
@@ -47,6 +47,6 @@ server {
 
     error_page 500 502 503 504 /50x.html;
     location = /50x.html {
-    	root /home/deploy/srv/PtKingdom/src/templates;
+    	root /root/srv/kingdom/src/templates;
     }
 }
