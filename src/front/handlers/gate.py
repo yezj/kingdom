@@ -42,6 +42,7 @@ class GetHandler(ApiHandler):
         reb = zlib.compress(escape.json_encode(ret))
         self.write(ret)
 
+    get = post
 
 @handler
 class SetHandler(ApiHandler):
@@ -85,3 +86,5 @@ class SetHandler(ApiHandler):
         ret = dict(timestamp=int(time.time()))
         reb = zlib.compress(escape.json_encode(ret))
         self.write(ret)
+
+    get = post
