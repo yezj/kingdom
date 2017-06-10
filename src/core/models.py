@@ -12,6 +12,7 @@ from django.core.exceptions import ValidationError
 from filebrowser.fields import FileBrowseField, FileObject
 from django.contrib.auth.models import User as AdminUser
 
+
 class Channel(models.Model):
     title = models.CharField(_('Title'), max_length=20)
     slug = models.SlugField(_('Slug'))
@@ -59,6 +60,7 @@ class User(models.Model):
     def __unicode__(self):
         return self.nickname
 
+
 post_save.connect(syncdb_callback_function, sender=User)
 post_delete.connect(syncdb_callback_function, sender=User)
 
@@ -80,6 +82,7 @@ class Guild(models.Model):
     def __unicode__(self):
         return self.name
 
+
 post_save.connect(syncdb_callback_function, sender=Guild)
 post_delete.connect(syncdb_callback_function, sender=Guild)
 
@@ -96,14 +99,15 @@ class Hp(models.Model):
     def __unicode__(self):
         return self.user
 
-#post_save.connect(syncdb_callback_function, sender=Hp)
-#post_delete.connect(syncdb_callback_function, sender=Hp)
+
+# post_save.connect(syncdb_callback_function, sender=Hp)
+# post_delete.connect(syncdb_callback_function, sender=Hp)
 
 
 class Account(models.Model):
     id = models.AutoField(primary_key=True)
     hex = models.CharField(_('Hex'), max_length=64, blank=True)
-    state = models.PositiveIntegerField(_('State'), default=0)    # 0: normal; 2: abnormal; 3: bebanked
+    state = models.PositiveIntegerField(_('State'), default=0)  # 0: normal; 2: abnormal; 3: bebanked
     user = models.OneToOneField(User, null=True)
     model = models.CharField(_('Model'), max_length=50, blank=True)
     serial = models.CharField(_('Serial'), max_length=100, blank=True)
@@ -163,7 +167,7 @@ class Noticeship(models.Model):
     class Meta:
         verbose_name = 'Noticeship'
         verbose_name_plural = _('Noticeships')
-        ordering = ('position', )
+        ordering = ('position',)
 
     def __unicode__(self):
         return self.notice.title
@@ -311,6 +315,7 @@ class ArenaResult(models.Model):
 
     def __unicode__(self):
         return self.user.name + ' : ' + self.competitor.name
+
 
 class Hunt(models.Model):
     user = models.ForeignKey(User, related_name='hunts')
@@ -573,6 +578,7 @@ class LetvOrder(models.Model):
     def __unicode__(self):
         return self.app_order_id
 
+
 class LetvPayRecord(models.Model):
     user = models.ForeignKey(User)
     pid = models.CharField(_('Pid'), max_length=10)
@@ -603,6 +609,7 @@ class CmOrder(models.Model):
 
     def __unicode__(self):
         return self.app_order_id
+
 
 class CmPayRecord(models.Model):
     user = models.ForeignKey(User)
@@ -637,6 +644,7 @@ class LgOrder(models.Model):
 
     def __unicode__(self):
         return self.app_order_id
+
 
 class LgPayRecord(models.Model):
     user = models.ForeignKey(User)
@@ -687,6 +695,7 @@ class DangbeiPayRecord(models.Model):
     def __unicode__(self):
         return self.user.name
 
+
 class AtetOrder(models.Model):
     app_order_id = models.CharField(_('app_order_id'), max_length=100, blank=True)
     user = models.ForeignKey(User)
@@ -708,16 +717,18 @@ class AtetPayRecord(models.Model):
     counts = models.PositiveIntegerField(_('Counts'))
     paypoint = models.CharField(_('PayPoint'), max_length=32)
     exorderno = models.TextField(_('ExorderNo'))
-    cpprivateinfo = models.CharField(_('cpPrivateInfo'),max_length=128)
-    paytype=models.PositiveIntegerField(_('payType'))
-    result=models.PositiveIntegerField(_('result'))
+    cpprivateinfo = models.CharField(_('cpPrivateInfo'), max_length=128)
+    paytype = models.PositiveIntegerField(_('payType'))
+    result = models.PositiveIntegerField(_('result'))
     paied_at = models.PositiveIntegerField(_('Paid at'))
+
     class Meta:
         verbose_name = _('AtetPayRecord')
         verbose_name_plural = _('AtetPayRecords')
 
     def __unicode__(self):
         return self.user.name
+
 
 class SoulBox(models.Model):
     MON = 0
@@ -741,7 +752,7 @@ class SoulBox(models.Model):
     TYPE = (
         (PRIMARY, _('Primary')),
         (SECOND, _('Second')),
-        )
+    )
     week = models.PositiveIntegerField(_('Week'), choices=WEEK, default=MON)
     type = models.PositiveIntegerField(_('Type'), choices=TYPE, default=PRIMARY)
     prod = models.CharField(_('Prod'), max_length=10)
@@ -789,6 +800,7 @@ class SoulProba(models.Model):
     def __unicode__(self):
         return u'星期%s' % (int(self.week) + 1)
 
+
 class Beauty(models.Model):
     name = models.CharField(_('Name'), max_length=20)
     beautyid = models.CharField(_('Beautyid'), max_length=10)
@@ -805,6 +817,7 @@ class Beauty(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class Seal(models.Model):
     JAN = 1
@@ -849,6 +862,7 @@ class Seal(models.Model):
     def __unicode__(self):
         return '%s' % self.day
 
+
 class FourteenSeal(models.Model):
     day = models.PositiveIntegerField(_('Day'), default=0)
     gold = models.PositiveIntegerField(_('Gold'), default=0)
@@ -865,10 +879,11 @@ class FourteenSeal(models.Model):
     def __unicode__(self):
         return '%s' % self.day
 
-class FourteenSealSecond(models.Model):
 
+class FourteenSealSecond(models.Model):
     user = models.ForeignKey(User)
     seals = models.TextField(_('JSON Seals'), blank=True)
+
     class Meta:
         verbose_name = _('FourteenSealSecond')
         verbose_name_plural = _('FourteenSealSecond')
@@ -889,6 +904,7 @@ class DoubleEvent(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class Activity(models.Model):
     RECHARGE = 1
@@ -916,6 +932,7 @@ class Activity(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class Code(models.Model):
     UNUSED = 0
@@ -945,6 +962,7 @@ class Code(models.Model):
 
     def __unicode__(self):
         return self.code
+
 
 class Product(models.Model):
     FIRST = 0
@@ -987,6 +1005,7 @@ class Product(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.pid
+
 
 class ProdProba(models.Model):
     GOLD = 1
@@ -1074,6 +1093,7 @@ class Match(models.Model):
     def __unicode__(self):
         return self.mid
 
+
 class Expedition(models.Model):
     eid = models.CharField(_('Eid'), max_length=64)
     prod = models.TextField(_('Prod'), blank=True)
@@ -1091,6 +1111,7 @@ class Expedition(models.Model):
     def __unicode__(self):
         return self.eid
 
+
 class UserExped(models.Model):
     user = models.ForeignKey(User)
     exped_coin = models.PositiveIntegerField(_('Expedition coin'), default=0)
@@ -1101,6 +1122,7 @@ class UserExped(models.Model):
 
     def __unicode__(self):
         return self.user.nickname
+
 
 class BigEvent(models.Model):
     bid = models.CharField(_('Bid'), max_length=64)
@@ -1144,6 +1166,7 @@ class Recharge(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Inpour(models.Model):
     INPOUR = 1
     TYPE = (
@@ -1168,6 +1191,7 @@ class Inpour(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class UserInpour(models.Model):
     user = models.ForeignKey(User)
     bid = models.CharField(_('Bid'), max_length=10)
@@ -1176,6 +1200,7 @@ class UserInpour(models.Model):
     class Meta:
         verbose_name = _('UserInpour')
         verbose_name_plural = _('UserInpours')
+
 
 class UserInpourRecord(models.Model):
     user = models.ForeignKey(User)
@@ -1188,6 +1213,7 @@ class UserInpourRecord(models.Model):
 
     def __unicode__(self):
         return self.user.nickname
+
 
 class Consume(models.Model):
     CONSUME = 1
@@ -1215,6 +1241,7 @@ class Consume(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class UserConsume(models.Model):
     user = models.ForeignKey(User)
     bid = models.CharField(_('Bid'), max_length=10)
@@ -1227,6 +1254,7 @@ class UserConsume(models.Model):
     def __unicode__(self):
         return self.user.nickname
 
+
 class UserConsumeRecord(models.Model):
     user = models.ForeignKey(User)
     bid = models.CharField(_('Bid'), max_length=10)
@@ -1238,6 +1266,7 @@ class UserConsumeRecord(models.Model):
 
     def __unicode__(self):
         return self.user.nickname
+
 
 class DayRecharge(models.Model):
     DAYRECHARGE = 2
@@ -1266,6 +1295,7 @@ class DayRecharge(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Gift(models.Model):
     bigevent = models.ForeignKey(BigEvent, blank=True, null=True)
     name = models.CharField(_('Name'), max_length=20)
@@ -1283,6 +1313,7 @@ class Gift(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Zhangfei(models.Model):
     bigevent = models.ForeignKey(BigEvent, blank=True, null=True)
     name = models.CharField(_('Name'), max_length=20)
@@ -1298,6 +1329,7 @@ class Zhangfei(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class UserZhangfeiRecord(models.Model):
     user = models.ForeignKey(User)
     bid = models.CharField(_('Bid'), max_length=10)
@@ -1308,6 +1340,7 @@ class UserZhangfeiRecord(models.Model):
 
     def __unicode__(self):
         return self.user.nickname
+
 
 class SeckillTime(models.Model):
     name = models.CharField(_('Name'), max_length=20)
@@ -1321,6 +1354,7 @@ class SeckillTime(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.name
+
 
 class Seckill(models.Model):
     FIRSTGROUP = 1
@@ -1348,6 +1382,7 @@ class Seckill(models.Model):
     def __unicode__(self):
         return u'%s:%s' % (self.index, self.groups)
 
+
 class VipPackage(models.Model):
     prods = models.TextField(_('Prods'), blank=True)
     nums = models.TextField(_('Nums'), blank=True)
@@ -1364,6 +1399,7 @@ class VipPackage(models.Model):
     def __unicode__(self):
         return self.level
 
+
 class UserPackage(models.Model):
     user = models.ForeignKey(User)
     package = models.ForeignKey(VipPackage)
@@ -1374,6 +1410,7 @@ class UserPackage(models.Model):
 
     def __unicode__(self):
         return self.user.name
+
 
 class PropExchange(models.Model):
     bigevent = models.ForeignKey(BigEvent, blank=True, null=True)
@@ -1400,6 +1437,7 @@ class PropExchange(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class UserPropExchange(models.Model):
     user = models.ForeignKey(User)
     rid = models.CharField(_('Rid'), max_length=10)
@@ -1412,12 +1450,13 @@ class UserPropExchange(models.Model):
     def __unicode__(self):
         return self.user.nickname
 
+
 class Chest(models.Model):
     OTHER = 0
     GOLD = 1
     TYPE = (
-    (OTHER, _('Other')),
-    (GOLD, _('Gold')),
+        (OTHER, _('Other')),
+        (GOLD, _('Gold')),
     )
     name = models.CharField(_('Name'), max_length=20)
     type = models.PositiveIntegerField(_('Type'), choices=TYPE, default=OTHER)
@@ -1433,6 +1472,7 @@ class Chest(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class UserState(models.Model):
     OTHER = -1
@@ -1460,6 +1500,7 @@ class UserState(models.Model):
     def __unicode__(self):
         return self.user.nickname + '@' + str(self.state)
 
+
 class LiangState(models.Model):
     user = models.ForeignKey(User, unique=True)
     before_rank = models.PositiveIntegerField(_('Before_rank'), default=0)
@@ -1479,6 +1520,7 @@ class LiangState(models.Model):
 
     def __unicode__(self):
         return self.user.name
+
 
 class LiangStateResult(models.Model):
     WIN = 1
@@ -1501,6 +1543,7 @@ class LiangStateResult(models.Model):
     def __unicode__(self):
         return self.user.name + ' : ' + self.competitor.name
 
+
 class YiState(models.Model):
     user = models.ForeignKey(User, unique=True)
     before_rank = models.PositiveIntegerField(_('Before_rank'), default=0)
@@ -1520,6 +1563,7 @@ class YiState(models.Model):
 
     def __unicode__(self):
         return self.user.name
+
 
 class YiStateResult(models.Model):
     WIN = 1
@@ -1542,6 +1586,7 @@ class YiStateResult(models.Model):
     def __unicode__(self):
         return self.user.name + ' : ' + self.competitor.name
 
+
 class JingState(models.Model):
     user = models.ForeignKey(User, unique=True)
     before_rank = models.PositiveIntegerField(_('Before_rank'), default=0)
@@ -1561,6 +1606,7 @@ class JingState(models.Model):
 
     def __unicode__(self):
         return self.user.name
+
 
 class JingStateResult(models.Model):
     WIN = 1
@@ -1583,6 +1629,7 @@ class JingStateResult(models.Model):
     def __unicode__(self):
         return self.user.name + ' : ' + self.competitor.name
 
+
 class QingState(models.Model):
     user = models.ForeignKey(User, unique=True)
     before_rank = models.PositiveIntegerField(_('Before_rank'), default=0)
@@ -1602,6 +1649,7 @@ class QingState(models.Model):
 
     def __unicode__(self):
         return self.user.name
+
 
 class QingStateResult(models.Model):
     WIN = 1
@@ -1624,6 +1672,7 @@ class QingStateResult(models.Model):
     def __unicode__(self):
         return self.user.name + ' : ' + self.competitor.name
 
+
 class GmLog(models.Model):
     user = models.ForeignKey(AdminUser)
     content = models.TextField(blank=True)
@@ -1635,3 +1684,16 @@ class GmLog(models.Model):
 
     def __unicode__(self):
         return self.user
+
+
+class Gate(models.Model):
+    gate_id = models.CharField(_('Gate Id'), max_length=100, blank=True)
+    jgates = models.TextField(_('JSON Gates'), blank=True)
+    timestamp = models.PositiveIntegerField(_('Timestamp'), default=0, blank=True)
+
+    class Meta:
+        verbose_name = _('Gate')
+        verbose_name_plural = _('Gate')
+
+    def __unicode__(self):
+        return self.gate_id
