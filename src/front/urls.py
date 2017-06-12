@@ -54,6 +54,7 @@ from front.handlers import fourteenseal
 from front.handlers import atet
 from front.handlers import guild
 from front.handlers import gate
+from front.handlers import stage
 from front.debug import gmprod
 from front.debug import gmaccount
 from front.debug import gmhero

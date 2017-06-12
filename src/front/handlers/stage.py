@@ -22,41 +22,36 @@ class GetHandler(ApiHandler):
     @storage.databaseSafe
     @defer.inlineCallbacks
     # @utils.signed
-    @api('Gate get', '/gate/get/', [
-        Param('gate_id', True, str, '010208_0', '010208_0', 'gate_id'),
-    ], filters=[ps_filter], description="Gate get")
+    @api('Stage get', '/stage/get/', [
+        Param('stage_id', True, str, '010208_0', '010208_0', 'gate_id'),
+    ], filters=[ps_filter], description="Stage get")
     def get(self):
         try:
-            gate_id = self.get_argument("gate_id")
+            stage_id = self.get_argument("stage_id")
         except Exception:
             raise web.HTTPError(400, "Argument error")
+        jstages = dict(battleId=uuid.uuid4().hex, rs1=456897635, rs2=12345, is1PLeft=False, name_1P="我要霸占你你秀发",
+                       name_2P="浅时光Bonns", level_1P=23, level_2P=35, icon_1P=301, icon_2P=401, resource=500,
+                       resourceLimit=1000, resourceGrowSpeed=1)
 
-        # // "battleId":"id20170608_023_65678",
-        # // "rs1":456897635,
-        # // "rs2":12345,
-        # // "rs3":98765,
-        # // "is1PLeft":false,
-        #
-        # // "name_1P":"我要霸占你你秀发",
-        # // "name_2P":"浅时光Bonns",
-        # // "level_1P":23,
-        # // "level_2P":35,
-        # // "icon_1P":301,
-        # // "icon_2P":401,
-        #
-        # // "resource":500,
-        # // "resourceLimit":1000,
-        # // "resourceGrowSpeed":1,
-        fid = uuid.uuid4().hex
-
-        res = yield self.sql.runQuery("SELECT jgates FROM core_gate WHERE gate_id=%s LIMIT 1", (gate_id,))
+        res = yield self.sql.runQuery("SELECT jgates FROM core_gate WHERE gate_id=%s LIMIT 1", (stage_id,))
         if res:
             jgates, = res[0]
+
             print 'jgates', jgates
-            jgates = escape.json_decode(jgates)
+            #jgates = escape.json_decode(jgates)
         else:
             jgates = {}
-        ret = dict(gate_id=gate_id, jgates=jgates, timestamp=int(time.time()))
+
+        print type(jgates), jgates,
+        a = {u'resourceLimit': 1000, u'resource': 500, u'name_2P': '浅时光Bonns', u'icon_1P': 301, 'resourceGrowSpeed': 1,
+             u'level_2P': 35, u'battleId': 'fdc910b65673438dabd80f44762251f0', u'level_1P': 23,
+             u'name_1P': '我要霸占你你秀发',
+             u'is1PLeft': False, u'rs1': 456897635, u'rs2': 12345, u'icon_2P': 401}
+        print jgates.items()
+        #a.update(jgates)
+        #print dict(jgates.items() + a.items())
+        ret = dict(stage_id=stage_id, jgates=jgates, timestamp=int(time.time()))
         reb = zlib.compress(escape.json_encode(ret))
         self.write(ret)
 
@@ -66,14 +61,14 @@ class SetHandler(ApiHandler):
     @storage.databaseSafe
     @defer.inlineCallbacks
     # @utils.signed
-    @api('Gate set', '/gate/set/', [
+    @api('Stage set', '/stage/set/', [
         Param('gate_id', True, str, '010208_0', '010208_0', 'gate_id'),
         Param('jgates', True, str, '{}', '{}', 'jgates'),
-    ], filters=[ps_filter], description="Batt")
+    ], filters=[ps_filter], description="Stage set")
     def get(self):
 
         try:
-            gate_id = self.get_argument("gate_id")
+            stage_id = self.get_argument("stage_id")
             jgates = self.get_argument("jgates")
         except Exception:
             raise web.HTTPError(400, "Argument error")
