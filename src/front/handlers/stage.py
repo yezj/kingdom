@@ -42,7 +42,7 @@ class GetHandler(ApiHandler):
             jgates = escape.json_decode(jgates)
         else:
             jgates = {}
-        jstages.update(jstages)
+        jgates.update(jstages)
         # print type(jgates), jgates,
         # a = {u'resourceLimit': 1000, u'resource': 500, u'name_2P': '浅时光Bonns', u'icon_1P': 301, 'resourceGrowSpeed': 1,
         #      u'level_2P': 35, u'battleId': 'fdc910b65673438dabd80f44762251f0', u'level_1P': 23,
