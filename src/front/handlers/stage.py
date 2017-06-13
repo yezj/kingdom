@@ -39,16 +39,16 @@ class GetHandler(ApiHandler):
             jgates, = res[0]
 
             print 'jgates', jgates
-            #jgates = escape.json_decode(jgates)
+            jgates = escape.json_decode(jgates)
         else:
             jgates = {}
-
-        print type(jgates), jgates,
-        a = {u'resourceLimit': 1000, u'resource': 500, u'name_2P': '浅时光Bonns', u'icon_1P': 301, 'resourceGrowSpeed': 1,
-             u'level_2P': 35, u'battleId': 'fdc910b65673438dabd80f44762251f0', u'level_1P': 23,
-             u'name_1P': '我要霸占你你秀发',
-             u'is1PLeft': False, u'rs1': 456897635, u'rs2': 12345, u'icon_2P': 401}
-        print jgates.items()
+        jstages.update(jstages)
+        # print type(jgates), jgates,
+        # a = {u'resourceLimit': 1000, u'resource': 500, u'name_2P': '浅时光Bonns', u'icon_1P': 301, 'resourceGrowSpeed': 1,
+        #      u'level_2P': 35, u'battleId': 'fdc910b65673438dabd80f44762251f0', u'level_1P': 23,
+        #      u'name_1P': '我要霸占你你秀发',
+        #      u'is1PLeft': False, u'rs1': 456897635, u'rs2': 12345, u'icon_2P': 401}
+        # print jgates.items()
         #a.update(jgates)
         #print dict(jgates.items() + a.items())
         ret = dict(stage_id=stage_id, jgates=jgates, timestamp=int(time.time()))
