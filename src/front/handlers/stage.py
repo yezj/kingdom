@@ -30,22 +30,17 @@ class GetHandler(ApiHandler):
             stage_id = self.get_argument("stage_id")
         except Exception:
             raise web.HTTPError(400, "Argument error")
-        jstages = dict(battleId=uuid.uuid4().hex, rs1=456897635, rs2=12345, is1PLeft=False, name_1P=u"我要霸占你你秀发",
+        jstages = dict(stage_id=stage_id, battleId=uuid.uuid4().hex, rs1=456897635, rs2=12345, is1PLeft=False, name_1P=u"我要霸占你你秀发",
                        name_2P=u"浅时光Bonns", level_1P=23, level_2P=35, icon_1P=301, icon_2P=401, resource=500,
-                       resourceLimit=1000, resourceGrowSpeed=1)
+                       resourceLimit=1000, resourceGrowSpeed=1, timestamp=int(time.time()))
 
         res = yield self.sql.runQuery("SELECT jgates FROM core_gate WHERE gate_id=%s LIMIT 1", (stage_id,))
         if res:
             jgates, = res[0]
-
-            print 'jgates', jgates
             jgates = escape.json_decode(jgates)
         else:
             jgates = {}
-        print 'jstages', jstages
-        print 'jgates', jgates
-        #jstages.update(jgates)
-        #jgates.update(dict(battleId=uuid.uuid4().hex))
+
         jgates.update(jstages)
         print 11111, jgates
         # print type(jgates), jgates,
@@ -56,9 +51,9 @@ class GetHandler(ApiHandler):
         # print jgates.items()
         # a.update(jgates)
         # print dict(jgates.items() + a.items())
-        ret = dict(stage_id=stage_id, jstages=jgates, timestamp=int(time.time()))
+        #ret = dict(stage_id=stage_id, jstages=jgates, timestamp=int(time.time()))
         # reb = zlib.compress(escape.json_encode(ret))
-        self.write(ret)
+        self.write(jgates)
 
 
 @handler
