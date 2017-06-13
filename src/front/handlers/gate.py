@@ -53,7 +53,7 @@ class GetHandler(ApiHandler):
         if res:
             jgates, = res[0]
             print 'jgates', jgates
-            jgates = escape.json_decode(jgates)
+            #jgates = escape.json_decode(jgates)
         else:
             jgates = {}
         ret = dict(gate_id=gate_id, jgates=jgates, timestamp=int(time.time()))
