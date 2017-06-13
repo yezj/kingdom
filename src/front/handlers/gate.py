@@ -57,9 +57,9 @@ class GetHandler(ApiHandler):
         else:
             jgates = {}
         jgates.update(dict(gate_id=gate_id, timestamp=int(time.time())))
-        ret = dict(result=jgates)
+        #ret = dict(result=jgates)
         reb = zlib.compress(escape.json_encode(ret))
-        self.write(ret)
+        self.write(jgates)
 
 
 @handler
