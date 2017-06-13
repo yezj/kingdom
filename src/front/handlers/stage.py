@@ -45,7 +45,8 @@ class GetHandler(ApiHandler):
         print 'jstages', jstages
         print 'jgates', jgates
         #jstages.update(jgates)
-        jgates.update(dict(battleId=uuid.uuid4().hex))
+        #jgates.update(dict(battleId=uuid.uuid4().hex))
+        jgates.update(jstages)
         print 11111, jgates
         # print type(jgates), jgates,
         # a = {u'resourceLimit': 1000, u'resource': 500, u'name_2P': '浅时光Bonns', u'icon_1P': 301, 'resourceGrowSpeed': 1,
