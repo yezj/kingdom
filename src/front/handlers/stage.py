@@ -39,7 +39,7 @@ class GetHandler(ApiHandler):
             jgates, = res[0]
 
             print 'jgates', jgates
-            jgates = escape.json_decode(jgates)
+            #jgates = escape.json_decode(jgates)
         else:
             jgates = {}
         print 'jstages', jstages
