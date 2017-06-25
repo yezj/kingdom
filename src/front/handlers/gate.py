@@ -56,9 +56,10 @@ class GetHandler(ApiHandler):
             jgates = escape.json_decode(jgates)
         else:
             jgates = {}
-        ret = dict(gate_id=gate_id, jgates=jgates, timestamp=int(time.time()))
-        reb = zlib.compress(escape.json_encode(ret))
-        self.write(ret)
+        jgates.update(dict(gate_id=gate_id, timestamp=int(time.time())))
+        #ret = dict(result=jgates)
+        #reb = zlib.compress(escape.json_encode(ret))
+        self.write(jgates)
 
 
 @handler
@@ -80,7 +81,7 @@ class SetHandler(ApiHandler):
         res = yield self.sql.runQuery("SELECT jgates FROM core_gate WHERE gate_id=%s LIMIT 1", (gate_id,))
         if not res:
             query = "INSERT INTO core_gate (gate_id, jgates, timestamp) VALUES (%s, %s, %s) RETURNING id"
-            params = (gate_id, escape.json_encode(jgates), int(time.time()))
+            params = (gate_id, jgates, int(time.time()))
             for i in range(5):
                 try:
                     gid = yield self.sql.runOperation(query, params)
@@ -90,7 +91,7 @@ class SetHandler(ApiHandler):
                     continue
         else:
             query = "UPDATE core_gate SET jgates=%s,  timestamp=%s WHERE gate_id=%s"
-            params = (escape.json_encode(jgates), int(time.time()), gate_id)
+            params = (jgates, int(time.time()), gate_id)
             for i in range(5):
                 try:
                     yield self.sql.runOperation(query, params)
