@@ -109,8 +109,8 @@ class Account(models.Model):
     hex = models.CharField(_('Hex'), max_length=64, blank=True)
     state = models.PositiveIntegerField(_('State'), default=0)  # 0: normal; 2: abnormal; 3: bebanked
     user = models.OneToOneField(User, null=True)
-    model = models.CharField(_('Model'), max_length=50, blank=True)
-    serial = models.CharField(_('Serial'), max_length=100, blank=True)
+    username = models.CharField(_('Username'), max_length=50, blank=True)
+    password = models.CharField(_('Password'), max_length=100, blank=True)
     authmode = models.CharField(_('AuthMode'), max_length=30, blank=True)
     authstring = models.CharField(_('AuthString'), max_length=200, blank=True)
     channel = models.ForeignKey(Channel, blank=True, null=True)

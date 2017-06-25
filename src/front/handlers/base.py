@@ -92,11 +92,11 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
 
     @storage.databaseSafe
     @defer.inlineCallbacks
-    def refresh_idcard(self, idcard, model, serial, channel, access_token):
+    def refresh_idcard(self, idcard, username, password, channel, access_token):
         if idcard:
             ahex, aid = idcard.split('h', 1)
-            query = "UPDATE core_account SET model=%s, serial=%s, timestamp=%s WHERE id=%s AND hex=%s RETURNING id"
-            params = (model, serial, int(time.time()), aid, ahex)
+            query = "UPDATE core_account SET username=%s, password=%s, timestamp=%s WHERE id=%s AND hex=%s RETURNING id"
+            params = (username, password, int(time.time()), aid, ahex)
             for i in range(5):
                 try:
                     res = yield self.sql.runQuery(query, params)
@@ -107,16 +107,16 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                     log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
                     continue
         if not idcard:
-            res = yield self.sql.runQuery("SELECT hex, id FROM core_account WHERE authstring=%s LIMIT 1",
-                                          (access_token,))
+            res = yield self.sql.runQuery("SELECT hex, id FROM core_account WHERE username=%s AND password=%s LIMIT 1",
+                                          (username, password))
             if res:
                 ahex, aid = res[0]
                 idcard = '%sh%s' % (ahex, aid)
             else:
                 ahex = uuid.uuid4().hex
-                query = "INSERT INTO core_account(hex, state, user_id, model, serial, authmode, authstring, channel_id,\
+                query = "INSERT INTO core_account(hex, state, user_id, username, password, authmode, authstring, channel_id,\
                  created, timestamp, accountid) VALUES (%s, 0, NULL, %s, %s, '', %s, %s, %s, %s, '') RETURNING id"
-                params = (ahex, model, serial, access_token, channel, int(time.time()), int(time.time()))
+                params = (ahex, username, password, access_token, channel, int(time.time()), int(time.time()))
                 for i in range(5):
                     try:
                         res = yield self.sql.runQuery(query, params)

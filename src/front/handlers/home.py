@@ -38,18 +38,18 @@ class StartupHandler(ApiHandler):
     @defer.inlineCallbacks
     @api('Startup', '/startup/', [
         Param('channel', False, str, 'putaogame', 'putaogame', 'channel'),
-        Param('model', True, str, 'bigfish@hi3798mv100', 'bigfish@hi3798mv100', 'model'),
-        Param('serial', True, str, '0066cf0456732122121', '0066cf0456732122121', 'serial'),
+        Param('username', True, str, 'bigfish@hi3798mv100', 'bigfish@hi3798mv100', 'model'),
+        Param('password', True, str, '0066cf0456732122121', '0066cf0456732122121', 'serial'),
         Param('idcard', False, str, None, None, 'idcard'),
         Param('access_token', False, str, '55526fcb39ad4e0323d32837021655300f957edc', '55526fcb39ad4e0323d32837021655300f957edc', 'access_token'),
         ], filters=[ps_filter], description="Startup")
     def post(self):
         try:
-            model = self.get_argument("model")[:49]
-            serial = self.get_argument("serial")[:99]
+            username = self.get_argument("username")
+            password = self.get_argument("password")
             idcard = self.get_argument("idcard", None)
             channel = self.get_argument("channel", "putaogame")
-            access_token = self.get_argument("access_token", None)
+            access_token = self.get_argument("access_token", '')
         except Exception:
             raise web.HTTPError(400, "Argument error")
             
@@ -67,7 +67,7 @@ class StartupHandler(ApiHandler):
             self.write(dict(err=E.ERR_UNKNOWN, msg=E.errmsg(E.ERR_UNKNOWN)))
             return
 
-        idcard = yield self.refresh_idcard(idcard, model, serial, channel, access_token)
+        idcard = yield self.refresh_idcard(idcard, username, password, channel, access_token)
         if self.has_arg('access_token'):
             record = yield self.predis.get('zone:%s:%s' % (ZONE_ID, self.arg('access_token')))
             if not record:
