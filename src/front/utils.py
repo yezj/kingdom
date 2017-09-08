@@ -9,6 +9,10 @@ import uuid
 from cyclone import web
 import D
 import random
+import requests
+from local_settings import BASE_URL
+
+
 def signed(method):
     @functools.wraps(method)
     def wraps(self, *args, **kwargs):
@@ -24,6 +28,28 @@ def signed(method):
             except Exception:
                 raise web.HTTPError(400, "Sign invalid")
         return method(self, *args, **kwargs)
+
+    return wraps
+
+
+def token(method):
+    @functools.wraps(method)
+    def wraps(self, *args, **kwargs):
+        if self.has_arg("access_token") and self.has_arg("user_id"):
+            access_token = self.get_argument("access_token")
+            user_id = self.get_argument("user_id")
+            login_url = BASE_URL + '/user/login/?access_token=%s&user_id=%s' % (access_token, user_id)
+            r = requests.get(login_url)
+            if r.status_code == 200 and 'user_id' in r.json():
+                self.user_id = r.json()['user_id']
+            else:
+                self.user_id = None
+                self.write(r.text)
+                return
+        else:
+            self.user_id = None
+        return method(self, *args, **kwargs)
+
     return wraps
 
 
@@ -131,10 +157,18 @@ class E(object):
     ERR_CLIENT = 3
     ERR_SYNC = 4
     ERR_REPEAT = 5
+    ERR_ARGUMENT = 6
+    ERR_CHANNEL = 7
     ERR_USER_NOTFOUND = 101
     ERR_USER_ABNORMAL = 102
     ERR_USER_BEBANKED = 103
     ERR_USER_REPEAT = 104
+    ERR_USER_CREATED = 105
+    ERR_USER_PASSWORD = 106
+    ERR_USER_TOKEN_EXPIRE = 107
+    ERR_USER_TOKEN = 108
+    ERR_USER_REFRESH_TOKEN = 109
+    #ERR_USER_CREATED = 105
     ERR_NOTENOUGH_HP = 201
     ERR_NOTENOUGH_GOLD = 202
     ERR_NOTENOUGH_ROCK = 203
@@ -219,10 +253,17 @@ class E(object):
         ERR_CLIENT: u'客户端发生异常',
         ERR_SYNC: u'数据同步错误',
         ERR_REPEAT: u'重复操作',
+        ERR_ARGUMENT: u'参数错误',
+        ERR_CHANNEL: u'渠道错误',
+        ERR_USER_CREATED: u'创建用户失败',
         ERR_USER_NOTFOUND: u'用户不存在',
         ERR_USER_ABNORMAL: u'账户发生异常',
         ERR_USER_BEBANKED: u'账户已被封',
         ERR_USER_REPEAT: u'用户名重复',
+        ERR_USER_PASSWORD: u'用户名或密码错误',
+        ERR_USER_TOKEN_EXPIRE: u'Access_token过期,请重新登录',
+        ERR_USER_TOKEN: u'Access_token错误',
+        ERR_USER_REFRESH_TOKEN: u'Refresh_token错误',
         ERR_NOTENOUGH_HP: u'体力不足',
         ERR_NOTENOUGH_GOLD: u'金币不足',
         ERR_NOTENOUGH_ROCK: u'钻石不足',
@@ -1575,4 +1616,3 @@ class E(object):
         vip = E.vip(vrock)
         maxtimes, = [D.VERSUSRESETTIMES[i*2+1] for i in xrange(0, len(D.VERSUSRESETTIMES)/2) if vip == D.VERSUSRESETTIMES[i*2]]
         return maxtimes
-
