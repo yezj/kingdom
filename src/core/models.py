@@ -280,3 +280,16 @@ class GmLog(models.Model):
 
     def __unicode__(self):
         return self.user
+
+
+class Gate(models.Model):
+     gate_id = models.CharField(_('Gate Id'), max_length=100, blank=True)
+     jgates = models.TextField(_('JSON Gates'), blank=True)
+     timestamp = models.PositiveIntegerField(_('Timestamp'), default=0, blank=True)
+
+     class Meta:
+         verbose_name = _('Gate')
+         verbose_name_plural = _('Gate')
+
+     def __unicode__(self):
+         return self.gate_id
