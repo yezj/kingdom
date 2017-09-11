@@ -92,10 +92,10 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
 
     @storage.databaseSafe
     @defer.inlineCallbacks
-    def refresh_idcard(self, idcard, model, serial, channel, access_token):
+    def refresh_idcard(self, idcard, model, serial, channel, access_token, user_id):
         if idcard:
             ahex, aid = idcard.split('h', 1)
-            query = "UPDATE core_account SET model=%s, password=%s, timestamp=%s WHERE id=%s AND hex=%s RETURNING id"
+            query = "UPDATE core_user SET model=%s, serial=%s, timestamp=%s WHERE id=%s AND hex=%s RETURNING id"
             params = (model, serial, int(time.time()), aid, ahex)
             for i in range(5):
                 try:
@@ -106,17 +106,18 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                 except storage.IntegrityError:
                     log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
                     continue
+
         if not idcard:
-            res = yield self.sql.runQuery("SELECT hex, id FROM core_account WHERE model=%s AND serial=%s LIMIT 1",
-                                          (model, serial))
+            res = yield self.sql.runQuery("SELECT hex, id FROM core_user WHERE user_id=%s LIMIT 1",
+                                          (user_id, ))
             if res:
                 ahex, aid = res[0]
                 idcard = '%sh%s' % (ahex, aid)
             else:
                 ahex = uuid.uuid4().hex
-                query = "INSERT INTO core_account(hex, state, user_id, model, serial, authmode, authstring, channel_id,\
-                 created, timestamp, accountid) VALUES (%s, 0, NULL, %s, %s, '', %s, %s, %s, %s, '') RETURNING id"
-                params = (ahex, model, serial, access_token, channel, int(time.time()), int(time.time()))
+                query = "INSERT INTO core_user(hex, model, serial, user_id, channel_id,\
+                 created, timestamp) VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id"
+                params = (ahex, model, serial, user_id, channel, int(time.time()), int(time.time()))
                 for i in range(5):
                     try:
                         res = yield self.sql.runQuery(query, params)
@@ -164,16 +165,16 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
             except storage.IntegrityError:
                 log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
                 continue
-        for lot in D.LOTT.keys():
-            query = "INSERT INTO core_freelott(user_id, lotttype, times, timestamp, free) VALUES (%s, %s, %s, %s, %s) RETURNING id"
-            params = (uid, lot, 0, int(time.time()), True)
-            for i in range(5):
-                try:
-                    yield self.sql.runQuery(query, params)
-                    break
-                except storage.IntegrityError:
-                    log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
-                    continue
+        # for lot in D.LOTT.keys():
+        #     query = "INSERT INTO core_freelott(user_id, lotttype, times, timestamp, free) VALUES (%s, %s, %s, %s, %s) RETURNING id"
+        #     params = (uid, lot, 0, int(time.time()), True)
+        #     for i in range(5):
+        #         try:
+        #             yield self.sql.runQuery(query, params)
+        #             break
+        #         except storage.IntegrityError:
+        #             log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
+        #             continue
 
         # query = "INSERT INTO core_arena(user_id, arena_coin, before_rank, now_rank, last_rank, jguards, jpositions, formation, timestamp) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"
         # params = (uid, 0, uid, uid, uid, nuser['jheros'], D.USERARENA['jpositions'], E.default_formation, int(time.time()))

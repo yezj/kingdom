@@ -28,7 +28,9 @@ class Channel(models.Model):
 
 class User(models.Model):
     id = models.AutoField(primary_key=True)
+    hex = models.CharField(_('Hex'), max_length=64, unique=True)
     user_id = models.CharField(_('User_id'), max_length=20, blank=True)
+
     model = models.CharField(_('Model'), max_length=100, blank=True)
     serial = models.CharField(_('Serial'), max_length=20, unique=True)
     channel = models.ForeignKey(Channel, blank=True, null=True)
