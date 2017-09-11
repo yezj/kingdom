@@ -115,6 +115,8 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                 idcard = '%sh%s' % (ahex, aid)
             else:
                 ahex = uuid.uuid4().hex
+                nickname = ''
+                avat = ''
                 heroList = ''
                 soldierList = ''
                 formations = ''
@@ -146,7 +148,7 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                         " dungeonAnnelGatesNormal, dungeonAnnelGatesHero, dungeonAnnelGatesEpic, jmails, created," \
                         " modified) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s," \
                         " %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"
-                params = (ahex, model, serial, user_id, channel, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, heroList,
+                params = (ahex, model, serial, user_id, channel, nickname, avat, 0, 0, 0, 0, 0, 0, 0, 0, 0, heroList,
                           soldierList, formations, items, headIconList, titleList, achievement, playerConfig,
                           buddyList, playerStatusInfo, annalNormal, annelCurrentGateNormal, annalHero,
                           annelCurrentGateHero, annalEpic, dungeonAnnelHero, dungeonAnnelEpic, dungeonAnnelGatesNormal,
