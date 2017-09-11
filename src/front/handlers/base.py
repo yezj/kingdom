@@ -16,7 +16,7 @@ from twisted.internet import defer
 from twisted.python import log
 from front import storage, D
 from front.utils import E
-#from M2Crypto import RSA, BIO, EVP
+# from M2Crypto import RSA, BIO, EVP
 from local_settings import ZONE_ID
 
 
@@ -109,15 +109,49 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
 
         if not idcard:
             res = yield self.sql.runQuery("SELECT hex, id FROM core_user WHERE user_id=%s LIMIT 1",
-                                          (user_id, ))
+                                          (user_id,))
             if res:
                 ahex, aid = res[0]
                 idcard = '%sh%s' % (ahex, aid)
             else:
                 ahex = uuid.uuid4().hex
-                query = "INSERT INTO core_user(hex, model, serial, user_id, channel_id,\
-                 created, timestamp) VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id"
-                params = (ahex, model, serial, user_id, channel, int(time.time()), int(time.time()))
+                heroList = ''
+                soldierList = ''
+                formations = ''
+                items = ''
+                headIconList = ''
+                titleList = ''
+                achievement = ''
+                playerConfig = ''
+                buddyList = ''
+                playerStatusInfo = ''
+                annalNormal = ''
+                annelCurrentGateNormal = ''
+
+                annalHero = ''
+                annelCurrentGateHero = ''
+                annalEpic = ''
+                dungeonAnnelHero = ''
+                dungeonAnnelEpic = ''
+                dungeonAnnelGatesNormal = ''
+                dungeonAnnelGatesHero = ''
+                dungeonAnnelGatesEpic = ''
+                jmails = '{}'
+
+                query = "INSERT INTO core_user(hex, model, serial, user_id, channel_id, nickname, avat, playerLevel," \
+                        " playerXp, goldcoin, gem, honorPoint, arena5v5Rank, arena5v5Place, arenaOtherRank," \
+                        " arenaOtherPlace, heroList, soldierList, formations, items, headIconList, titleList," \
+                        " achievement, playerConfig, buddyList, playerStatusInfo, annalNormal, annelCurrentGateNormal," \
+                        " annalHero, annelCurrentGateHero, annalEpic, dungeonAnnelHero, dungeonAnnelEpic," \
+                        " dungeonAnnelGatesNormal, dungeonAnnelGatesHero, dungeonAnnelGatesEpic, jmails, created," \
+                        " modified) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s," \
+                        " %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"
+                params = (ahex, model, serial, user_id, channel, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, heroList,
+                          soldierList, formations, items, headIconList, titleList, achievement, playerConfig,
+                          buddyList, playerStatusInfo, annalNormal, annelCurrentGateNormal, annalHero,
+                          annelCurrentGateHero, annalEpic, dungeonAnnelHero, dungeonAnnelEpic, dungeonAnnelGatesNormal,
+                          dungeonAnnelGatesHero, dungeonAnnelGatesEpic, jmails, int(time.time()), int(time.time()))
+                print query % params
                 for i in range(5):
                     try:
                         res = yield self.sql.runQuery(query, params)
