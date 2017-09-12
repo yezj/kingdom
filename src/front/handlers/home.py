@@ -33,6 +33,7 @@ class CrossdomainHandler(ApiHandler):
 
 @handler
 class StartupHandler(ApiHandler):
+    @utils.token
     @storage.databaseSafe
     @defer.inlineCallbacks
     @api('Startup', '/startup/', [
@@ -83,12 +84,16 @@ class StartupHandler(ApiHandler):
 
 @handler
 class ActiveHandler(ApiHandler):
+    @utils.token
     @storage.databaseSafe
     @defer.inlineCallbacks
     @api('Active', '/active/', [
         Param('channel', False, str, 'putaogame', 'putaogame', 'channel'),
         Param('idcard', True, str, '864c04bf73a445fd84da86a206060c48h20', '864c04bf73a445fd84da86a206060c48h20',
               'idcard'),
+        Param('user_id', False, str, '1', '1', 'user_id'),
+        Param('access_token', False, str, '55526fcb39ad4e0323d32837021655300f957edc',
+              '55526fcb39ad4e0323d32837021655300f957edc', 'access_token'),
         Param('zone', True, str, '0', '0', 'zone'),
     ], filters=[ps_filter], description="Active")
     def post(self):
@@ -100,36 +105,72 @@ class ActiveHandler(ApiHandler):
             raise web.HTTPError(400, "Argument error")
         if idcard:
             ahex, aid = idcard.split('h', 1)
-            res = yield self.sql.runQuery(
-                "SELECT accountid, user_id FROM core_account WHERE accountid=%s OR id=%s LIMIT 1", (aid, aid))
+            query = """SELECT nickname, avat, "playerLevel", "playerXp", "goldcoin", gem, "honorPoint",\
+                  "arena5v5Rank", arena5v5Place",  "arenaOtherRank", "arenaOtherPlace", "heroList", "soldierList",\
+                   formations, items, headIconList", "titleList", achievement, "playerConfig", "buddyList",\
+                    "playerStatusInfo", jmails, annalNormal", "annelCurrentGateNormal", "annalHero",\
+                     annelCurrentGateHero", "annalEpic", dungeonAnnelHero", "dungeonAnnelEpic",\
+                      "dungeonAnnelGatesNormal", "dungeonAnnelGatesHero", "dungeonAnnelGatesEpic"\
+                       FROM core_user WHERE hex=%s and id=%s LIMIT 1"""
+            params = (ahex, aid)
+            res = yield self.sql.runQuery(query, params)
             if res:
-                query = "UPDATE core_account SET accountid=%s, timestamp=%s WHERE id=%s RETURNING id"
-                params = (aid, int(time.time()), aid)
-                for i in range(5):
-                    try:
-                        yield self.sql.runOperation(query, params)
-                        break
-                    except storage.IntegrityError:
-                        log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
-                        continue
-            yield self.predis.hset('zone:%s:%s' % (zone, datetime.datetime.now().strftime('%Y%m%d')), aid, E.true)
-
-        try:
-            sign = yield self.generate_sign(idcard=idcard, zone=zone)
-        except E.USERNOTFOUND:
-            self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
-            return
-        except E.USERABNORMAL:
-            self.write(dict(err=E.ERR_USER_ABNORMAL, msg=E.errmsg(E.ERR_USER_ABNORMAL)))
-            return
-        except E.USERBEBANKED:
-            self.write(dict(err=E.ERR_USER_BEBANKED, msg=E.errmsg(E.ERR_USER_BEBANKED)))
-            return
-        except Exception:
-            self.write(dict(err=E.ERR_UNKNOWN, msg=E.errmsg(E.ERR_UNKNOWN)))
-            return
+                avat, playerLevel, playerXp, goldcoin, gem, honorPoint, arena5v5Rank, arena5v5Place, arenaOtherRank, \
+                arenaOtherPlace, heroList, soldierList, formations, items, headIconList, titleList, achievement, \
+                playerConfig, buddyList, playerStatusInfo, jmails, annalNormal, annelCurrentGateNormal, annalHero, \
+                annelCurrentGateHero, annalEpic, dungeonAnnelHero, dungeonAnnelEpic, dungeonAnnelGatesNormal, \
+                dungeonAnnelGatesHero, dungeonAnnelGatesEpic = res[0]
+            else:
+                self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
+                return
+                # yield self.predis.hset('zone:%s:%s' % (zone, datetime.datetime.now().strftime('%Y%m%d')), aid, E.true)
+            users = dict(avat=avat,
+                         playerLevel=playerLevel,
+                         playerXp=playerXp,
+                         goldcoin=goldcoin,
+                         gem=gem,
+                         honorPoint=honorPoint,
+                         arena5v5Rank=arena5v5Rank,
+                         arena5v5Place=arena5v5Place,
+                         arenaOtherRank=arenaOtherRank,
+                         arenaOtherPlace=arenaOtherPlace,
+                         heroList=heroList,
+                         soldierList=soldierList,
+                         formations=formations,
+                         items=items,
+                         headIconList=headIconList,
+                         titleList=titleList,
+                         achievement=achievement,
+                         playerConfig=playerConfig,
+                         buddyList=buddyList,
+                         playerStatusInfo=playerStatusInfo,
+                         jmails=jmails,
+                         annalNormal=annalNormal,
+                         annelCurrentGateNormal=annelCurrentGateNormal,
+                         annalHero=annalHero,
+                         annelCurrentGateHero=annelCurrentGateHero,
+                         annalEpic=annalEpic,
+                         dungeonAnnelHero=dungeonAnnelHero,
+                         dungeonAnnelEpic=dungeonAnnelEpic,
+                         dungeonAnnelGatesNormal=dungeonAnnelGatesNormal,
+                         dungeonAnnelGatesHero=dungeonAnnelGatesHero,
+                         dungeonAnnelGatesEpic=dungeonAnnelGatesEpic)
+        # try:
+        #     sign = yield self.generate_sign(idcard=idcard, zone=zone)
+        # except E.USERNOTFOUND:
+        #     self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
+        #     return
+        # except E.USERABNORMAL:
+        #     self.write(dict(err=E.ERR_USER_ABNORMAL, msg=E.errmsg(E.ERR_USER_ABNORMAL)))
+        #     return
+        # except E.USERBEBANKED:
+        #     self.write(dict(err=E.ERR_USER_BEBANKED, msg=E.errmsg(E.ERR_USER_BEBANKED)))
+        #     return
+        # except Exception:
+        #     self.write(dict(err=E.ERR_UNKNOWN, msg=E.errmsg(E.ERR_UNKNOWN)))
+        #     return
         # print 'sign', sign
-        ret = dict(sign=sign, accountid=aid)
+        ret = dict(users=users)
         reb = zlib.compress(escape.json_encode(ret))
         self.write(ret)
 
