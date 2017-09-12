@@ -106,10 +106,10 @@ class ActiveHandler(ApiHandler):
         if idcard:
             ahex, aid = idcard.split('h', 1)
             query = """SELECT nickname, avat, "playerLevel", "playerXp", "goldcoin", gem, "honorPoint",\
-                  "arena5v5Rank", arena5v5Place",  "arenaOtherRank", "arenaOtherPlace", "heroList", "soldierList",\
-                   formations, items, headIconList", "titleList", achievement, "playerConfig", "buddyList",\
-                    "playerStatusInfo", jmails, annalNormal", "annelCurrentGateNormal", "annalHero",\
-                     annelCurrentGateHero", "annalEpic", dungeonAnnelHero", "dungeonAnnelEpic",\
+                  "arena5v5Rank", "arena5v5Place",  "arenaOtherRank", "arenaOtherPlace", "heroList", "soldierList",\
+                   formations, items, "headIconList", "titleList", achievement, "playerConfig", "buddyList",\
+                    "playerStatusInfo", jmails, "annalNormal", "annelCurrentGateNormal", "annalHero",\
+                     "annelCurrentGateHero", "annalEpic", "dungeonAnnelHero", "dungeonAnnelEpic",\
                       "dungeonAnnelGatesNormal", "dungeonAnnelGatesHero", "dungeonAnnelGatesEpic"\
                        FROM core_user WHERE hex=%s and id=%s LIMIT 1"""
             params = (ahex, aid)
