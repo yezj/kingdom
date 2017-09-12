@@ -140,14 +140,14 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                 dungeonAnnelGatesEpic = ''
                 jmails = '{}'
 
-                query = "INSERT INTO core_user(hex, model, serial, user_id, channel_id, nickname, avat, playerLevel," \
-                        " playerXp, goldcoin, gem, honorPoint, arena5v5Rank, arena5v5Place, arenaOtherRank," \
-                        " arenaOtherPlace, heroList, soldierList, formations, items, headIconList, titleList," \
-                        " achievement, playerConfig, buddyList, playerStatusInfo, annalNormal, annelCurrentGateNormal," \
-                        " annalHero, annelCurrentGateHero, annalEpic, dungeonAnnelHero, dungeonAnnelEpic," \
-                        " dungeonAnnelGatesNormal, dungeonAnnelGatesHero, dungeonAnnelGatesEpic, jmails, created," \
-                        " modified) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s," \
-                        " %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"
+                query = """INSERT INTO core_user(hex, model, serial, user_id, channel_id, nickname, avat, "playerLevel",\
+                 "playerXp", goldcoin, gem, "honorPoint", "arena5v5Rank", "arena5v5Place", "arenaOtherRank",\
+                  "arenaOtherPlace", "heroList", "soldierList", formations, items, "headIconList", "titleList",\
+                   achievement, "playerConfig", "buddyList", "playerStatusInfo", "annalNormal", "annelCurrentGateNormal",\
+                   "annalHero", "annelCurrentGateHero", "annalEpic", "dungeonAnnelHero", "dungeonAnnelEpic",\
+                    "dungeonAnnelGatesNormal", "dungeonAnnelGatesHero", "dungeonAnnelGatesEpic", jmails, created,\
+                    modified) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,\
+                     %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"""
                 params = (ahex, model, serial, user_id, channel, nickname, avat, 0, 0, 0, 0, 0, 0, 0, 0, 0, heroList,
                           soldierList, formations, items, headIconList, titleList, achievement, playerConfig,
                           buddyList, playerStatusInfo, annalNormal, annelCurrentGateNormal, annalHero,
