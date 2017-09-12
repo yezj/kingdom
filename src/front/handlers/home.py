@@ -115,10 +115,10 @@ class ActiveHandler(ApiHandler):
             params = (ahex, aid)
             res = yield self.sql.runQuery(query, params)
             if res:
-                avat, playerLevel, playerXp, goldcoin, gem, honorPoint, arena5v5Rank, arena5v5Place, arenaOtherRank, \
-                arenaOtherPlace, heroList, soldierList, formations, items, headIconList, titleList, achievement, \
-                playerConfig, buddyList, playerStatusInfo, jmails, annalNormal, annelCurrentGateNormal, annalHero, \
-                annelCurrentGateHero, annalEpic, dungeonAnnelHero, dungeonAnnelEpic, dungeonAnnelGatesNormal, \
+                nickname, avat, playerLevel, playerXp, goldcoin, gem, honorPoint, arena5v5Rank, arena5v5Place,\
+                arenaOtherRank, arenaOtherPlace, heroList, soldierList, formations, items, headIconList, titleList,\
+                achievement, playerConfig, buddyList, playerStatusInfo, jmails, annalNormal, annelCurrentGateNormal,\
+                annalHero, annelCurrentGateHero, annalEpic, dungeonAnnelHero, dungeonAnnelEpic, dungeonAnnelGatesNormal, \
                 dungeonAnnelGatesHero, dungeonAnnelGatesEpic = res[0]
             else:
                 self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
