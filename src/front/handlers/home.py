@@ -170,9 +170,9 @@ class ActiveHandler(ApiHandler):
         #     self.write(dict(err=E.ERR_UNKNOWN, msg=E.errmsg(E.ERR_UNKNOWN)))
         #     return
         # print 'sign', sign
-        ret = dict(users=users)
-        reb = zlib.compress(escape.json_encode(ret))
-        self.write(ret)
+        #ret = dict(users=users)
+        #reb = zlib.compress(escape.json_encode(ret))
+        self.write(users)
 
 
 @handler
