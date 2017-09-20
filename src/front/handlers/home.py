@@ -172,8 +172,8 @@ class ActiveHandler(ApiHandler):
         #     return
         # print 'sign', sign
         #ret = dict(users=users)
-        reb = zlib.compress(escape.json_encode(users))
-        self.write(reb)
+        #reb = zlib.compress(escape.json_encode(users))
+        self.write(users)
 
 
 # @handler
