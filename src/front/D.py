@@ -103,7 +103,7 @@ USERINIT_bak = {
 }
 
 USERINIT = {
-    "nickname": "刘健",
+    "nickname": u"刘健",
     "avat": "",
     "playerLevel": 77,
     "playerXp": 120000,
