@@ -45,7 +45,7 @@ class StartupHandler(ApiHandler):
         Param('access_token', False, str, '55526fcb39ad4e0323d32837021655300f957edc',
               '55526fcb39ad4e0323d32837021655300f957edc', 'access_token'),
     ], filters=[ps_filter], description="Startup")
-    def post(self):
+    def get(self):
         try:
             model = self.get_argument("model")
             serial = self.get_argument("serial")
@@ -96,7 +96,7 @@ class ActiveHandler(ApiHandler):
               '55526fcb39ad4e0323d32837021655300f957edc', 'access_token'),
         Param('zone', True, str, '0', '0', 'zone'),
     ], filters=[ps_filter], description="Active")
-    def post(self):
+    def get(self):
         try:
             channel = self.get_argument("channel", "putaogame")
             idcard = self.get_argument("idcard")
