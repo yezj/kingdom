@@ -104,7 +104,7 @@ USERINIT_bak = {
 
 USERINIT = {
     "nickname": "test",
-    "avat": "",
+    "avat": "1",
     "playerLevel": 77,
     "playerXp": 120000,
     "goldcoin": 0,
