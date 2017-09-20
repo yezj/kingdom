@@ -115,65 +115,65 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                 idcard = '%sh%s' % (ahex, aid)
             else:
                 ahex = uuid.uuid4().hex
-        nickname = D.USERINIT["nickname"]
-        avat = D.USERINIT["avat"]
-        playerLevel = D.USERINIT["playerLevel"]
-        playerXp = D.USERINIT["playerXp"]
-        goldcoin = D.USERINIT["goldcoin"]
-        gem = D.USERINIT["gem"]
-        honorPoint = D.USERINIT["honorPoint"]
-        arena5v5Rank = D.USERINIT["arena5v5Rank"]
-        arena5v5Place = D.USERINIT["arena5v5Place"]
-        arenaOtherRank = D.USERINIT["arenaOtherRank"]
-        arenaOtherPlace = D.USERINIT["arenaOtherPlace"]
-        ####
-        heroList = escape.json_encode(D.USERINIT["heroList"])
-        soldierList = escape.json_encode(D.USERINIT["soldierList"])
-        formations = escape.json_encode(D.USERINIT["formations"])
-        items = escape.json_encode(D.USERINIT["items"])
-        headIconList = escape.json_encode(D.USERINIT["headIconList"])
-        titleList = escape.json_encode(D.USERINIT["titleList"])
-        achievement = escape.json_encode(D.USERINIT["achievement"])
-        playerConfig = escape.json_encode(D.USERINIT["playerConfig"])
-        buddyList = escape.json_encode(D.USERINIT["buddyList"])
-        playerStatusInfo = escape.json_encode(D.USERINIT["playerStatusInfo"])
-        annalNormal = escape.json_encode(D.USERINIT["annalNormal"])
-        annelCurrentGateNormal = escape.json_encode(D.USERINIT["annelCurrentGateNormal"])
-        annalHero = escape.json_encode(D.USERINIT["annalHero"])
-        annelCurrentGateHero = escape.json_encode(D.USERINIT["annelCurrentGateHero"])
-        annalEpic = escape.json_encode(D.USERINIT["annalEpic"])
-        dungeonAnnelHero = escape.json_encode(D.USERINIT["dungeonAnnelHero"])
-        dungeonAnnelEpic = escape.json_encode(D.USERINIT["dungeonAnnelEpic"])
-        dungeonAnnelGatesNormal = escape.json_encode(D.USERINIT["dungeonAnnelGatesNormal"])
-        dungeonAnnelGatesHero = escape.json_encode(D.USERINIT["dungeonAnnelGatesHero"])
-        dungeonAnnelGatesEpic = escape.json_encode(D.USERINIT["dungeonAnnelGatesEpic"])
-        jmails = escape.json_encode(D.USERINIT["jmails"])
+                nickname = D.USERINIT["nickname"]
+                avat = D.USERINIT["avat"]
+                playerLevel = D.USERINIT["playerLevel"]
+                playerXp = D.USERINIT["playerXp"]
+                goldcoin = D.USERINIT["goldcoin"]
+                gem = D.USERINIT["gem"]
+                honorPoint = D.USERINIT["honorPoint"]
+                arena5v5Rank = D.USERINIT["arena5v5Rank"]
+                arena5v5Place = D.USERINIT["arena5v5Place"]
+                arenaOtherRank = D.USERINIT["arenaOtherRank"]
+                arenaOtherPlace = D.USERINIT["arenaOtherPlace"]
+                ####
+                heroList = escape.json_encode(D.USERINIT["heroList"])
+                soldierList = escape.json_encode(D.USERINIT["soldierList"])
+                formations = escape.json_encode(D.USERINIT["formations"])
+                items = escape.json_encode(D.USERINIT["items"])
+                headIconList = escape.json_encode(D.USERINIT["headIconList"])
+                titleList = escape.json_encode(D.USERINIT["titleList"])
+                achievement = escape.json_encode(D.USERINIT["achievement"])
+                playerConfig = escape.json_encode(D.USERINIT["playerConfig"])
+                buddyList = escape.json_encode(D.USERINIT["buddyList"])
+                playerStatusInfo = escape.json_encode(D.USERINIT["playerStatusInfo"])
+                annalNormal = escape.json_encode(D.USERINIT["annalNormal"])
+                annelCurrentGateNormal = escape.json_encode(D.USERINIT["annelCurrentGateNormal"])
+                annalHero = escape.json_encode(D.USERINIT["annalHero"])
+                annelCurrentGateHero = escape.json_encode(D.USERINIT["annelCurrentGateHero"])
+                annalEpic = escape.json_encode(D.USERINIT["annalEpic"])
+                dungeonAnnelHero = escape.json_encode(D.USERINIT["dungeonAnnelHero"])
+                dungeonAnnelEpic = escape.json_encode(D.USERINIT["dungeonAnnelEpic"])
+                dungeonAnnelGatesNormal = escape.json_encode(D.USERINIT["dungeonAnnelGatesNormal"])
+                dungeonAnnelGatesHero = escape.json_encode(D.USERINIT["dungeonAnnelGatesHero"])
+                dungeonAnnelGatesEpic = escape.json_encode(D.USERINIT["dungeonAnnelGatesEpic"])
+                jmails = escape.json_encode(D.USERINIT["jmails"])
 
-        query = """INSERT INTO core_user(hex, model, serial, user_id, channel_id, nickname, avat, "playerLevel",\
-                 "playerXp", goldcoin, gem, "honorPoint", "arena5v5Rank", "arena5v5Place", "arenaOtherRank",\
-                  "arenaOtherPlace", "heroList", "soldierList", formations, items, "headIconList", "titleList",\
-                   achievement, "playerConfig", "buddyList", "playerStatusInfo", "annalNormal", "annelCurrentGateNormal",\
-                   "annalHero", "annelCurrentGateHero", "annalEpic", "dungeonAnnelHero", "dungeonAnnelEpic",\
-                    "dungeonAnnelGatesNormal", "dungeonAnnelGatesHero", "dungeonAnnelGatesEpic", jmails, created,\
-                    modified) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,\
-                     %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"""
-        params = (ahex, model, serial, user_id, channel, nickname, avat, playerLevel, playerXp, goldcoin, gem, \
-                  honorPoint, arena5v5Rank, arena5v5Place, arenaOtherRank, arenaOtherPlace, heroList,
-                  soldierList, formations, items, headIconList, titleList, achievement, playerConfig,
-                  buddyList, playerStatusInfo, annalNormal, annelCurrentGateNormal, annalHero,
-                  annelCurrentGateHero, annalEpic, dungeonAnnelHero, dungeonAnnelEpic, dungeonAnnelGatesNormal,
-                  dungeonAnnelGatesHero, dungeonAnnelGatesEpic, jmails, int(time.time()), int(time.time()))
-        print query % params
-        for i in range(5):
+                query = """INSERT INTO core_user(hex, model, serial, user_id, channel_id, nickname, avat, "playerLevel",\
+                         "playerXp", goldcoin, gem, "honorPoint", "arena5v5Rank", "arena5v5Place", "arenaOtherRank",\
+                          "arenaOtherPlace", "heroList", "soldierList", formations, items, "headIconList", "titleList",\
+                           achievement, "playerConfig", "buddyList", "playerStatusInfo", "annalNormal", "annelCurrentGateNormal",\
+                           "annalHero", "annelCurrentGateHero", "annalEpic", "dungeonAnnelHero", "dungeonAnnelEpic",\
+                            "dungeonAnnelGatesNormal", "dungeonAnnelGatesHero", "dungeonAnnelGatesEpic", jmails, created,\
+                            modified) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,\
+                             %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"""
+                params = (ahex, model, serial, user_id, channel, nickname, avat, playerLevel, playerXp, goldcoin, gem, \
+                          honorPoint, arena5v5Rank, arena5v5Place, arenaOtherRank, arenaOtherPlace, heroList,
+                          soldierList, formations, items, headIconList, titleList, achievement, playerConfig,
+                          buddyList, playerStatusInfo, annalNormal, annelCurrentGateNormal, annalHero,
+                          annelCurrentGateHero, annalEpic, dungeonAnnelHero, dungeonAnnelEpic, dungeonAnnelGatesNormal,
+                          dungeonAnnelGatesHero, dungeonAnnelGatesEpic, jmails, int(time.time()), int(time.time()))
+                print query % params
+                for i in range(5):
 
-            try:
-                res = yield self.sql.runQuery(query, params)
-                aid = res[0][0]
-                idcard = '%sh%s' % (ahex, aid)
-                break
-            except storage.IntegrityError:
-                log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
-                continue
+                    try:
+                        res = yield self.sql.runQuery(query, params)
+                        aid = res[0][0]
+                        idcard = '%sh%s' % (ahex, aid)
+                        break
+                    except storage.IntegrityError:
+                        log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
+                        continue
 
         defer.returnValue(idcard)
 
