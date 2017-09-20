@@ -59,10 +59,8 @@ class GetHandler(ApiHandler):
         # // "resource":500,
         # // "resourceLimit":1000,
         # // "resourceGrowSpeed":1,
-
-        res = yield self.sql.runQuery(
-            "SELECT playerLevel, avat, nickname, formations FROM core_user WHERE user_id=%s LIMIT 1",
-            (user_id,))
+        query = """SELECT "playerLevel", avat, nickname, formations FROM core_user WHERE user_id=%s LIMIT 1"""
+        res = yield self.sql.runQuery(query, (user_id,))
         if res:
             playerLevel, avat, nickname, heros1P = res[0]
         else:
@@ -152,6 +150,6 @@ class SetHandler(ApiHandler):
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
-        #ret = dict(timestamp=int(time.time()), data=data)
-        #reb = zlib.compress(escape.json_encode(ret))
+        # ret = dict(timestamp=int(time.time()), data=data)
+        # reb = zlib.compress(escape.json_encode(ret))
         self.write(data)
