@@ -19,6 +19,7 @@ from local_settings import ZONE_ID
 
 @handler
 class GetHandler(ApiHandler):
+    @utils.token
     @storage.databaseSafe
     @defer.inlineCallbacks
     # @utils.signed
@@ -43,22 +44,6 @@ class GetHandler(ApiHandler):
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
 
-        # // "battleId":"id20170608_023_65678",
-        # // "rs1":456897635,
-        # // "rs2":12345,
-        # // "rs3":98765,
-        # // "is1PLeft":false,
-        #
-        # // "name_1P":"我要霸占你你秀发",
-        # // "name_2P":"浅时光Bonns",
-        # // "level_1P":23,
-        # // "level_2P":35,
-        # // "icon_1P":301,
-        # // "icon_2P":401,
-        #
-        # // "resource":500,
-        # // "resourceLimit":1000,
-        # // "resourceGrowSpeed":1,
         query = """SELECT "playerLevel", avat, nickname, formations FROM core_user WHERE user_id=%s LIMIT 1"""
         res = yield self.sql.runQuery(query, (user_id,))
         if res:
@@ -92,6 +77,7 @@ class GetHandler(ApiHandler):
 
 @handler
 class SetHandler(ApiHandler):
+    @utils.token
     @storage.databaseSafe
     @defer.inlineCallbacks
     # @utils.signed
