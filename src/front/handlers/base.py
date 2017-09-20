@@ -163,12 +163,13 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                           buddyList, playerStatusInfo, annalNormal, annelCurrentGateNormal, annalHero,
                           annelCurrentGateHero, annalEpic, dungeonAnnelHero, dungeonAnnelEpic, dungeonAnnelGatesNormal,
                           dungeonAnnelGatesHero, dungeonAnnelGatesEpic, jmails, int(time.time()), int(time.time()))
-                print query, params
-                # print query % params
+                #print query, params
+                print query % params
                 for i in range(5):
 
                     try:
                         res = yield self.sql.runQuery(query, params)
+                        print 'res', res
                         aid = res[0][0]
                         idcard = '%sh%s' % (ahex, aid)
                         break
