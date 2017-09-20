@@ -134,27 +134,28 @@ class ActiveHandler(ApiHandler):
                          arena5v5Place=arena5v5Place,
                          arenaOtherRank=arenaOtherRank,
                          arenaOtherPlace=arenaOtherPlace,
-                         heroList=heroList,
-                         soldierList=soldierList,
-                         formations=formations,
-                         items=items,
-                         headIconList=headIconList,
-                         titleList=titleList,
-                         achievement=achievement,
-                         playerConfig=playerConfig,
-                         buddyList=buddyList,
-                         playerStatusInfo=playerStatusInfo,
-                         jmails=jmails,
-                         annalNormal=annalNormal,
-                         annelCurrentGateNormal=annelCurrentGateNormal,
-                         annalHero=annalHero,
-                         annelCurrentGateHero=annelCurrentGateHero,
-                         annalEpic=annalEpic,
-                         dungeonAnnelHero=dungeonAnnelHero,
-                         dungeonAnnelEpic=dungeonAnnelEpic,
-                         dungeonAnnelGatesNormal=dungeonAnnelGatesNormal,
-                         dungeonAnnelGatesHero=dungeonAnnelGatesHero,
-                         dungeonAnnelGatesEpic=dungeonAnnelGatesEpic)
+                         heroList=escape.json_decode(heroList),
+                         soldierList=escape.json_decode(soldierList),
+                         formations=escape.json_decode(formations),
+                         items=escape.json_decode(items),
+                         headIconList=escape.json_decode(headIconList),
+                         titleList=escape.json_decode(titleList),
+                         achievement=escape.json_decode(achievement),
+                         playerConfig=escape.json_decode(playerConfig),
+                         buddyList=escape.json_decode(buddyList),
+                         playerStatusInfo=escape.json_decode(playerStatusInfo),
+                         jmails=escape.json_decode(jmails),
+                         annalNormal=escape.json_decode(annalNormal),
+                         annelCurrentGateNormal=escape.json_decode(annelCurrentGateNormal),
+                         annalHero=escape.json_decode(annalHero),
+                         annelCurrentGateHero=escape.json_decode(annelCurrentGateHero),
+                         annalEpic=escape.json_decode(annalEpic),
+                         dungeonAnnelHero=escape.json_decode(dungeonAnnelHero),
+                         dungeonAnnelEpic=escape.json_decode(dungeonAnnelEpic),
+                         dungeonAnnelGatesNormal=escape.json_decode(dungeonAnnelGatesNormal),
+                         dungeonAnnelGatesHero=escape.json_decode(dungeonAnnelGatesHero),
+                         dungeonAnnelGatesEpic=escape.json_decode(dungeonAnnelGatesEpic),
+                         )
         # try:
         #     sign = yield self.generate_sign(idcard=idcard, zone=zone)
         # except E.USERNOTFOUND:
@@ -171,8 +172,8 @@ class ActiveHandler(ApiHandler):
         #     return
         # print 'sign', sign
         #ret = dict(users=users)
-        #reb = zlib.compress(escape.json_encode(ret))
-        self.write(users)
+        reb = zlib.compress(escape.json_encode(users))
+        self.write(reb)
 
 
 # @handler
