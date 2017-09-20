@@ -163,7 +163,7 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                           buddyList, playerStatusInfo, annalNormal, annelCurrentGateNormal, annalHero,
                           annelCurrentGateHero, annalEpic, dungeonAnnelHero, dungeonAnnelEpic, dungeonAnnelGatesNormal,
                           dungeonAnnelGatesHero, dungeonAnnelGatesEpic, jmails, int(time.time()), int(time.time()))
-                print query % params
+                #print query % params
                 for i in range(5):
 
                     try:
