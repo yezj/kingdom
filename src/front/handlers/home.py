@@ -71,6 +71,14 @@ class StartupHandler(ApiHandler):
             return
 
         idcard = yield self.refresh_idcard(idcard, model, serial, channel, access_token, user_id)
+        if not idcard:
+            self.write(dict(err=E.ERR_USER_CREATED, msg=E.errmsg(E.ERR_USER_CREATED)))
+            return
+        else:
+            record = yield self.predis.get('zone:%s:%s' % (ZONE_ID, user_id))
+            if not record:
+                yield self.predis.set('zone:%s:%s' % (ZONE_ID, user_id), idcard)
+                #yield self.bind_token(idcard, self.arg('access_token'))
         # if self.has_arg('access_token'):
         #     record = yield self.predis.get('zone:%s:%s' % (ZONE_ID, self.arg('access_token')))
         #     if not record:

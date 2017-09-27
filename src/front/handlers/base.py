@@ -107,7 +107,7 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                     log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
                     continue
 
-        if not idcard:
+        else:
             res = yield self.sql.runQuery("SELECT hex, id FROM core_user WHERE user_id=%s LIMIT 1",
                                           (user_id,))
             if res:
