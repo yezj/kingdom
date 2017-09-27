@@ -37,7 +37,7 @@ class StartupHandler(ApiHandler):
     @storage.databaseSafe
     @defer.inlineCallbacks
     @api('Startup', '/startup/', [
-        Param('channel', False, str, 'putaogame', 'putaogame', 'channel'),
+        Param('channel', False, str, 'test1', 'test1', 'channel'),
         Param('model', True, str, 'bigfish@hi3798mv100', 'bigfish@hi3798mv100', 'model'),
         Param('serial', True, str, '0066cf0456732122121', '0066cf0456732122121', 'serial'),
         Param('idcard', False, str, None, None, 'idcard'),
@@ -50,7 +50,7 @@ class StartupHandler(ApiHandler):
             model = self.get_argument("model")
             serial = self.get_argument("serial")
             idcard = self.get_argument("idcard", None)
-            channel = self.get_argument("channel", "putaogame")
+            channel = self.get_argument("channel", "test1")
             user_id = self.get_argument("user_id")
             access_token = self.get_argument("access_token")
         except Exception:
@@ -58,7 +58,7 @@ class StartupHandler(ApiHandler):
 
         channels = yield self.sql.runQuery("SELECT id FROM core_channel WHERE slug=%s LIMIT 1", (channel,))
         if not channels:
-            channels = yield self.sql.runQuery("SELECT id FROM core_channel WHERE slug=%s LIMIT 1", ("putaogame",))
+            channels = yield self.sql.runQuery("SELECT id FROM core_channel WHERE slug=%s LIMIT 1", ("test1",))
         channel, = channels[0]
         try:
             # server = {domain:..., notice: ...}
@@ -96,7 +96,7 @@ class ActiveHandler(ApiHandler):
     @storage.databaseSafe
     @defer.inlineCallbacks
     @api('Active', '/active/', [
-        Param('channel', False, str, 'putaogame', 'putaogame', 'channel'),
+        Param('channel', False, str, 'test1', 'test1', 'channel'),
         Param('idcard', True, str, '864c04bf73a445fd84da86a206060c48h20', '864c04bf73a445fd84da86a206060c48h20',
               'idcard'),
         Param('user_id', False, str, '1', '1', 'user_id'),
@@ -106,7 +106,7 @@ class ActiveHandler(ApiHandler):
     ], filters=[ps_filter], description="Active")
     def get(self):
         try:
-            channel = self.get_argument("channel", "putaogame")
+            channel = self.get_argument("channel", "test1")
             idcard = self.get_argument("idcard")
             zone = self.get_argument("zone")
         except Exception:

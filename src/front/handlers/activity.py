@@ -21,12 +21,12 @@ class GetHandler(ApiHandler):
     @defer.inlineCallbacks
     @utils.signed
     @api('Activity get', '/activity/get/', [
-        Param('channel', False, str, 'putaogame', 'putaogame', 'channel'),
+        Param('channel', False, str, 'test1', 'test1', 'channel'),
         Param('_sign', True, str, '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK', '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK', '_sign'),
         ], filters=[ps_filter], description="Activity get")
     def post(self):
         try:
-            channel = self.get_argument("channel", "putaogame")
+            channel = self.get_argument("channel", "test1")
         except Exception:
             raise web.HTTPError(400, "Argument error")
         uid = self.uid
@@ -149,7 +149,7 @@ class InpourHandler(ApiHandler):
     @defer.inlineCallbacks
     @utils.signed
     @api('Activity inpour', '/activity/inpour/', [
-        Param('channel', False, str, 'putaogame', 'putaogame', 'channel'),
+        Param('channel', False, str, 'test1', 'test1', 'channel'),
         Param('aid', True, str, '80001', '80001', 'aid'),
         Param('rid', True, str, '80001', '80001', 'rid'),
         Param('_sign', True, str, '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK', '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK', '_sign'),
@@ -166,7 +166,7 @@ class InpourHandler(ApiHandler):
         try:
             bid = self.get_argument("aid")
             rid = self.get_argument("rid")
-            channel = self.get_argument("channel", "putaogame")
+            channel = self.get_argument("channel", "test1")
         except Exception:
             raise web.HTTPError(400, "Argument error")
 
@@ -228,7 +228,7 @@ class ZhangfeiHandler(ApiHandler):
     @defer.inlineCallbacks
     @utils.signed
     @api('Activity zhangfei', '/activity/zhangfei/', [
-        Param('channel', False, str, 'putaogame', 'putaogame', 'channel'),
+        Param('channel', False, str, 'test1', 'test1', 'channel'),
         Param('aid', True, str, '80001', '80001', 'aid'),
         Param('_sign', True, str, '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK', '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK', '_sign'),
         ], filters=[ps_filter], description="Activity zhangfei")
@@ -243,7 +243,7 @@ class ZhangfeiHandler(ApiHandler):
                 return
         try:
             bid = self.get_argument("aid")
-            channel = self.get_argument("channel", "putaogame")
+            channel = self.get_argument("channel", "test1")
         except Exception:
             raise web.HTTPError(400, "Argument error")
 
