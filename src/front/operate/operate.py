@@ -9,7 +9,7 @@ from front.utils import E
 from front.wiapi import *
 from front.handlers.base import ApiHandler, ApiJSONEncoder
 
-@handler
+
 class AccountHandler(ApiHandler):
 
     @storage.databaseSafe
