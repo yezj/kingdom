@@ -84,7 +84,7 @@ class SetHandler(ApiHandler):
         IS_EXISTED = True
         if res:
             formations, = res[0]
-            #formations = escape.json_decode(formations)
+            formations = escape.json_decode(formations)
             print escape.json_decode(formations)
             print escape.json_encode(formations)
             #import pdb
@@ -101,7 +101,7 @@ class SetHandler(ApiHandler):
             #     formations.append(escape.json_encode(dict(slotId=slotId, formation=formation)))
 
             print 'formations', formations
-            print escape.json_encode(dict(slotId=slotId, formation=formation))
+            #print escape.json_encode(dict(slotId=slotId, formation=formation))
 
             # query = "UPDATE core_user SET formations=%s WHERE hex=%s and id=%s"
             # params = (escape.json_encode(formations), ahex, aid)
