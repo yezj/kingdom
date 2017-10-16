@@ -81,12 +81,20 @@ class SetHandler(ApiHandler):
         query = """SELECT formations FROM core_user WHERE hex=%s and id=%s LIMIT 1"""
         params = (ahex, aid)
         res = yield self.sql.runQuery(query, params)
+        IS_EXISTED = True
         if res:
             formations, = res[0]
             formations = escape.json_decode(formations)
+            for one, index in enumerate(formations):
+                if int(one['slotId']) == int(slotId):
+                    formations[index] = escape.json_encode(dict(slotId=slotId, formation=formation))
+                    IS_EXISTED = False
+            if IS_EXISTED:
+                formations.append(escape.json_encode(dict(slotId=slotId, formation=formation)))
+
             print 'formations', formations
-            print escape.json_decode(dict(slotId=slotId, formation=formation))
-            formations.update(dict(slotId=slotId, formation=formation))
+            print escape.json_encode(dict(slotId=slotId, formation=formation))
+
             query = "UPDATE core_user SET formations=%s WHERE hex=%s and id=%s"
             params = (escape.json_encode(formations), ahex, aid)
             for i in range(5):
