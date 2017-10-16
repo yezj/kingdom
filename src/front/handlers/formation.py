@@ -83,9 +83,12 @@ class SetHandler(ApiHandler):
         res = yield self.sql.runQuery(query, params)
         if res:
             formations, = res[0]
+            formations = escape.json_decode(formations)
+            print 'formations', formations
+            print dict(slotId=slotId, formation=formation)
             formations.update(dict(slotId=slotId, formation=formation))
             query = "UPDATE core_user SET formations=%s WHERE hex=%s and id=%s"
-            params = (escape.json_encode(formations), ahex, aid)
+            params = (formations, ahex, aid)
             for i in range(5):
                 try:
                     yield self.sql.runOperation(query, params)
