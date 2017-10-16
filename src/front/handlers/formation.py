@@ -34,7 +34,8 @@ class GetHandler(ApiHandler):
         try:
             idcard = self.get_argument("idcard")
         except Exception:
-            raise web.HTTPError(400, "Argument error")
+            self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
+            return
         if idcard:
             ahex, aid = idcard.split('h', 1)
             query = """SELECT formations FROM core_user WHERE hex=%s and id=%s LIMIT 1"""
@@ -48,7 +49,8 @@ class GetHandler(ApiHandler):
             users = dict(formations=escape.json_decode(formations))
             self.write(users)
         else:
-            raise web.HTTPError(400, "Argument error")
+            self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
+            return
 
 
 @handler
@@ -73,7 +75,8 @@ class SetHandler(ApiHandler):
             slotId = self.get_argument("slotId")
             formation = self.get_argument("formation")
         except Exception:
-            raise web.HTTPError(400, "Argument error")
+            self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
+            return
         ahex, aid = idcard.split('h', 1)
         query = """SELECT formations FROM core_user WHERE hex=%s and id=%s LIMIT 1"""
         params = (ahex, aid)
@@ -94,4 +97,5 @@ class SetHandler(ApiHandler):
             # reb = zlib.compress(escape.json_encode(ret))
             self.write(formations)
         else:
-            raise web.HTTPError(400, "Argument error")
+            self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
+            return
