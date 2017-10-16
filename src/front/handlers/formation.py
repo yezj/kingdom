@@ -87,7 +87,7 @@ class SetHandler(ApiHandler):
             formations = escape.json_decode(formations)
             for index, one in enumerate(formations):
                 if int(one['slotId']) == int(slotId):
-                    formations[index] = escape.json_encode(dict(slotId=slotId, formation=formation))
+                    formations[index] = dict(slotId=slotId, formation=formation)
                     IS_EXISTED = False
             if IS_EXISTED:
                 formations.append(escape.json_encode(dict(slotId=slotId, formation=formation)))
