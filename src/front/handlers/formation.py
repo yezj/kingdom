@@ -84,12 +84,12 @@ class SetHandler(ApiHandler):
         IS_EXISTED = True
         if res:
             formations, = res[0]
-            import json
-            formations = json.loads(formations)
-            print 'formations', formations
+            formations = escape.json_decode(formations)
+            print escape.json_decode(formations)
+            print escape.json_encode(formations)
             #import pdb
             #pdb.set_trace()
-
+            import json
             for index, one in enumerate(formations):
                 print index, one, json.loads(one)
                 print one["slotId"] == int(slotId)
