@@ -99,15 +99,15 @@ class SetHandler(ApiHandler):
             print 'formations', formations
             print escape.json_encode(dict(slotId=slotId, formation=formation))
 
-            query = "UPDATE core_user SET formations=%s WHERE hex=%s and id=%s"
-            params = (escape.json_encode(formations), ahex, aid)
-            for i in range(5):
-                try:
-                    yield self.sql.runOperation(query, params)
-                    break
-                except storage.IntegrityError:
-                    log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
-                    continue
+            # query = "UPDATE core_user SET formations=%s WHERE hex=%s and id=%s"
+            # params = (escape.json_encode(formations), ahex, aid)
+            # for i in range(5):
+            #     try:
+            #         yield self.sql.runOperation(query, params)
+            #         break
+            #     except storage.IntegrityError:
+            #         log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
+            #         continue
             # ret = dict(timestamp=int(time.time()))
             # reb = zlib.compress(escape.json_encode(ret))
             self.write(formations)
