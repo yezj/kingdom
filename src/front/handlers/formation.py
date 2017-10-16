@@ -85,13 +85,13 @@ class SetHandler(ApiHandler):
         if res:
             formations, = res[0]
             #formations = escape.json_decode(formations)
-            #print escape.json_decode(formations)
+            print escape.json_decode(formations)
             print escape.json_encode(formations)
             #import pdb
             #pdb.set_trace()
             import json
             for index, one in enumerate(formations):
-                print index, one, json.loads(one)
+                print index, one
                 print one["slotId"] == int(slotId)
                 if int(one["slotId"]) == int(slotId):
                     formations[index] = dict(slotId=slotId, formation=formation)
