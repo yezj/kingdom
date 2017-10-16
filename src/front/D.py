@@ -114,6 +114,7 @@ USERINIT = {
     "arena5v5Place": 0,
     "arenaOtherRank": 0,
     "arenaOtherPlace": 0,
+    "unlockSlotNum": 0,
     "heroList": [
         {
             "id": 101,
@@ -186,75 +187,75 @@ USERINIT = {
     ],
 
     "formations": [
-        {
-            "slotId": 0,
-            "formation": [
-                {
-                    "heroId": 101,
-                    "soldierId": 3,
-                    "heroSkillIndex": 0
-                },
-                {
-                    "heroId": 102,
-                    "soldierId": 1,
-                    "heroSkillIndex": 2
-                },
-                {
-                    "heroId": 103,
-                    "soldierId": 7,
-                    "heroSkillIndex": 0
-                },
-                {
-                    "heroId": 104,
-                    "soldierId": 4,
-                    "heroSkillIndex": 0
-                },
-                {
-                    "heroId": 105,
-                    "soldierId": 3,
-                    "heroSkillIndex": 1
-                }
-            ]
-        },
-        {
-            "slotId": 2,
-            "formation": [
-                {
-                    "heroId": 101,
-                    "soldierId": 3,
-                    "heroSkillIndex": 0
-                },
-                {
-                    "heroId": 102,
-                    "soldierId": 1,
-                    "heroSkillIndex": 2
-                },
-                {
-                    "heroId": 103,
-                    "soldierId": 7,
-                    "heroSkillIndex": 0
-                },
-                {
-                    "heroId": 104,
-                    "soldierId": 4,
-                    "heroSkillIndex": 0
-                },
-                {
-                    "heroId": 105,
-                    "soldierId": 3,
-                    "heroSkillIndex": 1
-                }
-            ]
-        },
-        {
-            "slotId": 1, "formation": []
-        },
-        {
-            "slotId": 3, "formation": []
-        },
-        {
-            "slotId": 5, "formation": []
-        }
+        # {
+        #     "slotId": 0,
+        #     "formation": [
+        #         {
+        #             "heroId": 101,
+        #             "soldierId": 3,
+        #             "heroSkillIndex": 0
+        #         },
+        #         {
+        #             "heroId": 102,
+        #             "soldierId": 1,
+        #             "heroSkillIndex": 2
+        #         },
+        #         {
+        #             "heroId": 103,
+        #             "soldierId": 7,
+        #             "heroSkillIndex": 0
+        #         },
+        #         {
+        #             "heroId": 104,
+        #             "soldierId": 4,
+        #             "heroSkillIndex": 0
+        #         },
+        #         {
+        #             "heroId": 105,
+        #             "soldierId": 3,
+        #             "heroSkillIndex": 1
+        #         }
+        #     ]
+        # },
+        # {
+        #     "slotId": 2,
+        #     "formation": [
+        #         {
+        #             "heroId": 101,
+        #             "soldierId": 3,
+        #             "heroSkillIndex": 0
+        #         },
+        #         {
+        #             "heroId": 102,
+        #             "soldierId": 1,
+        #             "heroSkillIndex": 2
+        #         },
+        #         {
+        #             "heroId": 103,
+        #             "soldierId": 7,
+        #             "heroSkillIndex": 0
+        #         },
+        #         {
+        #             "heroId": 104,
+        #             "soldierId": 4,
+        #             "heroSkillIndex": 0
+        #         },
+        #         {
+        #             "heroId": 105,
+        #             "soldierId": 3,
+        #             "heroSkillIndex": 1
+        #         }
+        #     ]
+        # },
+        # {
+        #     "slotId": 1, "formation": []
+        # },
+        # {
+        #     "slotId": 3, "formation": []
+        # },
+        # {
+        #     "slotId": 5, "formation": []
+        # }
     ],
 
     "items": [
