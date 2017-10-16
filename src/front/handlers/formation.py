@@ -83,7 +83,7 @@ class SetHandler(ApiHandler):
         res = yield self.sql.runQuery(query, params)
         if res:
             formations, = res[0]
-            formations = escape.json_decode(formations)
+            formations = escape.json_encode(formations)
             print 'formations', formations
             print dict(slotId=slotId, formation=formation)
             formations.update(dict(slotId=slotId, formation=formation))
