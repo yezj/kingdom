@@ -85,6 +85,8 @@ class SetHandler(ApiHandler):
         if res:
             formations, = res[0]
             formations = escape.json_decode(formations)
+            import pdb
+            pdb.set_trace()
             for index, one in enumerate(formations):
                 #print index, escape.json_decode(one)["slotId"], int(slotId)
                 print int(escape.json_decode(one)["slotId"]) == int(slotId)
