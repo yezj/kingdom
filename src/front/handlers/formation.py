@@ -26,8 +26,8 @@ class GetHandler(ApiHandler):
     @api('Fromation get', '/fromation/get/', [
         Param('idcard', True, str, '864c04bf73a445fd84da86a206060c48h20', '864c04bf73a445fd84da86a206060c48h20',
               'idcard'),
-        Param('user_id', False, str, '1', '1', 'user_id'),
-        Param('access_token', False, str, '55526fcb39ad4e0323d32837021655300f957edc',
+        Param('user_id', True, str, '1', '1', 'user_id'),
+        Param('access_token', True, str, '55526fcb39ad4e0323d32837021655300f957edc',
               '55526fcb39ad4e0323d32837021655300f957edc', 'access_token'),
     ], filters=[ps_filter], description="Fromation get")
     def get(self):
@@ -60,11 +60,11 @@ class SetHandler(ApiHandler):
     @api('Fromation set', '/fromation/set/', [
         Param('idcard', True, str, '864c04bf73a445fd84da86a206060c48h20', '864c04bf73a445fd84da86a206060c48h20',
               'idcard'),
-        Param('user_id', False, str, '1', '1', 'user_id'),
-        Param('access_token', False, str, '55526fcb39ad4e0323d32837021655300f957edc',
+        Param('user_id', True, str, '1', '1', 'user_id'),
+        Param('access_token', True, str, '55526fcb39ad4e0323d32837021655300f957edc',
               '55526fcb39ad4e0323d32837021655300f957edc', 'access_token'),
-        Param('slotId', False, int, 0, 0, 'slotId'),
-        Param('formation', False, str, '[]', '[]', 'formation'),
+        Param('slotId', True, int, 0, 0, 'slotId'),
+        Param('formation', True, str, '[]', '[]', 'formation'),
     ], filters=[ps_filter], description="Fromation set")
     def get(self):
 
