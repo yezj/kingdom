@@ -84,8 +84,8 @@ class SetHandler(ApiHandler):
         IS_EXISTED = True
         if res:
             formations, = res[0]
-            formations = escape.json_decode(formations)
-            print escape.json_decode(formations)
+            #formations = escape.json_decode(formations)
+            #print escape.json_decode(formations)
             print escape.json_encode(formations)
             #import pdb
             #pdb.set_trace()
