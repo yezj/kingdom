@@ -46,7 +46,7 @@ class GetHandler(ApiHandler):
                 heroList, = res[0]
                 heroList = escape.json_decode(heroList)
                 for index, one in enumerate(heroList):
-                    if len(one["level"]) != 0:
+                    if one["level"] != 0:
                         out.append(one)
             else:
                 self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
