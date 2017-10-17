@@ -36,6 +36,7 @@ class GetHandler(ApiHandler):
         except Exception:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
+        out = []
         if idcard:
             ahex, aid = idcard.split('h', 1)
             query = """SELECT formations FROM core_user WHERE hex=%s and id=%s LIMIT 1"""
@@ -43,10 +44,14 @@ class GetHandler(ApiHandler):
             res = yield self.sql.runQuery(query, params)
             if res:
                 formations, = res[0]
+                formations = escape.json_decode(formations)
+                for index, one in enumerate(formations):
+                    if len(one["formation"]) != 0:
+                        out.append(one)
             else:
                 self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
                 return
-            users = dict(formations=escape.json_decode(formations))
+            users = dict(formations=escape.json_decode(out))
             self.write(users)
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
