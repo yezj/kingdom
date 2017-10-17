@@ -96,7 +96,7 @@ class SetHandler(ApiHandler):
                         formations[index] = dict(slotId=int(slotId), formation=formation)
                     IS_EXISTED = False
             print formations
-            if IS_EXISTED and len(formation) == 0:
+            if IS_EXISTED and len(formation) != 0:
                 formations.append(dict(slotId=int(slotId), formation=formation))
 
             print 'formations', formations
