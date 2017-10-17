@@ -77,7 +77,7 @@ class SetHandler(ApiHandler):
         except Exception:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
-        print 'formation', formation
+        formation = escape.json_decode(formation)
         ahex, aid = idcard.split('h', 1)
         query = """SELECT formations FROM core_user WHERE hex=%s and id=%s LIMIT 1"""
         params = (ahex, aid)
@@ -90,14 +90,17 @@ class SetHandler(ApiHandler):
                 print index, one
                 print one["slotId"] == int(slotId)
                 if int(one["slotId"]) == int(slotId):
-                    formations[index] = dict(slotId=int(slotId), formation=escape.json_decode(formation))
+                    if len(formation) == 0:
+                        del formations[index]
+                    else:
+                        formations[index] = dict(slotId=int(slotId), formation=formation)
                     IS_EXISTED = False
             print formations
-            if IS_EXISTED:
-                formations.append(dict(slotId=int(slotId), formation=escape.json_decode(formation)))
+            if IS_EXISTED and len(formation) == 0:
+                formations.append(dict(slotId=int(slotId), formation=formation))
 
             print 'formations', formations
-            #print escape.json_encode(dict(slotId=slotId, formation=formation))
+            # print escape.json_encode(dict(slotId=slotId, formation=formation))
 
             query = "UPDATE core_user SET formations=%s WHERE hex=%s and id=%s"
             params = (escape.json_encode(formations), ahex, aid)
@@ -108,8 +111,8 @@ class SetHandler(ApiHandler):
                 except storage.IntegrityError:
                     log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
                     continue
-            #ret = dict(timestamp=int(time.time()))
-            #reb = zlib.compress(escape.json_encode(ret))
+            # ret = dict(timestamp=int(time.time()))
+            # reb = zlib.compress(escape.json_encode(ret))
             self.write(formations)
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
