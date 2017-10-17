@@ -51,7 +51,7 @@ class GetHandler(ApiHandler):
             else:
                 self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
                 return
-            users = dict(formations=escape.json_decode(out))
+            users = dict(formations=out)
             self.write(users)
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
