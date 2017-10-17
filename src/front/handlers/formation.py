@@ -77,6 +77,7 @@ class SetHandler(ApiHandler):
         except Exception:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
+        print 'formation', formation
         ahex, aid = idcard.split('h', 1)
         query = """SELECT formations FROM core_user WHERE hex=%s and id=%s LIMIT 1"""
         params = (ahex, aid)
