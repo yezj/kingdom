@@ -142,6 +142,7 @@ class ActiveHandler(ApiHandler):
                          arena5v5Place=arena5v5Place,
                          arenaOtherRank=arenaOtherRank,
                          arenaOtherPlace=arenaOtherPlace,
+                         unlockSlotNum=0,
                          heroList=escape.json_decode(heroList),
                          soldierList=escape.json_decode(soldierList),
                          formations=escape.json_decode(formations),
