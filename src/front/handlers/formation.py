@@ -91,7 +91,7 @@ class SetHandler(ApiHandler):
                 print one["slotId"] == int(slotId)
                 if int(one["slotId"]) == int(slotId):
                     formations[index] = dict(slotId=int(slotId), formation=escape.json_decode(formation))
-                    #IS_EXISTED = False
+                    IS_EXISTED = False
             print formations
             if IS_EXISTED:
                 formations.append(dict(slotId=int(slotId), formation=escape.json_decode(formation)))
