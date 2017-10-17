@@ -118,7 +118,7 @@ class SetHandler(ApiHandler):
                     continue
             # ret = dict(timestamp=int(time.time()))
             # reb = zlib.compress(escape.json_encode(ret))
-            self.write(formations)
+            self.write(dict(formations=formations))
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
