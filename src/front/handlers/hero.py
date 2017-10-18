@@ -163,8 +163,8 @@ class SetHandler(ApiHandler):
                     continue
             # ret = dict(timestamp=int(time.time()))
             # reb = zlib.compress(escape.json_encode(ret))
-            for index, one in enumerate(heroList):
-                hero_list.append(one.pop("unlock"))
+            for index, one in enumerate(hero_list):
+                one.pop("unlock")
             self.write(dict(heroList=hero_list))
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
