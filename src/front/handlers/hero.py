@@ -141,8 +141,8 @@ class SetHandler(ApiHandler):
                                          goldSkin=0,
                                          unlock=1, star=0,
                                          grade=0,
-                                         skillLevel=[],
-                                         talent=[])
+                                         skillLevel=[2, 3],
+                                         talent=[2, 3])
                                 )
 
             for index, one in enumerate(heroList):
