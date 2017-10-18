@@ -65,60 +65,80 @@ class SetHandler(ApiHandler):
     @defer.inlineCallbacks
     # @utils.signed
     @api('Hero set', '/hero/set/', [
+        Param('id', True, str, '1', '1', 'id'),
+        Param('level', False, str, '1', '1', 'level'),
+        Param('xp', False, str, '0', '0', 'xp'),
+        Param('goldSkin', False, int, 0, 0, 'goldSkin'),
+        Param('unlock', False, int, 0, 0, 'unlock'),
+        Param('star', False, int, 0, 0, 'star'),
+        Param('grade', False, int, 0, 0, 'grade'),
+        Param('skillLevel', False, str, '[7,3,1]', '[7,3,1]', 'skillLevel'),
+        Param('talent', False, str, '[0,2,1,2]', '[0,2,1,2]', 'talent'),
         Param('idcard', True, str, '864c04bf73a445fd84da86a206060c48h20', '864c04bf73a445fd84da86a206060c48h20',
               'idcard'),
         Param('user_id', True, str, '1', '1', 'user_id'),
         Param('access_token', True, str, '55526fcb39ad4e0323d32837021655300f957edc',
               '55526fcb39ad4e0323d32837021655300f957edc', 'access_token'),
-        Param('slotId', True, int, 0, 0, 'slotId'),
-        Param('formation', True, str, '[]', '[]', 'formation'),
     ], filters=[ps_filter], description="Hero set")
     def get(self):
-
         try:
+            id = self.get_argument("id")
+            level = self.get_argument("level", None)
+            xp = self.get_argument("xp", None)
+            goldSkin = self.get_argument("goldSkin", None)
+            unlock = self.get_argument("unlock", None)
+            star = self.get_argument("star", None)
+            grade = self.get_argument("grade", None)
+            skillLevel = self.get_argument("skillLevel", None)
+            talent = self.get_argument("talent", None)
             idcard = self.get_argument("idcard")
-            slotId = self.get_argument("slotId")
-            formation = self.get_argument("formation")
         except Exception:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
-        formation = escape.json_decode(formation)
+
         ahex, aid = idcard.split('h', 1)
-        query = """SELECT formations FROM core_user WHERE hex=%s and id=%s LIMIT 1"""
+        query = """SELECT "heroList" FROM core_user WHERE hex=%s and id=%s LIMIT 1"""
         params = (ahex, aid)
         res = yield self.sql.runQuery(query, params)
-        IS_EXISTED = True
         if res:
-            formations, = res[0]
-            formations = escape.json_decode(formations)
-            for index, one in enumerate(formations):
+            heros = {}
+            if level:
+                heros.update(dict(level=level))
+            if xp:
+                heros.update(dict(xp=xp))
+            if goldSkin:
+                heros.update(dict(goldSkin=goldSkin))
+            if unlock:
+                heros.update(dict(unlock=unlock))
+            if star:
+                heros.update(dict(star=star))
+            if grade:
+                heros.update(dict(grade=grade))
+            if skillLevel:
+                heros.update(dict(skillLevel=skillLevel))
+            if talent:
+                heros.update(dict(talent=talent))
+
+            print 'heros', heros
+            heroList, = res[0]
+            heroList = escape.json_decode(heroList)
+            for index, one in enumerate(heroList):
                 print index, one
-                print one["slotId"] == int(slotId)
-                if int(one["slotId"]) == int(slotId):
-                    if len(formation) == 0:
-                        del formations[index]
-                    else:
-                        formations[index] = dict(slotId=int(slotId), formation=formation)
-                    IS_EXISTED = False
-            print formations
-            if IS_EXISTED and len(formation) != 0:
-                formations.append(dict(slotId=int(slotId), formation=formation))
+                if int(one["id"]) == int(id):
+                    heroList[index].update(heros)
 
-            print 'formations', formations
-            # print escape.json_encode(dict(slotId=slotId, formation=formation))
-
-            query = "UPDATE core_user SET formations=%s WHERE hex=%s and id=%s"
-            params = (escape.json_encode(formations), ahex, aid)
-            for i in range(5):
-                try:
-                    yield self.sql.runOperation(query, params)
-                    break
-                except storage.IntegrityError:
-                    log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
-                    continue
+            # query = """UPDATE core_user SET "heroList"=%s WHERE hex=%s and id=%s"""
+            # params = (escape.json_encode(heroList), ahex, aid)
+            # for i in range(5):
+            #     try:
+            #         yield self.sql.runOperation(query, params)
+            #         break
+            #     except storage.IntegrityError:
+            #         log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
+            #         continue
             # ret = dict(timestamp=int(time.time()))
             # reb = zlib.compress(escape.json_encode(ret))
-            self.write(dict(formations=formations))
+            self.write(dict(heroList=heroList))
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
