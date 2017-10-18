@@ -410,1062 +410,1062 @@ HEROS = [
     },
     {
         "id": "109",
-        "name": "曹仁",
+        "name": u"曹仁",
         "nation": "1",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "110",
-        "name": "徐晃",
+        "name": u"徐晃",
         "nation": "1",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "111",
-        "name": "张郃",
+        "name": u"张郃",
         "nation": "1",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "112",
-        "name": "夏侯渊",
+        "name": u"夏侯渊",
         "nation": "1",
         "grade": "3",
         "able": "1"
     },
     {
         "id": "113",
-        "name": "李典",
+        "name": u"李典",
         "nation": "1",
         "grade": "3",
         "able": "1"
     },
     {
         "id": "114",
-        "name": "贾诩",
+        "name": u"贾诩",
         "nation": "1",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "115",
-        "name": "徐庶",
+        "name": u"徐庶",
         "nation": "1",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "117",
-        "name": "许攸",
+        "name": u"许攸",
         "nation": "1",
         "able": "0"
     },
     {
         "id": "118",
-        "name": "曹丕",
+        "name": u"曹丕",
         "nation": "1",
         "able": "0"
     },
     {
         "id": "119",
-        "name": "司马师",
+        "name": u"司马师",
         "nation": "1",
         "able": "0"
     },
     {
         "id": "120",
-        "name": "司马昭",
+        "name": u"司马昭",
         "nation": "1",
         "able": "0"
     },
     {
         "id": "121",
-        "name": "曹洪",
+        "name": u"曹洪",
         "nation": "1",
         "able": "0"
     },
     {
         "id": "122",
-        "name": "曹彰",
+        "name": u"曹彰",
         "nation": "1",
         "able": "0"
     },
     {
         "id": "123",
-        "name": "杨修",
+        "name": u"杨修",
         "nation": "1",
         "able": "0"
     },
     {
         "id": "124",
-        "name": "曹植",
+        "name": u"曹植",
         "nation": "1",
         "able": "0"
     },
     {
         "id": "201",
-        "name": "刘备",
+        "name": u"刘备",
         "nation": "2",
         "grade": "5",
         "able": "1"
     },
     {
         "id": "202",
-        "name": "诸葛亮",
+        "name": u"诸葛亮",
         "nation": "2",
         "grade": "5",
         "able": "0"
     },
     {
         "id": "203",
-        "name": "关羽",
+        "name": u"关羽",
         "nation": "2",
         "grade": "5",
         "able": "1"
     },
     {
         "id": "204",
-        "name": "张飞",
+        "name": u"张飞",
         "nation": "2",
         "grade": "5",
         "able": "1"
     },
     {
         "id": "205",
-        "name": "赵云",
+        "name": u"赵云",
         "nation": "2",
         "grade": "5",
         "able": "0"
     },
     {
         "id": "206",
-        "name": "马超",
+        "name": u"马超",
         "nation": "2",
         "able": "0"
     },
     {
         "id": "207",
-        "name": "黄忠",
+        "name": u"黄忠",
         "nation": "2",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "208",
-        "name": "姜维",
+        "name": u"姜维",
         "nation": "2",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "209",
-        "name": "魏延",
+        "name": u"魏延",
         "nation": "2",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "210",
-        "name": "庞统",
+        "name": u"庞统",
         "nation": "2",
         "able": "0"
     },
     {
         "id": "211",
-        "name": "简雍",
+        "name": u"简雍",
         "nation": "2",
         "grade": "3",
         "able": "1"
     },
     {
         "id": "212",
-        "name": "孙乾",
+        "name": u"孙乾",
         "nation": "2",
         "grade": "3",
         "able": "1"
     },
     {
         "id": "212",
-        "name": "孙尚香",
+        "name": u"孙尚香",
         "nation": "2",
         "able": "0"
     },
     {
         "id": "213",
-        "name": "糜竺",
+        "name": u"糜竺",
         "nation": "2",
         "grade": "3",
         "able": "1"
     },
     {
         "id": "213",
-        "name": "关兴",
+        "name": u"关兴",
         "nation": "2",
         "able": "0"
     },
     {
         "id": "214",
-        "name": "邓艾",
+        "name": u"邓艾",
         "nation": "2",
         "able": "0"
     },
     {
         "id": "215",
-        "name": "糜芳",
+        "name": u"糜芳",
         "nation": "2",
         "able": "0"
     },
     {
         "id": "301",
-        "name": "孙权",
+        "name": u"孙权",
         "nation": "3",
         "grade": "5",
         "able": "0"
     },
     {
         "id": "302",
-        "name": "孙策",
+        "name": u"孙策",
         "nation": "3",
         "grade": "5",
         "able": "1"
     },
     {
         "id": "303",
-        "name": "孙坚",
+        "name": u"孙坚",
         "nation": "3",
         "grade": "5",
         "able": "0"
     },
     {
         "id": "304",
-        "name": "甘宁",
+        "name": u"甘宁",
         "nation": "3",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "305",
-        "name": "周瑜",
+        "name": u"周瑜",
         "nation": "3",
         "grade": "5",
         "able": "1"
     },
     {
         "id": "306",
-        "name": "陆逊",
+        "name": u"陆逊",
         "nation": "3",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "307",
-        "name": "黄盖",
+        "name": u"黄盖",
         "nation": "3",
         "grade": "3",
         "able": "1"
     },
     {
         "id": "308",
-        "name": "程普",
+        "name": u"程普",
         "nation": "3",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "309",
-        "name": "太史慈",
+        "name": u"太史慈",
         "nation": "3",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "310",
-        "name": "张昭",
+        "name": u"张昭",
         "nation": "3",
         "grade": "3",
         "able": "1"
     },
     {
         "id": "311",
-        "name": "鲁肃",
+        "name": u"鲁肃",
         "nation": "3",
         "able": "0"
     },
     {
         "id": "312",
-        "name": "吕蒙",
+        "name": u"吕蒙",
         "nation": "3",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "313",
-        "name": "周泰",
+        "name": u"周泰",
         "nation": "3",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "314",
-        "name": "韩当",
+        "name": u"韩当",
         "nation": "3",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "315",
-        "name": "凌统",
+        "name": u"凌统",
         "nation": "3",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "401",
-        "name": "吕布",
+        "name": u"吕布",
         "nation": "4",
         "grade": "5",
         "able": "1"
     },
     {
         "id": "402",
-        "name": "董卓",
+        "name": u"董卓",
         "nation": "4",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "404",
-        "name": "张角",
+        "name": u"张角",
         "nation": "4",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "405",
-        "name": "孟获",
+        "name": u"孟获",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "406",
-        "name": "袁绍",
+        "name": u"袁绍",
         "nation": "4",
         "grade": "3",
         "able": "0"
     },
     {
         "id": "407",
-        "name": "袁术",
+        "name": u"袁术",
         "nation": "4",
         "grade": "3",
         "able": "0"
     },
     {
         "id": "408",
-        "name": "华雄",
+        "name": u"华雄",
         "nation": "4",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "409",
-        "name": "陈宫",
+        "name": u"陈宫",
         "nation": "4",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "410",
-        "name": "颜良",
+        "name": u"颜良",
         "nation": "4",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "411",
-        "name": "文丑",
+        "name": u"文丑",
         "nation": "4",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "412",
-        "name": "纪灵",
+        "name": u"纪灵",
         "nation": "4",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "413",
-        "name": "庞德",
+        "name": u"庞德",
         "nation": "4",
         "grade": "5",
         "able": "1"
     },
     {
         "id": "414",
-        "name": "貂蝉",
+        "name": u"貂蝉",
         "nation": "4",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "415",
-        "name": "韩遂",
+        "name": u"韩遂",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "416",
-        "name": "张梁",
+        "name": u"张梁",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "417",
-        "name": "张宝",
+        "name": u"张宝",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "501",
-        "name": "马腾",
+        "name": u"马腾",
         "nation": "5",
         "grade": "4",
         "able": "0"
     },
     {
         "id": "502",
-        "name": "公孙瓒",
+        "name": u"公孙瓒",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "503",
-        "name": "刘表",
+        "name": u"刘表",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "504",
-        "name": "黄埔嵩",
+        "name": u"黄埔嵩",
         "nation": "5",
         "able": "0"
     },
     {
         "id": "505",
-        "name": "陶谦",
+        "name": u"陶谦",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "506",
-        "name": "刘焉",
+        "name": u"刘焉",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "507",
-        "name": "李傕",
+        "name": u"李傕",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "508",
-        "name": "郭汜",
+        "name": u"郭汜",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "509",
-        "name": "张燕",
+        "name": u"张燕",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "510",
-        "name": "张鲁",
+        "name": u"张鲁",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "511",
-        "name": "刘璋",
+        "name": u"刘璋",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "512",
-        "name": "黄祖",
+        "name": u"黄祖",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "513",
-        "name": "何进",
+        "name": u"何进",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "514",
-        "name": "士燮",
+        "name": u"士燮",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "515",
-        "name": "孔融",
+        "name": u"孔融",
         "nation": "4",
         "able": "0"
     },
     {
         "id": "516",
-        "name": "王允",
+        "name": u"王允",
         "nation": "5",
         "able": "0"
     },
     {
-        "name": "蒋干",
+        "name": u"蒋干",
         "nation": "3",
         "able": "0"
     },
     {
-        "name": "吕玲绮",
+        "name": u"吕玲绮",
         "nation": "4",
         "able": "0"
     },
     {
-        "name": "沮授",
+        "name": u"沮授",
         "nation": "4",
         "able": "0"
     },
     {
-        "name": "法正",
+        "name": u"法正",
         "able": "0"
     },
     {
-        "name": "钟会",
+        "name": u"钟会",
         "able": "0"
     },
     {
-        "name": "乐进",
+        "name": u"乐进",
         "able": "0"
     },
     {
-        "name": "公孙度",
+        "name": u"公孙度",
         "able": "0"
     },
     {
-        "name": "田丰",
+        "name": u"田丰",
         "able": "0"
     },
     {
-        "name": "张济",
+        "name": u"张济",
         "able": "0"
     },
     {
-        "name": "越吉",
+        "name": u"越吉",
         "able": "0"
     },
     {
-        "name": "荀攸",
+        "name": u"荀攸",
         "able": "0"
     },
     {
-        "name": "高干",
+        "name": u"高干",
         "able": "0"
     },
     {
-        "name": "李儒",
+        "name": u"李儒",
         "able": "0"
     },
     {
-        "name": "董丞",
+        "name": u"董丞",
         "able": "0"
     },
     {
-        "name": "程昱",
+        "name": u"程昱",
         "able": "0"
     },
     {
-        "name": "文聘",
+        "name": u"文聘",
         "able": "0"
     },
     {
-        "name": "公孙康",
+        "name": u"公孙康",
         "able": "0"
     },
     {
-        "name": "李严",
+        "name": u"李严",
         "able": "0"
     },
     {
-        "name": "马岱",
+        "name": u"马岱",
         "able": "0"
     },
     {
-        "name": "郭淮",
+        "name": u"郭淮",
         "able": "0"
     },
     {
-        "name": "诸葛瑾",
+        "name": u"诸葛瑾",
         "able": "0"
     },
     {
-        "name": "马谡",
+        "name": u"马谡",
         "nation": "2",
         "able": "0"
     },
     {
-        "name": "王双",
+        "name": u"王双",
         "able": "0"
     },
     {
-        "name": "曹休",
+        "name": u"曹休",
         "able": "0"
     },
     {
-        "name": "张苞",
+        "name": u"张苞",
         "nation": "2",
         "able": "0"
     },
     {
-        "name": "诸葛格",
+        "name": u"诸葛格",
         "able": "0"
     },
     {
-        "name": "郛览",
+        "name": u"郛览",
         "able": "0"
     },
     {
-        "name": "雷同",
+        "name": u"雷同",
         "able": "0"
     },
     {
-        "name": "张任",
+        "name": u"张任",
         "able": "0"
     },
     {
-        "name": "高览",
+        "name": u"高览",
         "able": "0"
     },
     {
-        "name": "樊稠",
+        "name": u"樊稠",
         "able": "0"
     },
     {
-        "name": "严颜",
+        "name": u"严颜",
         "able": "0"
     },
     {
-        "name": "陈阑",
+        "name": u"陈阑",
         "able": "0"
     },
     {
-        "name": "成宜",
+        "name": u"成宜",
         "able": "0"
     },
     {
-        "name": "候选",
+        "name": u"候选",
         "able": "0"
     },
     {
-        "name": "周善",
+        "name": u"周善",
         "able": "0"
     },
     {
-        "name": "张横",
+        "name": u"张横",
         "able": "0"
     },
     {
-        "name": "程银",
+        "name": u"程银",
         "able": "0"
     },
     {
-        "name": "孟达",
+        "name": u"孟达",
         "able": "0"
     },
     {
-        "name": "吴兰",
+        "name": u"吴兰",
         "able": "0"
     },
     {
-        "name": "任双",
+        "name": u"任双",
         "able": "0"
     },
     {
-        "name": "宋宪",
+        "name": u"宋宪",
         "able": "0"
     },
     {
-        "name": "贾华",
+        "name": u"贾华",
         "able": "0"
     },
     {
-        "name": "张南",
+        "name": u"张南",
         "able": "0"
     },
     {
-        "name": "吴懿",
+        "name": u"吴懿",
         "able": "0"
     },
     {
-        "name": "陈武",
+        "name": u"陈武",
         "able": "0"
     },
     {
-        "name": "于禁",
+        "name": u"于禁",
         "able": "0"
     },
     {
-        "name": "赵月",
+        "name": u"赵月",
         "able": "0"
     },
     {
-        "name": "吕旷",
+        "name": u"吕旷",
         "able": "0"
     },
     {
-        "name": "审配",
+        "name": u"审配",
         "able": "0"
     },
     {
-        "name": "朱治",
+        "name": u"朱治",
         "able": "0"
     },
     {
-        "name": "李捷",
+        "name": u"李捷",
         "able": "0"
     },
     {
-        "name": "候成",
+        "name": u"候成",
         "able": "0"
     },
     {
-        "name": "袁谭",
+        "name": u"袁谭",
         "able": "0"
     },
     {
-        "name": "吕范",
+        "name": u"吕范",
         "able": "0"
     },
     {
-        "name": "袁熙",
+        "name": u"袁熙",
         "able": "0"
     },
     {
-        "name": "王甫",
+        "name": u"王甫",
         "able": "0"
     },
     {
-        "name": "逢绝",
+        "name": u"逢绝",
         "able": "0"
     },
     {
-        "name": "徐荣",
+        "name": u"徐荣",
         "able": "0"
     },
     {
-        "name": "伊籍",
+        "name": u"伊籍",
         "able": "0"
     },
     {
-        "name": "黄权",
+        "name": u"黄权",
         "able": "0"
     },
     {
-        "name": "杨阜",
+        "name": u"杨阜",
         "able": "0"
     },
     {
-        "name": "陈震",
+        "name": u"陈震",
         "able": "0"
     },
     {
-        "name": "郭图",
+        "name": u"郭图",
         "able": "0"
     },
     {
-        "name": "刘度",
+        "name": u"刘度",
         "able": "0"
     },
     {
-        "name": "阎圃",
+        "name": u"阎圃",
         "able": "0"
     },
     {
-        "name": "虑翻",
+        "name": u"虑翻",
         "able": "0"
     },
     {
-        "name": "韩玄",
+        "name": u"韩玄",
         "able": "0"
     },
     {
-        "name": "严峻",
+        "name": u"严峻",
         "able": "0"
     },
     {
-        "name": "吕凯",
+        "name": u"吕凯",
         "able": "0"
     },
     {
-        "name": "张松",
+        "name": u"张松",
         "able": "0"
     },
     {
-        "name": "董允",
+        "name": u"董允",
         "able": "0"
     },
     {
-        "name": "胡车儿",
+        "name": u"胡车儿",
         "able": "0"
     },
     {
-        "name": "周仓",
+        "name": u"周仓",
         "able": "0"
     },
     {
-        "name": "朱然",
+        "name": u"朱然",
         "able": "0"
     },
     {
-        "name": "刑道荣",
+        "name": u"刑道荣",
         "able": "0"
     },
     {
-        "name": "武安国",
+        "name": u"武安国",
         "able": "0"
     },
     {
-        "name": "郝昭",
+        "name": u"郝昭",
         "able": "0"
     },
     {
-        "name": "史焕",
+        "name": u"史焕",
         "able": "0"
     },
     {
-        "name": "谭雄",
+        "name": u"谭雄",
         "able": "0"
     },
     {
-        "name": "田畴",
+        "name": u"田畴",
         "able": "0"
     },
     {
-        "name": "董茶奴",
+        "name": u"董茶奴",
         "able": "0"
     },
     {
-        "name": "王累",
+        "name": u"王累",
         "able": "0"
     },
     {
-        "name": "高定",
+        "name": u"高定",
         "able": "0"
     },
     {
-        "name": "华歆",
+        "name": u"华歆",
         "able": "0"
     },
     {
-        "name": "尚龙",
+        "name": u"尚龙",
         "able": "0"
     },
     {
-        "name": "荆越",
+        "name": u"荆越",
         "able": "0"
     },
     {
-        "name": "张卫",
+        "name": u"张卫",
         "able": "0"
     },
     {
-        "name": "陆绩",
+        "name": u"陆绩",
         "able": "0"
     },
     {
-        "name": "雷薄",
+        "name": u"雷薄",
         "able": "0"
     },
     {
-        "name": "淳干隗",
+        "name": u"淳干隗",
         "able": "0"
     },
     {
-        "name": "扬洪",
+        "name": u"扬洪",
         "able": "0"
     },
     {
-        "name": "韩琪",
+        "name": u"韩琪",
         "able": "0"
     },
     {
-        "name": "申耽",
+        "name": u"申耽",
         "able": "0"
     },
     {
-        "name": "雍圃",
+        "name": u"雍圃",
         "able": "0"
     },
     {
-        "name": "庞柔",
+        "name": u"庞柔",
         "able": "0"
     },
     {
-        "name": "周鲂",
+        "name": u"周鲂",
         "able": "0"
     },
     {
-        "name": "蔡阳",
+        "name": u"蔡阳",
         "able": "0"
     },
     {
-        "name": "荆良",
+        "name": u"荆良",
         "able": "0"
     },
     {
-        "name": "薛综",
+        "name": u"薛综",
         "able": "0"
     },
     {
-        "name": "程乘",
+        "name": u"程乘",
         "able": "0"
     },
     {
-        "name": "李硅",
+        "name": u"李硅",
         "able": "0"
     },
     {
-        "name": "鄂焕",
+        "name": u"鄂焕",
         "able": "0"
     },
     {
-        "name": "朱恒",
+        "name": u"朱恒",
         "able": "0"
     },
     {
-        "name": "牛金",
+        "name": u"牛金",
         "able": "0"
     },
     {
-        "name": "吕度",
+        "name": u"吕度",
         "able": "0"
     },
     {
-        "name": "马延",
+        "name": u"马延",
         "able": "0"
     },
     {
-        "name": "苏飞",
+        "name": u"苏飞",
         "able": "0"
     },
     {
-        "name": "韩猛",
+        "name": u"韩猛",
         "able": "0"
     },
     {
-        "name": "留平",
+        "name": u"留平",
         "able": "0"
     },
     {
-        "name": "崔谅",
+        "name": u"崔谅",
         "able": "0"
     },
     {
-        "name": "辛昆",
+        "name": u"辛昆",
         "able": "0"
     },
     {
-        "name": "任峻",
+        "name": u"任峻",
         "able": "0"
     },
     {
-        "name": "崔琰",
+        "name": u"崔琰",
         "able": "0"
     },
     {
-        "name": "韩德",
+        "name": u"韩德",
         "able": "0"
     },
     {
-        "name": "王平",
+        "name": u"王平",
         "able": "0"
     },
     {
-        "name": "徐盛",
+        "name": u"徐盛",
         "able": "0"
     },
     {
-        "name": "朱灵",
+        "name": u"朱灵",
         "able": "0"
     },
     {
-        "name": "张翼",
+        "name": u"张翼",
         "able": "0"
     },
     {
-        "name": "张严",
+        "name": u"张严",
         "able": "0"
     },
     {
-        "name": "尹赏",
+        "name": u"尹赏",
         "able": "0"
     },
     {
-        "name": "尹楷",
+        "name": u"尹楷",
         "able": "0"
     },
     {
-        "name": "辛评",
+        "name": u"辛评",
         "able": "0"
     },
     {
-        "name": "王粲",
+        "name": u"王粲",
         "able": "0"
     },
     {
-        "name": "韦康",
+        "name": u"韦康",
         "able": "0"
     },
     {
-        "name": "万或",
+        "name": u"万或",
         "able": "0"
     },
     {
-        "name": "董袭",
+        "name": u"董袭",
         "able": "0"
     },
     {
-        "name": "吕翔",
+        "name": u"吕翔",
         "able": "0"
     },
     {
-        "name": "全琼",
+        "name": u"全琼",
         "able": "0"
     },
     {
-        "name": "金环结",
+        "name": u"金环结",
         "able": "0"
     },
     {
-        "name": "荀湛",
+        "name": u"荀湛",
         "able": "0"
     },
     {
-        "name": "蒋义渠",
+        "name": u"蒋义渠",
         "able": "0"
     },
     {
-        "name": "马遵",
+        "name": u"马遵",
         "able": "0"
     },
     {
-        "name": "李异",
+        "name": u"李异",
         "able": "0"
     },
     {
