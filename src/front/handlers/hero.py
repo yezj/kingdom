@@ -101,6 +101,7 @@ class SetHandler(ApiHandler):
         params = (ahex, aid)
         res = yield self.sql.runQuery(query, params)
         if res:
+            IS_EXISTED=True
             heros = {}
             hero_list = []
             if level:
@@ -127,11 +128,19 @@ class SetHandler(ApiHandler):
                 print index, one
                 if int(one["id"]) == int(id):
                     heroList[index].update(heros)
+                    IS_EXISTED = False
+            if unlock:
+                if IS_EXISTED and int(unlock) == 1:
+                    for one in D.HEROS:
+                        if one["id"] == int(id):
+                            heroList[index].append(one)
 
             for index, one in enumerate(heroList):
                 print index, one
                 if int(one["level"]) != 0:
                     hero_list.append(one)
+
+
             query = """UPDATE core_user SET "heroList"=%s WHERE hex=%s and id=%s"""
             params = (escape.json_encode(hero_list), ahex, aid)
             for i in range(5):
