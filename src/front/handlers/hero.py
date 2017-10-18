@@ -127,15 +127,15 @@ class SetHandler(ApiHandler):
                 if int(one["id"]) == int(id):
                     heroList[index].update(heros)
 
-            # query = """UPDATE core_user SET "heroList"=%s WHERE hex=%s and id=%s"""
-            # params = (escape.json_encode(heroList), ahex, aid)
-            # for i in range(5):
-            #     try:
-            #         yield self.sql.runOperation(query, params)
-            #         break
-            #     except storage.IntegrityError:
-            #         log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
-            #         continue
+            query = """UPDATE core_user SET "heroList"=%s WHERE hex=%s and id=%s"""
+            params = (escape.json_encode(heroList), ahex, aid)
+            for i in range(5):
+                try:
+                    yield self.sql.runOperation(query, params)
+                    break
+                except storage.IntegrityError:
+                    log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
+                    continue
             # ret = dict(timestamp=int(time.time()))
             # reb = zlib.compress(escape.json_encode(ret))
             self.write(dict(heroList=heroList))
