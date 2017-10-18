@@ -354,14 +354,14 @@ USERINIT = {
 HEROS = [
     {
         "id": "101",
-        "name": "曹操",
+        "name": u"曹操",
         "nation": "1",
         "grade": "5",
         "able": "1"
     },
     {
         "id": "102",
-        "name": "司马懿",
+        "name": u"司马懿",
         "nation": "1",
         "grade": "5",
         "able": "0"
@@ -375,35 +375,35 @@ HEROS = [
     },
     {
         "id": "104",
-        "name": "郭嘉",
+        "name": u"郭嘉",
         "nation": "1",
         "grade": "5",
         "able": "1"
     },
     {
         "id": "105",
-        "name": "夏侯惇",
+        "name": u"夏侯惇",
         "nation": "1",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "106",
-        "name": "张辽",
+        "name": u"张辽",
         "nation": "1",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "107",
-        "name": "许褚",
+        "name": u"许褚",
         "nation": "1",
         "grade": "4",
         "able": "1"
     },
     {
         "id": "108",
-        "name": "典韦",
+        "name": u"典韦",
         "nation": "1",
         "grade": "4",
         "able": "1"
