@@ -36,7 +36,7 @@ class GetHandler(ApiHandler):
         except Exception:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
-        out = []
+        hero_list = []
         if idcard:
             ahex, aid = idcard.split('h', 1)
             query = """SELECT "heroList" FROM core_user WHERE hex=%s and id=%s LIMIT 1"""
@@ -47,11 +47,11 @@ class GetHandler(ApiHandler):
                 heroList = escape.json_decode(heroList)
                 for index, one in enumerate(heroList):
                     if one["level"] != 0:
-                        out.append(one)
+                        hero_list.append(one)
             else:
                 self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
                 return
-            users = dict(heroList=out)
+            users = dict(heroList=hero_list)
             self.write(users)
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
@@ -102,6 +102,7 @@ class SetHandler(ApiHandler):
         res = yield self.sql.runQuery(query, params)
         if res:
             heros = {}
+            hero_list = []
             if level:
                 heros.update(dict(level=level))
             if xp:
@@ -127,8 +128,12 @@ class SetHandler(ApiHandler):
                 if int(one["id"]) == int(id):
                     heroList[index].update(heros)
 
+            for index, one in enumerate(heroList):
+                print index, one
+                if int(one["level"]) == 0:
+                    hero_list.append(one)
             query = """UPDATE core_user SET "heroList"=%s WHERE hex=%s and id=%s"""
-            params = (escape.json_encode(heroList), ahex, aid)
+            params = (escape.json_encode(hero_list), ahex, aid)
             for i in range(5):
                 try:
                     yield self.sql.runOperation(query, params)
@@ -138,7 +143,7 @@ class SetHandler(ApiHandler):
                     continue
             # ret = dict(timestamp=int(time.time()))
             # reb = zlib.compress(escape.json_encode(ret))
-            self.write(dict(heroList=heroList))
+            self.write(dict(heroList=hero_list))
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
