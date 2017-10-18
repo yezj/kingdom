@@ -130,7 +130,7 @@ class SetHandler(ApiHandler):
 
             for index, one in enumerate(heroList):
                 print index, one
-                if int(one["level"]) == 0:
+                if int(one["level"]) != 0:
                     hero_list.append(one)
             query = """UPDATE core_user SET "heroList"=%s WHERE hex=%s and id=%s"""
             params = (escape.json_encode(hero_list), ahex, aid)
