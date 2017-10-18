@@ -130,8 +130,6 @@ class SetHandler(ApiHandler):
                     heroList[index].update(heros)
                     IS_EXISTED = False
             if unlock:
-                import pdb
-                pdb.set_trace()
                 if IS_EXISTED and int(unlock) == 1:
                     for one in D.HEROS:
                         if "id" in one:
