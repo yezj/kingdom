@@ -132,8 +132,9 @@ class SetHandler(ApiHandler):
             if unlock:
                 if IS_EXISTED and int(unlock) == 1:
                     for one in D.HEROS:
-                        if one["id"] == int(id):
-                            heroList[index].append(one)
+                        if "id" in one:
+                            if one["id"] == int(id):
+                                heroList[index].append(one)
 
             for index, one in enumerate(heroList):
                 print index, one
