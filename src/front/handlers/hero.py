@@ -48,7 +48,7 @@ class GetHandler(ApiHandler):
                 for index, one in enumerate(heroList):
                     if one["level"] != 0 or int(one['unlock']) != 0:
                         hero_list.append(one)
-                for index, one in enumerate(heroList):
+                for index, one in enumerate(hero_list):
                     one.pop("unlock")
             else:
                 self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
