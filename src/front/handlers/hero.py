@@ -137,7 +137,7 @@ class SetHandler(ApiHandler):
                         if "id" in one:
                             if int(one["id"]) == int(id):
                                 one.update({'level': 1})
-                                heroList[index].append(one)
+                                heroList.append(one)
 
             for index, one in enumerate(heroList):
                 print index, one
