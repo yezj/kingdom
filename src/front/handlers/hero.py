@@ -167,7 +167,7 @@ class SetHandler(ApiHandler):
             for index, one in enumerate(hero_list):
                 if int(one["unlock"]) != 0:
                     heros.append(one.pop("unlock"))
-            self.write(dict(heroList=hero_list))
+            self.write(dict(heroList=heros))
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
