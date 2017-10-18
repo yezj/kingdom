@@ -46,7 +46,7 @@ class GetHandler(ApiHandler):
                 heroList, = res[0]
                 heroList = escape.json_decode(heroList)
                 for index, one in enumerate(heroList):
-                    if one["level"] != 0:
+                    if one["level"] != 0 or int(one['unlock']) != 0:
                         hero_list.append(one)
             else:
                 self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
@@ -134,8 +134,16 @@ class SetHandler(ApiHandler):
                     for one in D.HEROS:
                         if "id" in one:
                             if int(one["id"]) == int(id):
-                                one.update({'level': 1})
-                                heroList.append(one)
+                                heroList.append(
+                                    dict(id=id,
+                                         level=1,
+                                         xp=0,
+                                         goldSkin=0,
+                                         unlock=1, star=0,
+                                         grade=0,
+                                         skillLevel=[],
+                                         talent=[])
+                                )
 
             for index, one in enumerate(heroList):
                 print index, one

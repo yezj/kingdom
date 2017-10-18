@@ -368,7 +368,7 @@ HEROS = [
     },
     {
         "id": "103",
-        "name": "荀彧",
+        "name": u"荀彧",
         "nation": "1",
         "grade": "4",
         "able": "1"
