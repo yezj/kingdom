@@ -135,7 +135,7 @@ class SetHandler(ApiHandler):
                 if IS_EXISTED and int(unlock) == 1:
                     for one in D.HEROS:
                         if "id" in one:
-                            if int(one["id"]) == int(id):
+                            if int(one["id"]) == int(id) and int(one["able"]) == 1:
                                 heroList.append(
                                     dict(id=id,
                                          level=1,
