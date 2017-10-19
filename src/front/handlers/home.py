@@ -132,7 +132,13 @@ class ActiveHandler(ApiHandler):
                 self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
                 return
                 # yield self.predis.hset('zone:%s:%s' % (zone, datetime.datetime.now().strftime('%Y%m%d')), aid, E.true)
+            hero_list = []
             heroList = escape.json_decode(heroList)
+            for index, one in enumerate(heroList):
+                if int(one['unlock']) != 0:
+                    hero_list.append(one)
+            for index, one in enumerate(hero_list):
+                one.pop("unlock")
             users = dict(avat=avat,
                          playerLevel=playerLevel,
                          playerXp=playerXp,
@@ -144,7 +150,7 @@ class ActiveHandler(ApiHandler):
                          arenaOtherRank=arenaOtherRank,
                          arenaOtherPlace=arenaOtherPlace,
                          unlockSlotNum=0,
-                         heroList=escape.json_decode(heroList),
+                         heroList=escape.json_decode(hero_list),
                          soldierList=escape.json_decode(soldierList),
                          formations=escape.json_decode(formations),
                          items=escape.json_decode(items),
