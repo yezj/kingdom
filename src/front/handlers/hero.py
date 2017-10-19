@@ -105,7 +105,6 @@ class SetHandler(ApiHandler):
         if res:
             IS_EXISTED = True
             heros = {}
-            hero_list = []
             if level:
                 heros.update(dict(level=level))
             if xp:
@@ -147,13 +146,13 @@ class SetHandler(ApiHandler):
                                          talent=[2, 3])
                                 )
 
-            for index, one in enumerate(heroList):
-                print index, one
-                if int(one["level"]) != 0:
-                    hero_list.append(one)
+            # for index, one in enumerate(heroList):
+            #     print index, one
+            #     if int(one["level"]) != 0:
+            #         hero_list.append(one)
 
             query = """UPDATE core_user SET "heroList"=%s WHERE hex=%s and id=%s"""
-            params = (escape.json_encode(hero_list), ahex, aid)
+            params = (escape.json_encode(heroList), ahex, aid)
             for i in range(5):
                 try:
                     yield self.sql.runOperation(query, params)
@@ -163,13 +162,12 @@ class SetHandler(ApiHandler):
                     continue
             # ret = dict(timestamp=int(time.time()))
             # reb = zlib.compress(escape.json_encode(ret))
-            heros = []
-            for index, one in enumerate(hero_list):
+            hero_list = []
+            for index, one in enumerate(heroList):
                 if int(one["unlock"]) != 0:
-                    a = one
                     one.pop("unlock")
-                    heros.append(a)
-            self.write(dict(heroList=heros))
+                    hero_list.append(one)
+            self.write(dict(heroList=hero_list))
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
