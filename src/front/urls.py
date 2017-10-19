@@ -11,7 +11,7 @@ from front.handlers import hero
 # from front.debug import gmprod
 # from front.debug import gmaccount
 # from front.debug import gmhero
-# #from operate import operate
+from operate import operate
 from local_settings import DEBUG
 
 url_patterns = [
