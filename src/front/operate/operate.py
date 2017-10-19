@@ -13,8 +13,8 @@ from front.handlers.base import ApiHandler, ApiJSONEncoder
 class TestHandler(ApiHandler):
 
     @storage.databaseSafe
-    @defer.inlineCallbacks
-    @api('Operate account', '/operate/test/', [
+    #@defer.inlineCallbacks
+    @api('Operate test', '/operate/test/', [
         Param('formation', True, str, '[]', '[]', 'formation'),
         ], filters=[ps_filter], description="Operate test")
     def get(self):
