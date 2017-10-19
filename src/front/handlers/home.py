@@ -150,7 +150,7 @@ class ActiveHandler(ApiHandler):
                          arenaOtherRank=arenaOtherRank,
                          arenaOtherPlace=arenaOtherPlace,
                          unlockSlotNum=0,
-                         heroList=escape.json_decode(hero_list),
+                         heroList=hero_list,
                          soldierList=escape.json_decode(soldierList),
                          formations=escape.json_decode(formations),
                          items=escape.json_decode(items),
