@@ -46,7 +46,7 @@ class GetHandler(ApiHandler):
                 heroList, = res[0]
                 heroList = escape.json_decode(heroList)
                 for index, one in enumerate(heroList):
-                    if int(one["level"]) != 0 and int(one['unlock']) != 0:
+                    if int(one['unlock']) != 0:
                         hero_list.append(one)
                 for index, one in enumerate(hero_list):
                     one.pop("unlock")

@@ -132,6 +132,7 @@ class ActiveHandler(ApiHandler):
                 self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
                 return
                 # yield self.predis.hset('zone:%s:%s' % (zone, datetime.datetime.now().strftime('%Y%m%d')), aid, E.true)
+            heroList = escape.json_decode(heroList)
             users = dict(avat=avat,
                          playerLevel=playerLevel,
                          playerXp=playerXp,
