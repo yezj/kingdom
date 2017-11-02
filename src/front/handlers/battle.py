@@ -29,7 +29,7 @@ class GetHandler(ApiHandler):
         Param('access_token', True, str, '010208_0', '010208_0', 'access_token'),
         Param('idcard', True, str, '010208_0', '010208_0', 'idcard'),
         Param('user_id', True, str, '7', '7', 'user_id'),
-        Param('formationList', True, str, '[5,1,2,4,8]', '[5,1,2,4,8]', 'formationList'),
+        Param('heros1P', True, str, '[]', '[]', 'heros1P'),
     ], filters=[ps_filter], description="Battle get")
     def get(self):
         try:
@@ -38,16 +38,16 @@ class GetHandler(ApiHandler):
             access_token = self.get_argument("access_token")
             user_id = self.get_argument("user_id")
             idcard = self.get_argument("idcard")
-            formationList = self.get_argument("formationList")
+            heros1P = self.get_argument("heros1P")
 
         except Exception:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
 
-        query = """SELECT "playerLevel", avat, nickname, formations FROM core_user WHERE user_id=%s LIMIT 1"""
+        query = """SELECT "playerLevel", avat, nickname FROM core_user WHERE user_id=%s LIMIT 1"""
         res = yield self.sql.runQuery(query, (user_id,))
         if res:
-            playerLevel, avat, nickname, heros1P = res[0]
+            playerLevel, avat, nickname = res[0]
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
@@ -62,7 +62,7 @@ class GetHandler(ApiHandler):
                                level_1P=playerLevel,
                                icon_1P=avat,
                                name_1P=nickname,
-                               heros1P=heros1P,
+                               heros1P=escape.json_decode(heros1P),
                                timestamp=int(time.time())))
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
