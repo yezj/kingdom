@@ -70,7 +70,7 @@ class SetHandler(ApiHandler):
     @api('Gate set', '/gate/set/', [
         Param('gate_id', True, str, '010208_0', '010208_0', 'gate_id'),
         Param('type', True, str, 'Siege3', 'Siege3', 'type'),
-        Param('is1PLeft', True, bool, True, True, 'is1PLeft'),
+        Param('is1PLeft', True, bool, 1, 1, 'is1PLeft'),
         Param('winCondition', True, int, 1, 1, 'winCondition'),
 
         Param('winTarget', True, int, -1, -1, 'winTarget'),
