@@ -87,7 +87,7 @@ class SetHandler(ApiHandler):
         Param('barrie', True, str, '[]', '[]', 'barrie'),
         Param('wave1P', True, str, '[]', '[]', 'wave1P'),
         Param('wave2P', True, str, '[]', '[]', 'wave2P'),
-        Param('name_2P', True, str, u'Siege3', u'Siege3', 'name_2P'),
+        Param('name_2P', True, str, 'Siege3', 'Siege3', 'name_2P'),
         Param('level_2P', True, int, 1, 1, 'level_2P'),
         Param('icon_2P', True, int, 1, 1, 'icon_2P'),
 
