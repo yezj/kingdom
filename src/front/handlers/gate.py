@@ -115,6 +115,7 @@ class SetHandler(ApiHandler):
             winTime = self.get_argument("winTime")
             rageTime = self.get_argument("rageTime")
             resource = self.get_argument("resource")
+            print 1111
             resourceLimit = self.get_argument("resourceLimit")
             resourceGrowSpeed = self.get_argument("resourceGrowSpeed")
             map = self.get_argument("map")
@@ -123,7 +124,8 @@ class SetHandler(ApiHandler):
             wave2P = self.get_argument("wave2P")
             name_2P = self.get_argument("name_2P")
             icon_2P = self.get_argument("icon_2P")
-
+            print 2222
+            
             herosNum1P = self.get_argument("herosNum1P")
             herosPermit1P = self.get_argument("herosPermit1P")
             herosLevelPermit1P = self.get_argument("herosLevelPermit1P")
