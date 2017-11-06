@@ -131,10 +131,12 @@ class SetHandler(ApiHandler):
             herosPermit1P = self.get_argument("herosPermit1P")
             herosLevelPermit1P = self.get_argument("herosLevelPermit1P")
 
+            print 333
             soldiersPermit1P = self.get_argument("soldiersPermit1P")
             heros2P = self.get_argument("heros2P")
             initTeam1P = self.get_argument("initTeam1P")
             initTeam2P = self.get_argument("initTeam2P")
+            print 4444
             print gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,\
                 winTime, rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P, name_2P,\
                 level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P,\
