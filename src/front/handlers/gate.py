@@ -87,11 +87,12 @@ class GetHandler(ApiHandler):
                           soldiersPermit1P=escape.json_decode(soldiersPermit1P),
                           heros2P=escape.json_decode(heros2P),
                           initTeam1P=escape.json_decode(initTeam1P),
-                          initTeam2P=escape.json_decode(initTeam2P)
+                          initTeam2P=escape.json_decode(initTeam2P),
+                          timestamp=int(time.time())
                           )
         else:
-            jgates = {}
-        jgates.update(dict(gate_id=gate_id, timestamp=int(time.time())))
+            jgates = dict(timestamp=int(time.time()))
+        #jgates.update(dict(gate_id=gate_id, timestamp=int(time.time())))
         # ret = dict(result=jgates)
         # reb = zlib.compress(escape.json_encode(ret))
         self.write(jgates)
