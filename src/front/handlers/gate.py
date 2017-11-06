@@ -175,6 +175,7 @@ class SetHandler(ApiHandler):
                       winTime, rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P,
                       name_2P, level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
                       heros2P, initTeam1P, initTeam2P, int(time.time()), gate_id)
+            print query % params
             for i in range(5):
                 try:
                     yield self.sql.runOperation(query, params)
