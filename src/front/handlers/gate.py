@@ -59,7 +59,7 @@ class GetHandler(ApiHandler):
             rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P, name_2P, level_2P,\
             icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P, initTeam1P,\
             initTeam2P = res[0]
-            print 'jgates', jgates
+            #print 'jgates', jgates
             #jgates = escape.json_decode(jgates)
             jgates = dict(gate_id=gate_id,
                           type=type,
