@@ -282,14 +282,62 @@ class GmLog(models.Model):
         return self.user
 
 
+# class Gate(models.Model):
+#     gate_id = models.CharField(_('Gate Id'), max_length=100, blank=True)
+#     jgates = models.TextField(_('JSON Gates'), blank=True)
+#     timestamp = models.PositiveIntegerField(_('Timestamp'), default=0, blank=True)
+#
+#     class Meta:
+#         verbose_name = _('Gate')
+#         verbose_name_plural = _('Gate')
+#
+#     def __unicode__(self):
+#         return self.gate_id
+
+
 class Gate(models.Model):
-     gate_id = models.CharField(_('Gate Id'), max_length=100, blank=True)
-     jgates = models.TextField(_('JSON Gates'), blank=True)
-     timestamp = models.PositiveIntegerField(_('Timestamp'), default=0, blank=True)
+    gate_id = models.CharField(_('Gate id'), max_length=64)
+    type = models.CharField(_('Type'), max_length=64)
+    is1PLeft = models.BooleanField(_('is1PLeft'), default=True)
+    # sequence = models.PositiveSmallIntegerField(
+    #     _('Sequence'), choices=ORDER, default=FIRST)
+    winCondition = models.PositiveSmallIntegerField(
+        _('winCondition'), default=1)
+    winTarget = models.PositiveIntegerField(_('winTarget'), default=-1)
+    winTargetNum = models.PositiveIntegerField(_('winTargetNum'), default=0)
 
-     class Meta:
-         verbose_name = _('Gate')
-         verbose_name_plural = _('Gate')
+    lostTarget = models.PositiveIntegerField(_('lostTarget'), default=-1)
+    lostTargetNum = models.PositiveIntegerField(_('lostTargetNum'), default=0)
 
-     def __unicode__(self):
-         return self.gate_id
+    winTime = models.PositiveIntegerField(_('winTime'), default=120)
+    rageTime = models.PositiveIntegerField(_('rageTime'), default=40)
+
+    resource = models.PositiveIntegerField(_('resource'), default=500)
+    resourceLimit = models.PositiveIntegerField(_('resourceLimit'), default=1000)
+    resourceGrowSpeed = models.PositiveIntegerField(_('resourceGrowSpeed'), default=1)
+
+    map = models.PositiveIntegerField(_('map'), default=1)
+    barrie = models.TextField(_('barrie'), blank=True)
+    wave1P = models.TextField(_('wave1P'), blank=True)
+    wave2P = models.TextField(_('wave2P'), blank=True)
+
+    name_2P = models.TextField(_('name_2P'), blank=True)
+    level_2P = models.PositiveIntegerField(_('level_2P'), default=1)
+    icon_2P = models.PositiveIntegerField(_('level_2P'), default=1)
+
+    herosNum1P = models.PositiveIntegerField(_('herosNum1P'), default=4)
+    herosPermit1P = models.TextField(_('herosPermit1P'), blank=True)
+    herosLevelPermit1P = models.PositiveIntegerField(_('herosNum1P'), default=60)
+    soldiersPermit1P = models.TextField(_('soldiersPermit1P'), blank=True)
+
+    heros2P = models.TextField(_('heros2P'), blank=True)
+    initTeam1P = models.TextField(_('initTeam1P'), blank=True)
+    initTeam2P = models.TextField(_('initTeam2P'), blank=True)
+    created_at = models.PositiveIntegerField(_('Created_at'), default=0)
+
+    class Meta:
+        verbose_name = _('Stage')
+        verbose_name_plural = _('Stages')
+
+    def __unicode__(self):
+        return u'%s' % self.gate_id
