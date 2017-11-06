@@ -57,8 +57,8 @@ class GetHandler(ApiHandler):
         else:
             jgates = {}
         jgates.update(dict(gate_id=gate_id, timestamp=int(time.time())))
-        #ret = dict(result=jgates)
-        #reb = zlib.compress(escape.json_encode(ret))
+        # ret = dict(result=jgates)
+        # reb = zlib.compress(escape.json_encode(ret))
         self.write(jgates)
 
 
@@ -69,7 +69,37 @@ class SetHandler(ApiHandler):
     # @utils.signed
     @api('Gate set', '/gate/set/', [
         Param('gate_id', True, str, '010208_0', '010208_0', 'gate_id'),
-        Param('jgates', True, str, '{}', '{}', 'jgates'),
+        Param('type', True, str, 'Siege3', 'Siege3', 'type'),
+        Param('is1PLeft', True, bool, True, True, 'is1PLeft'),
+        Param('winCondition', True, int, 1, 1, 'winCondition'),
+
+        Param('winTarget', True, int, -1, -1, 'winTarget'),
+        Param('winTargetNum', True, int, 0, 0, 'winTargetNum'),
+        Param('lostTarget', True, int, -1, -1, 'lostTarget'),
+        Param('lostTargetNum', True, int, 0, 0, 'lostTargetNum'),
+        Param('winTime', True, int, 120, 120, 'winTime'),
+        Param('rageTime', True, int, 40, 40, 'rageTime'),
+        Param('resource', True, int, 500, 500, 'resource'),
+        Param('resourceLimit', True, int, 1000, 1000, 'resourceLimit'),
+        Param('resourceGrowSpeed', True, int, 1, 1, 'resourceGrowSpeed'),
+        Param('map', True, int, 1, 1, 'map'),
+
+        Param('barrie', True, str, '[]', '[]', 'barrie'),
+        Param('wave1P', True, str, '[]', '[]', 'wave1P'),
+        Param('wave2P', True, str, '[]', '[]', 'wave2P'),
+        Param('name_2P', True, str, u'Siege3', u'Siege3', 'name_2P'),
+        Param('level_2P', True, int, 1, 1, 'level_2P'),
+        Param('icon_2P', True, int, 1, 1, 'icon_2P'),
+
+        Param('herosNum1P', True, int, 1, 1, 'herosNum1P'),
+        Param('herosPermit1P', True, str, '[]', '[]', 'herosPermit1P'),
+
+        Param('herosLevelPermit1P', True, int, 1, 1, 'herosLevelPermit1P'),
+        Param('soldiersPermit1P', True, str, '[]', '[]', 'soldiersPermit1P'),
+
+        Param('heros2P', True, str, '[]', '[]', 'heros2P'),
+        Param('initTeam1P', True, str, '[]', '[]', 'initTeam1P'),
+        Param('initTeam2P', True, str, '[]', '[]', 'initTeam2P'),
     ], filters=[ps_filter], description="Batt")
     def get(self):
 

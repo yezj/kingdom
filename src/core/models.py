@@ -303,10 +303,10 @@ class Gate(models.Model):
     #     _('Sequence'), choices=ORDER, default=FIRST)
     winCondition = models.PositiveSmallIntegerField(
         _('winCondition'), default=1)
-    winTarget = models.PositiveIntegerField(_('winTarget'), default=-1)
+    winTarget = models.IntegerField(_('winTarget'), default=-1)
     winTargetNum = models.PositiveIntegerField(_('winTargetNum'), default=0)
 
-    lostTarget = models.PositiveIntegerField(_('lostTarget'), default=-1)
+    lostTarget = models.IntegerField(_('lostTarget'), default=-1)
     lostTargetNum = models.PositiveIntegerField(_('lostTargetNum'), default=0)
 
     winTime = models.PositiveIntegerField(_('winTime'), default=120)
