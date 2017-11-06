@@ -132,7 +132,10 @@ class SetHandler(ApiHandler):
             heros2P = self.get_argument("heros2P")
             initTeam1P = self.get_argument("initTeam1P")
             initTeam2P = self.get_argument("initTeam2P")
-
+            print gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,\
+                winTime, rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P, name_2P,\
+                level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P,\
+                initTeam1P, initTeam2P
         except Exception:
             raise web.HTTPError(400, "Argument error")
         res = yield self.sql.runQuery("SELECT * FROM core_gate WHERE gate_id=%s LIMIT 1", (gate_id,))
