@@ -123,6 +123,7 @@ class SetHandler(ApiHandler):
             barrie = self.get_argument("barrie")
             wave1P = self.get_argument("wave1P")
             wave2P = self.get_argument("wave2P")
+            level_2P = self.get_argument("level_2P")
             name_2P = self.get_argument("name_2P")
             icon_2P = self.get_argument("icon_2P")
             print 2222
