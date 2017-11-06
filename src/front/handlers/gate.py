@@ -105,13 +105,47 @@ class SetHandler(ApiHandler):
 
         try:
             gate_id = self.get_argument("gate_id")
-            jgates = self.get_argument("jgates")
+            type = self.get_argument("type")
+            is1PLeft = self.get_argument("is1PLeft")
+            winCondition = self.get_argument("winCondition")
+            winTarget = self.get_argument("winTarget")
+            winTargetNum = self.get_argument("winTargetNum")
+            lostTarget = self.get_argument("lostTarget")
+            lostTargetNum = self.get_argument("lostTargetNum")
+            winTime = self.get_argument("winTime")
+            rageTime = self.get_argument("rageTime")
+            resource = self.get_argument("resource")
+            resourceLimit = self.get_argument("resourceLimit")
+            resourceGrowSpeed = self.get_argument("resourceGrowSpeed")
+            map = self.get_argument("map")
+            barrie = self.get_argument("barrie")
+            wave1P = self.get_argument("wave1P")
+            wave2P = self.get_argument("wave2P")
+            name_2P = self.get_argument("name_2P")
+            icon_2P = self.get_argument("icon_2P")
+
+            herosNum1P = self.get_argument("herosNum1P")
+            herosPermit1P = self.get_argument("herosPermit1P")
+            herosLevelPermit1P = self.get_argument("herosLevelPermit1P")
+
+            soldiersPermit1P = self.get_argument("soldiersPermit1P")
+            heros2P = self.get_argument("heros2P")
+            initTeam1P = self.get_argument("initTeam1P")
+            initTeam2P = self.get_argument("initTeam2P")
+
         except Exception:
             raise web.HTTPError(400, "Argument error")
-        res = yield self.sql.runQuery("SELECT jgates FROM core_gate WHERE gate_id=%s LIMIT 1", (gate_id,))
+        res = yield self.sql.runQuery("SELECT * FROM core_gate WHERE gate_id=%s LIMIT 1", (gate_id,))
         if not res:
-            query = "INSERT INTO core_gate (gate_id, jgates, timestamp) VALUES (%s, %s, %s) RETURNING id"
-            params = (gate_id, jgates, int(time.time()))
+            query = """INSERT INTO core_gate (gate_id, type, "is1PLeft", "winCondition", "winTarget", "winTargetNum",
+                    "lostTarget", "lostTargetNum", "winTime", "rageTime", resource, "resourceLimit", "resourceGrowSpeed",
+                     map, barrie, "wave1P", "wave2P", "name_2P", "level_2P", "icon_2P", "herosNum1P", "herosPermit1P",
+                      "herosLevelPermit1P", "soldiersPermit1P", "heros2P", "initTeam1P", "initTeam2P", created_at) 
+                      VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"""
+            params = (gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,
+                      winTime, rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P,
+                      name_2P, level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
+                      heros2P, initTeam1P, initTeam2P, int(time.time()))
             for i in range(5):
                 try:
                     gid = yield self.sql.runOperation(query, params)
