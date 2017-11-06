@@ -49,11 +49,46 @@ class GetHandler(ApiHandler):
         # // "resourceGrowSpeed":1,
         fid = uuid.uuid4().hex
 
-        res = yield self.sql.runQuery("SELECT jgates FROM core_gate WHERE gate_id=%s LIMIT 1", (gate_id,))
+        res = yield self.sql.runQuery("""SELECT gate_id, type, "is1PLeft", "winCondition", "winTarget", "winTargetNum",
+                    "lostTarget", "lostTargetNum", "winTime", "rageTime", resource, "resourceLimit", "resourceGrowSpeed",
+                     map, barrie, "wave1P", "wave2P", "name_2P", "level_2P", "icon_2P", "herosNum1P", "herosPermit1P",
+                      "herosLevelPermit1P", "soldiersPermit1P", "heros2P", "initTeam1P", "initTeam2P" FROM core_gate
+                       WHERE gate_id=%s LIMIT 1""", (gate_id,))
         if res:
-            jgates, = res[0]
+            gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum, winTime,\
+            rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P, name_2P, level_2P,\
+            icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P, initTeam1P,\
+            initTeam2P = res[0]
             print 'jgates', jgates
-            jgates = escape.json_decode(jgates)
+            #jgates = escape.json_decode(jgates)
+            jgates = dict(gate_id=gate_id,
+                          type=type,
+                          is1PLeft=is1PLeft,
+                          winCondition=winCondition,
+                          winTarget=winTarget,
+                          winTargetNum=winTargetNum,
+                          lostTarget=lostTarget,
+                          lostTargetNum=lostTargetNum,
+                          winTime=winTime,
+                          rageTime=rageTime,
+                          resource=resource,
+                          resourceLimit=resourceLimit,
+                          resourceGrowSpeed=resourceGrowSpeed,
+                          map=map,
+                          barrie=escape.json_decode(barrie),
+                          wave1P=escape.json_decode(wave1P),
+                          wave2P=escape.json_decode(wave2P),
+                          name_2P=name_2P,
+                          level_2P=level_2P,
+                          icon_2P=icon_2P,
+                          herosNum1P=herosNum1P,
+                          herosPermit1P=escape.json_decode(herosPermit1P),
+                          herosLevelPermit1P=herosLevelPermit1P,
+                          soldiersPermit1P=escape.json_decode(soldiersPermit1P),
+                          heros2P=escape.json_decode(heros2P),
+                          initTeam1P=escape.json_decode(initTeam1P),
+                          initTeam2P=escape.json_decode(initTeam2P)
+                          )
         else:
             jgates = {}
         jgates.update(dict(gate_id=gate_id, timestamp=int(time.time())))
@@ -102,12 +137,10 @@ class SetHandler(ApiHandler):
         Param('initTeam2P', True, str, '[]', '[]', 'initTeam2P'),
     ], filters=[ps_filter], description="Batt")
     def get(self):
-
         try:
             gate_id = self.get_argument("gate_id")
             type = self.get_argument("type")
             is1PLeft = self.get_argument("is1PLeft")
-            print 1213
             winCondition = self.get_argument("winCondition")
             winTarget = self.get_argument("winTarget")
             winTargetNum = self.get_argument("winTargetNum")
@@ -116,7 +149,6 @@ class SetHandler(ApiHandler):
             winTime = self.get_argument("winTime")
             rageTime = self.get_argument("rageTime")
             resource = self.get_argument("resource")
-            print 1111
             resourceLimit = self.get_argument("resourceLimit")
             resourceGrowSpeed = self.get_argument("resourceGrowSpeed")
             map = self.get_argument("map")
@@ -126,22 +158,13 @@ class SetHandler(ApiHandler):
             level_2P = self.get_argument("level_2P")
             name_2P = self.get_argument("name_2P")
             icon_2P = self.get_argument("icon_2P")
-            print 2222
-
             herosNum1P = self.get_argument("herosNum1P")
             herosPermit1P = self.get_argument("herosPermit1P")
             herosLevelPermit1P = self.get_argument("herosLevelPermit1P")
-
-            print 333
             soldiersPermit1P = self.get_argument("soldiersPermit1P")
             heros2P = self.get_argument("heros2P")
             initTeam1P = self.get_argument("initTeam1P")
             initTeam2P = self.get_argument("initTeam2P")
-            print 4444
-            print gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,\
-                winTime, rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P, name_2P,\
-                level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P,\
-                initTeam1P, initTeam2P
         except Exception:
             raise web.HTTPError(400, "Argument error")
         res = yield self.sql.runQuery("SELECT * FROM core_gate WHERE gate_id=%s LIMIT 1", (gate_id,))
