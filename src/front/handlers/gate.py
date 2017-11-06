@@ -165,8 +165,16 @@ class SetHandler(ApiHandler):
                     log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
                     continue
         else:
-            query = "UPDATE core_gate SET jgates=%s,  timestamp=%s WHERE gate_id=%s"
-            params = (jgates, int(time.time()), gate_id)
+            query = """UPDATE core_gate SET type=%s, "is1PLeft"=%s, "winCondition"=%s, "winTarget"=%s,
+                    "winTargetNum"=%s, lostTarget"=%s, "lostTargetNum"=%s, "winTime"=%s, "rageTime"=%s, resource=%s,
+                     "resourceLimit"=%s, "resourceGrowSpeed"=%s, map=%s, barrie=%s, "wave1P"=%s, "wave2P"=%s,
+                      "name_2P"=%s, "level_2P"=%s, "icon_2P"=%s, "herosNum1P"=%s, "herosPermit1P"=%s,
+                      "herosLevelPermit1P"=%s, "soldiersPermit1P"=%s, "heros2P"=%s, "initTeam1P"=%s, "initTeam2P"=%s,
+                       created_at=%s WHERE gate_id=%s"""
+            params = (type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,
+                      winTime, rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P,
+                      name_2P, level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
+                      heros2P, initTeam1P, initTeam2P, int(time.time()), gate_id)
             for i in range(5):
                 try:
                     yield self.sql.runOperation(query, params)
