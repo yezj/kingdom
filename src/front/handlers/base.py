@@ -179,7 +179,21 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
 
         defer.returnValue(idcard)
 
+    @storage.databaseSafe
+    @defer.inlineCallbacks
+    def set_flush(self, key, value):
+        yield self.redis.setex("flush:%s" % key, 36000, pickle.dumps(value))
 
+    @storage.databaseSafe
+    @defer.inlineCallbacks
+    def get_flush(self, key):
+        value = yield self.redis.get("flush:%s" % key)
+        if value:
+            yield self.redis.delete("flush:%s" % key)
+            defer.returnValue(pickle.loads(value))
+        else:
+            defer.returnValue(None)
+            
 @storage.databaseSafe
 @defer.inlineCallbacks
 def get_nickname(self):

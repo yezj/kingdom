@@ -323,7 +323,7 @@ class Gate(models.Model):
 
     name_2P = models.TextField(_('name_2P'), blank=True)
     level_2P = models.PositiveIntegerField(_('level_2P'), default=1)
-    icon_2P = models.PositiveIntegerField(_('level_2P'), default=1)
+    icon_2P = models.PositiveIntegerField(_('icon_2P'), default=1)
 
     herosNum1P = models.PositiveIntegerField(_('herosNum1P'), default=4)
     herosPermit1P = models.TextField(_('herosPermit1P'), blank=True)
@@ -336,8 +336,8 @@ class Gate(models.Model):
     created_at = models.PositiveIntegerField(_('Created_at'), default=0)
 
     class Meta:
-        verbose_name = _('Stage')
-        verbose_name_plural = _('Stages')
+        verbose_name = _('Gate')
+        verbose_name_plural = _('Gates')
 
     def __unicode__(self):
         return u'%s' % self.gate_id
