@@ -107,6 +107,7 @@ class SetHandler(ApiHandler):
             gate_id = self.get_argument("gate_id")
             type = self.get_argument("type")
             is1PLeft = self.get_argument("is1PLeft")
+            print 1213
             winCondition = self.get_argument("winCondition")
             winTarget = self.get_argument("winTarget")
             winTargetNum = self.get_argument("winTargetNum")
@@ -125,7 +126,7 @@ class SetHandler(ApiHandler):
             name_2P = self.get_argument("name_2P")
             icon_2P = self.get_argument("icon_2P")
             print 2222
-            
+
             herosNum1P = self.get_argument("herosNum1P")
             herosPermit1P = self.get_argument("herosPermit1P")
             herosLevelPermit1P = self.get_argument("herosLevelPermit1P")
