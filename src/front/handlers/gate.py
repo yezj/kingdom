@@ -166,7 +166,7 @@ class SetHandler(ApiHandler):
                     continue
         else:
             query = """UPDATE core_gate SET type=%s, "is1PLeft"=%s, "winCondition"=%s, "winTarget"=%s,
-                    "winTargetNum"=%s, lostTarget"=%s, "lostTargetNum"=%s, "winTime"=%s, "rageTime"=%s, resource=%s,
+                    "winTargetNum"=%s, "lostTarget"=%s, "lostTargetNum"=%s, "winTime"=%s, "rageTime"=%s, resource=%s,
                      "resourceLimit"=%s, "resourceGrowSpeed"=%s, map=%s, barrie=%s, "wave1P"=%s, "wave2P"=%s,
                       "name_2P"=%s, "level_2P"=%s, "icon_2P"=%s, "herosNum1P"=%s, "herosPermit1P"=%s,
                       "herosLevelPermit1P"=%s, "soldiersPermit1P"=%s, "heros2P"=%s, "initTeam1P"=%s, "initTeam2P"=%s,
