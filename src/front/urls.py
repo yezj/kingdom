@@ -18,7 +18,7 @@ url_patterns = [
     (r'/', home.HomeHandler),
     (r'/active/', home.ActiveHandler),
     (r'/startup/', home.StartupHandler),
-    # (r'/sync/', home.SyncHandler),
+    (r'/sync/', home.SyncHandler),
     # (r'/syncdb/', home.SyncdbHandler),
     # (r'/flushdb/', home.FlushdbHandler),
 

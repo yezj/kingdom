@@ -193,7 +193,7 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
             defer.returnValue(pickle.loads(value))
         else:
             defer.returnValue(None)
-            
+
 @storage.databaseSafe
 @defer.inlineCallbacks
 def get_nickname(self):
