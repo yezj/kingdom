@@ -177,7 +177,7 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                         log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
                         continue
 
-                query = """INSERT INTO core_userarena(user_id, rank, timestamp) VALUE (%s, %s, %s)"""
+                query = """INSERT INTO core_arena(user_id, rank, timestamp) VALUE (%s, %s, %s)"""
                 params = (aid, '[25, 0]', int(time.time()))
                 for i in range(5):
 
