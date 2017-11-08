@@ -168,10 +168,22 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                 for i in range(5):
 
                     try:
-                        res = yield self.sql.runQuery(query, params)
+                        res = yield self.sql.runOperation(query, params)
                         print 'res', res
                         aid = res[0][0]
                         idcard = '%sh%s' % (ahex, aid)
+                        break
+                    except storage.IntegrityError:
+                        log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
+                        continue
+
+                query = """INSERT INTO core_userarena(user_id, rank, timestamp) VALUE (%s, %s, %s)"""
+                params = (aid, '[25, 0]', int(time.time()))
+                for i in range(5):
+
+                    try:
+                        res = yield self.sql.runOperation(query, params)
+                        print 'res', res
                         break
                     except storage.IntegrityError:
                         log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))

@@ -114,23 +114,21 @@ post_save.connect(syncdb_callback_function, sender=User)
 post_delete.connect(syncdb_callback_function, sender=User)
 
 
-# class Hp(models.Model):
-#     user = models.OneToOneField(User)
-#     hp = models.PositiveSmallIntegerField(_('Hp'), default=0)
-#     timestamp = models.PositiveIntegerField(_('Timestamp'), default=0, blank=True)
-#
-#     class Meta:
-#         verbose_name = _('Hp')
-#         verbose_name_plural = _('Hps')
-#
-#     def __unicode__(self):
-#         return self.user
+class Arena(models.Model):
+    user = models.OneToOneField(User)
+    rank = models.TextField(_('Rank'), default='[25, 0]', blank=False)
+    timestamp = models.PositiveIntegerField(_('Timestamp'), default=0, blank=True)
+
+    class Meta:
+        verbose_name = _('Arena')
+        verbose_name_plural = _('Arenas')
+
+    def __unicode__(self):
+        return self.user.nickname
 
 
-# post_save.connect(syncdb_callback_function, sender=Hp)
-# post_delete.connect(syncdb_callback_function, sender=Hp)
-
-
+post_save.connect(syncdb_callback_function, sender=Arena)
+post_delete.connect(syncdb_callback_function, sender=Arena)
 
 
 # class Zone(models.Model):

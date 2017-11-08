@@ -60,12 +60,12 @@ class GetHandler(ApiHandler):
                       "herosLevelPermit1P", "soldiersPermit1P", "heros2P", "initTeam1P", "initTeam2P" FROM core_gate
                        WHERE gate_id=%s LIMIT 1""", (stage_id,))
         if res:
-            gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum, winTime,\
-            rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P, name_2P, level_2P,\
-            icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P, initTeam1P,\
+            gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum, winTime, \
+            rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P, name_2P, level_2P, \
+            icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P, initTeam1P, \
             initTeam2P = res[0]
-            #print 'jgates', jgates
-            #jgates = escape.json_decode(jgates)
+            # print 'jgates', jgates
+            # jgates = escape.json_decode(jgates)
             jgates = dict(battleId=battleId,
                           level_1P=playerLevel,
                           icon_1P=avat,
