@@ -116,7 +116,8 @@ post_delete.connect(syncdb_callback_function, sender=User)
 
 class Arena(models.Model):
     user = models.OneToOneField(User)
-    rank = models.TextField(_('Rank'), default='[25, 0]', blank=False)
+    rank = models.PositiveIntegerField(_('Rank'), default=25, blank=True)
+    star = models.PositiveIntegerField(_('Star'), default=0, blank=True)
     timestamp = models.PositiveIntegerField(_('Timestamp'), default=0, blank=True)
 
     class Meta:
