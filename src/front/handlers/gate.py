@@ -50,17 +50,17 @@ class GetHandler(ApiHandler):
         fid = uuid.uuid4().hex
 
         res = yield self.sql.runQuery("""SELECT gate_id, type, "is1PLeft", "winCondition", "winTarget", "winTargetNum",
-                    "lostTarget", "lostTargetNum", "winTime", "rageTime", resource, "resourceLimit", "resourceGrowSpeed",
-                     map, barrie, "wave1P", "wave2P", "name_2P", "level_2P", "icon_2P", "herosNum1P", "herosPermit1P",
+                    "lostTarget", "lostTargetNum", "winTime", "rageTime", "supplyNow1p", "supplyMax1p", "supplyGrowSpeed1p",
+                    "supplyNow2p", "supplyMax2p", "supplyGrowSpeed2p", map, barrie, "wave1P", "wave2P", "name_2P", "level_2P", "icon_2P", "herosNum1P", "herosPermit1P",
                       "herosLevelPermit1P", "soldiersPermit1P", "heros2P", "initTeam1P", "initTeam2P" FROM core_gate
                        WHERE gate_id=%s LIMIT 1""", (gate_id,))
         if res:
-            gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum, winTime,\
-            rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P, name_2P, level_2P,\
-            icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P, initTeam1P,\
+            gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum, winTime, \
+            rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p, supplyGrowSpeed2p, map, barrie, wave1P, wave2P, name_2P, level_2P, \
+            icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P, initTeam1P, \
             initTeam2P = res[0]
-            #print 'jgates', jgates
-            #jgates = escape.json_decode(jgates)
+            # print 'jgates', jgates
+            # jgates = escape.json_decode(jgates)
             jgates = dict(gate_id=gate_id,
                           type=type,
                           is1PLeft=is1PLeft,
@@ -71,9 +71,12 @@ class GetHandler(ApiHandler):
                           lostTargetNum=lostTargetNum,
                           winTime=winTime,
                           rageTime=rageTime,
-                          resource=resource,
-                          resourceLimit=resourceLimit,
-                          resourceGrowSpeed=resourceGrowSpeed,
+                          supplyNow1p=supplyNow1p,
+                          supplyMax1p=supplyMax1p,
+                          supplyGrowSpeed1p=supplyGrowSpeed1p,
+                          supplyNow2p=supplyNow2p,
+                          supplyMax2p=supplyMax2p,
+                          supplyGrowSpeed2p=supplyGrowSpeed2p,
                           map=map,
                           barrie=escape.json_decode(barrie),
                           wave1P=escape.json_decode(wave1P),
@@ -92,7 +95,7 @@ class GetHandler(ApiHandler):
                           )
         else:
             jgates = dict(timestamp=int(time.time()))
-        #jgates.update(dict(gate_id=gate_id, timestamp=int(time.time())))
+        # jgates.update(dict(gate_id=gate_id, timestamp=int(time.time())))
         # ret = dict(result=jgates)
         # reb = zlib.compress(escape.json_encode(ret))
         self.write(jgates)
@@ -115,9 +118,14 @@ class SetHandler(ApiHandler):
         Param('lostTargetNum', True, int, 0, 0, 'lostTargetNum'),
         Param('winTime', True, int, 120, 120, 'winTime'),
         Param('rageTime', True, int, 40, 40, 'rageTime'),
-        Param('resource', True, int, 500, 500, 'resource'),
-        Param('resourceLimit', True, int, 1000, 1000, 'resourceLimit'),
-        Param('resourceGrowSpeed', True, int, 1, 1, 'resourceGrowSpeed'),
+        Param('supplyNow1p', True, int, 500, 500, 'supplyNow1p'),
+        Param('supplyMax1p', True, int, 1000, 1000, 'supplyMax1p'),
+        Param('supplyGrowSpeed1p', True, int, 1, 1, 'supplyGrowSpeed1p'),
+
+        Param('supplyNow2p', True, int, 500, 500, 'supplyNow2p'),
+        Param('supplyMax2p', True, int, 1000, 1000, 'supplyMax2p'),
+        Param('supplyGrowSpeed2p', True, int, 1, 1, 'supplyGrowSpeed2p'),
+
         Param('map', True, int, 1, 1, 'map'),
 
         Param('barrie', True, str, '[]', '[]', 'barrie'),
@@ -149,9 +157,14 @@ class SetHandler(ApiHandler):
             lostTargetNum = self.get_argument("lostTargetNum")
             winTime = self.get_argument("winTime")
             rageTime = self.get_argument("rageTime")
-            resource = self.get_argument("resource")
-            resourceLimit = self.get_argument("resourceLimit")
-            resourceGrowSpeed = self.get_argument("resourceGrowSpeed")
+            supplyNow1p = self.get_argument("supplyNow1p")
+            supplyMax1p = self.get_argument("supplyMax1p")
+            supplyGrowSpeed1p = self.get_argument("supplyGrowSpeed1p")
+
+            supplyNow2p = self.get_argument("supplyNow2p")
+            supplyMax2p = self.get_argument("supplyMax2p")
+            supplyGrowSpeed2p = self.get_argument("supplyGrowSpeed2p")
+
             map = self.get_argument("map")
             barrie = self.get_argument("barrie")
             wave1P = self.get_argument("wave1P")
@@ -171,13 +184,15 @@ class SetHandler(ApiHandler):
         res = yield self.sql.runQuery("SELECT * FROM core_gate WHERE gate_id=%s LIMIT 1", (gate_id,))
         if not res:
             query = """INSERT INTO core_gate (gate_id, type, "is1PLeft", "winCondition", "winTarget", "winTargetNum",
-                    "lostTarget", "lostTargetNum", "winTime", "rageTime", resource, "resourceLimit", "resourceGrowSpeed",
+                    "lostTarget", "lostTargetNum", "winTime", "rageTime", "supplyNow1p", "supplyMax1p", "supplyGrowSpeed1p",
+                    "supplyNow2p", "supplyMax2p", "supplyGrowSpeed2p",
                      map, barrie, "wave1P", "wave2P", "name_2P", "level_2P", "icon_2P", "herosNum1P", "herosPermit1P",
                       "herosLevelPermit1P", "soldiersPermit1P", "heros2P", "initTeam1P", "initTeam2P", created_at) 
-                      VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                      VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s %s, %s, %s, %s, %s, %s, %s, %s,
                        %s, %s, %s, %s, %s, %s) RETURNING id"""
             params = (gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,
-                      winTime, rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P,
+                      winTime, rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p,
+                      supplyGrowSpeed2p, map, barrie, wave1P, wave2P,
                       name_2P, level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
                       heros2P, initTeam1P, initTeam2P, int(time.time()))
             print query % params
@@ -190,13 +205,15 @@ class SetHandler(ApiHandler):
                     continue
         else:
             query = """UPDATE core_gate SET type=%s, "is1PLeft"=%s, "winCondition"=%s, "winTarget"=%s,
-                    "winTargetNum"=%s, "lostTarget"=%s, "lostTargetNum"=%s, "winTime"=%s, "rageTime"=%s, resource=%s,
-                     "resourceLimit"=%s, "resourceGrowSpeed"=%s, map=%s, barrie=%s, "wave1P"=%s, "wave2P"=%s,
+                    "winTargetNum"=%s, "lostTarget"=%s, "lostTargetNum"=%s, "winTime"=%s, "rageTime"=%s, "supplyNow1p"=%s,
+                     "supplyMax1p"=%s, "supplyGrowSpeed1p"=%s, "supplyNow2p"=%s,
+                     "supplyMax2p"=%s, "supplyGrowSpeed2p"=%s, map=%s, barrie=%s, "wave1P"=%s, "wave2P"=%s,
                       "name_2P"=%s, "level_2P"=%s, "icon_2P"=%s, "herosNum1P"=%s, "herosPermit1P"=%s,
                       "herosLevelPermit1P"=%s, "soldiersPermit1P"=%s, "heros2P"=%s, "initTeam1P"=%s, "initTeam2P"=%s,
                        created_at=%s WHERE gate_id=%s"""
             params = (type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,
-                      winTime, rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P,
+                      winTime, rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p,
+                      supplyGrowSpeed2p, map, barrie, wave1P, wave2P,
                       name_2P, level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
                       heros2P, initTeam1P, initTeam2P, int(time.time()), gate_id)
             print query % params

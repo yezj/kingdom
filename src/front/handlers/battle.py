@@ -55,13 +55,14 @@ class GetHandler(ApiHandler):
         battleId = uuid.uuid4().hex
 
         res = yield self.sql.runQuery("""SELECT gate_id, type, "is1PLeft", "winCondition", "winTarget", "winTargetNum",
-                    "lostTarget", "lostTargetNum", "winTime", "rageTime", resource, "resourceLimit", "resourceGrowSpeed",
+                    "lostTarget", "lostTargetNum", "winTime", "rageTime", "supplyNow1p", "supplyMax1p", "supplyGrowSpeed1p",
+                    "supplyNow2p", "supplyMax2p", "supplyGrowSpeed2p",
                      map, barrie, "wave1P", "wave2P", "name_2P", "level_2P", "icon_2P", "herosNum1P", "herosPermit1P",
                       "herosLevelPermit1P", "soldiersPermit1P", "heros2P", "initTeam1P", "initTeam2P" FROM core_gate
                        WHERE gate_id=%s LIMIT 1""", (stage_id,))
         if res:
             gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum, winTime, \
-            rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P, name_2P, level_2P, \
+            rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p, supplyGrowSpeed2p, map, barrie, wave1P, wave2P, name_2P, level_2P, \
             icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P, initTeam1P, \
             initTeam2P = res[0]
             # print 'jgates', jgates
@@ -81,9 +82,12 @@ class GetHandler(ApiHandler):
                           lostTargetNum=lostTargetNum,
                           winTime=winTime,
                           rageTime=rageTime,
-                          resource=resource,
-                          resourceLimit=resourceLimit,
-                          resourceGrowSpeed=resourceGrowSpeed,
+                          supplyNow1p=supplyNow1p,
+                          supplyMax1p=supplyMax1p,
+                          supplyGrowSpeed1p=supplyGrowSpeed1p,
+                          supplyNow2p=supplyNow2p,
+                          supplyMax2p=supplyMax2p,
+                          supplyGrowSpeed2p=supplyGrowSpeed2p,
                           map=map,
                           barrie=escape.json_decode(barrie),
                           wave1P=escape.json_decode(wave1P),

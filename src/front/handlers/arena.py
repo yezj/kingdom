@@ -24,36 +24,56 @@ from front.handlers.base import ApiHandler, ApiJSONEncoder
 class InfoHandler(ApiHandler):
     @storage.databaseSafe
     @defer.inlineCallbacks
-    @utils.signed
+    @utils.token
     @api('Arena info', '/arena/info/', [
-        Param('_sign', True, str, 'gGRwMApTJ3VpZCcKcDEKUyc5JwpwMgpzLK', '4GRwMApTJ3VpZCcKcDEKUyc4NycKcDIKcyK', '_sign'),
+        Param('stage_id', True, str, '010208_0', '010208_0', 'stage_id'),
+        Param('access_token', True, str, '010208_0', '010208_0', 'access_token'),
+        Param('idcard', True, str, '010208_0', '010208_0', 'idcard'),
+        Param('user_id', True, str, '7', '7', 'user_id'),
+        Param('heros1P', True, str, '[]', '[]', 'heros1P'),
     ], filters=[ps_filter], description="Get arena info")
     def post(self):
-        uid = self.uid
-        user = yield self.get_user(uid)
-        # print 'uid', uid
-        yield self.set_arena(uid)
-        arenas = yield self.get_arena(uid)
-        if arenas:
-            rand_num = 1
-            competitor = yield self.random_competitor(arenas, uid, rand_num)
-            cuser = dict(arena_coin=arenas['arena_coin'],
-                         guards=arenas['guards'].keys(),
-                         competitor=competitor,
-                         formation=arenas['formation'],
-                         now_rank=arenas['now_rank'],
-                         before_rank=arenas['before_rank'],
-                         positions=arenas['positions'])
-        else:
-            raise web.HTTPError(400, "Argument error")
+        try:
+            stage_id = self.get_argument("stage_id")
+            opponent_Id_card = self.get_argument("opponent_Id_card", None)
+            access_token = self.get_argument("access_token")
+            user_id = self.get_argument("user_id")
+            idcard = self.get_argument("idcard")
+            heros1P = self.get_argument("heros1P")
 
-        arenatime = yield self.redis.get('arenatime:%s' % uid) or 0
-        arenatimes = yield self.redis.get('arenatimes:%s' % uid) or 0
+        except Exception:
+            self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
+            return
+
+        query = """SELECT rank, star FROM core_arena WHERE user_id=%s LIMIT 1"""
+        res = yield self.sql.runQuery(query, (user_id,))
+        if res:
+            rank, star = res[0]
+        else:
+            self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
+            return
+
+        query = """SELECT MIN(id), MAX(id) FROM core_arena WHERE user_id<>%s AND rank=%s AND star>=%s"""
+        res = yield self.sql.runQuery(query, (user_id, rank, star))
+        if res:
+            min_id, max_id = res[0]
+            seed_id = random.randint(min_id, max_id)
+            query = """SELECT user_id FROM core_arena WHERE id>=%s LIMIT 1"""
+            res = yield self.sql.runQuery(query, (seed_id,))
+            if res:
+                user_id, = res[0]
+                cuser = yield self.get_user(user_id)
+        else:
+            self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
+            return
+
+        arenatime = yield self.redis.get('arenatime:%s' % user_id) or 0
+        arenatimes = yield self.redis.get('arenatimes:%s' % user_id) or 0
         if not arenatime:
             arenatime = 0
         if not arenatimes:
             arenatimes = 0
-            yield self.redis.set('arenatimes:%s' % uid, arenatimes)
+            yield self.redis.set('arenatimes:%s' % user_id, arenatimes)
         if arenatimes >= E.limit_by_arena:
             cuser['interval'] = 0
             cuser['left_times'] = 0
@@ -71,17 +91,17 @@ class InfoHandler(ApiHandler):
             cuser['interval'] = interval
             cuser['left_times'] = E.limit_by_arena - arenatimes
             cuser['total_times'] = E.limit_by_arena
-        if user['xp'] / 100000 < D.ARENA_OPEN_LIMIT:
-            arenamark = 0
-        else:
-            arenamark = yield self.redis.get('arenamark:%s' % uid)
-            if not arenamark:
-                arenamark = 0
-        reset_times = yield self.redis.get('arenaresets:%s' % uid)
+        # if user['xp'] / 100000 < D.ARENA_OPEN_LIMIT:
+        #     arenamark = 0
+        # else:
+        #     arenamark = yield self.redis.get('arenamark:%s' % uid)
+        #     if not arenamark:
+        #         arenamark = 0
+        reset_times = yield self.redis.get('arenaresets:%s' % user_id)
         if not reset_times:
             reset_times = 0
         cuser['reset_times'] = reset_times
-        ret = dict(user=cuser, arena=arenamark, timestamp=int(time.time()))
+        ret = dict(user=cuser, timestamp=int(time.time()))
         reb = zlib.compress(escape.json_encode(ret))
         self.write(ret)
 
@@ -90,37 +110,32 @@ class InfoHandler(ApiHandler):
 class GetHandler(ApiHandler):
     @storage.databaseSafe
     @defer.inlineCallbacks
-    @utils.signed
+    @utils.token
     @api('Arena get', '/arena/get/', [
-        Param('_sign', True, str, 'gGRwMApTJ3VpZCcKcDEKUyc5JwpwMgpzLK', 'gGRwMApTJ3VpZCcKcDEKUyc5JwpwMgpzLK', '_sign'),
-        Param('cid', True, str, '1', '1', 'cid'),
+        Param('stage_id', True, str, '010208_0', '010208_0', 'stage_id'),
+        Param('access_token', True, str, '010208_0', '010208_0', 'access_token'),
+        Param('idcard', True, str, '010208_0', '010208_0', 'idcard'),
+        Param('user_id', True, str, '7', '7', 'user_id'),
+        Param('heros1P', True, str, '[]', '[]', 'heros1P'),
+        Param('cuser_id', True, str, '1', '1', 'cuser_id'),
+        Param('heros2P', True, str, '[]', '[]', 'heros2P'),
     ], filters=[ps_filter], description="Arena get")
     def post(self):
-
-        uu = self.get_argument("uu", None)
-        if uu:
-            uu = "%s:%s:%s" % (self.request.remote_ip, self.request.path, uu)
-            ret = yield self.get_uu(uu)
-            if ret:
-                self.write(ret)
-                return
         try:
-            cid = self.get_argument("cid")
+            user_id = self.get_argument("user_id")
+            cuser_id = self.get_argument("cuser_id")
         except Exception:
-            raise web.HTTPError(400, "Argument error")
-        uid = self.uid
-        user = yield self.get_user(uid)
+            self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
+            return
+        user = yield self.get_user(user_id)
+        cuser = yield self.get_user(cuser_id)
 
-        if self.arg('cid') == str(uid):
-            arenas = yield self.get_arena(uid)
-            if arenas['now_rank'] != 1:
-                raise web.HTTPError(400, "Argument error")
-        arenatimes = yield self.redis.get('arenatimes:%s' % uid)
+        arenatimes = yield self.redis.get('arenatimes:%s' % user_id)
         if arenatimes:
             if arenatimes >= E.limit_by_arena:
                 self.write(dict(err=E.ERR_DISSATISFY_MAXENTRY, msg=E.errmsg(E.ERR_DISSATISFY_MAXENTRY)))
                 return
-        arenatime = yield self.redis.get('arenatime:%s' % uid)
+        arenatime = yield self.redis.get('arenatime:%s' % user_id)
         if arenatime:
             if arenatime != 0:
                 interval_times = int(time.time()) - arenatime
@@ -142,61 +157,47 @@ class GetHandler(ApiHandler):
         cwork = E.tagworks(user, {'ARENA': 1})
         if cwork:
             nuser = dict(works=user['works'])
-            yield self.set_user(uid, **nuser)
+            yield self.set_user(user_id, **nuser)
 
         fid = uuid.uuid4().hex
-        yield self.set_matchflush(fid, cid)
+        yield self.set_matchflush(fid, cuser_id)
         ret = dict(out=dict(flush=fid), timestamp=int(time.time()))
         reb = zlib.compress(escape.json_encode(ret))
         self.write(ret)
 
-        if uu:
-            yield self.set_uu(uu, ret)
-
-        yield self.redis.incr('arenatimes:%s' % uid)
-        yield self.redis.set('arenatime:%s' % uid, int(time.time()))
+        yield self.redis.incr('arenatimes:%s' % user_id)
+        yield self.redis.set('arenatime:%s' % user_id, int(time.time()))
 
 
 @handler
 class SetHandler(ApiHandler):
     @storage.databaseSafe
     @defer.inlineCallbacks
-    @utils.signed
+    @utils.token
     @api('Arena set', '/arena/set/', [
         Param('fid', True, str, '0cb9abd2f380497198c769344279a7cd', '0cb9abd2f380497198c769344279a7cd', 'fid'),
-        Param('_sign', True, str, '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK', '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK',
-              '_sign'),
-        Param('hids', True, str, '01002,01001', '01002,01001', 'hids'),
-        Param('formation', True, str, '1', '1', 'formation'),
-        Param('chids', True, str, '01002,01001', '01002,01001', 'chids'),
-        Param('cformation', True, str, '1', '1', 'cformation'),
+        Param('access_token', True, str, '010208_0', '010208_0', 'access_token'),
+        Param('idcard', True, str, '010208_0', '010208_0', 'idcard'),
+        Param('user_id', True, str, '7', '7', 'user_id'),
         Param('result', True, int, 1, 1, 'result'),
     ], filters=[ps_filter], description="Arena set")
     def post(self):
-        # print 'SetHandler get()'
-
-        uu = self.get_argument("uu", None)
-        if uu:
-            uu = "%s:%s:%s" % (self.request.remote_ip, self.request.path, uu)
-            ret = yield self.get_uu(uu)
-            if ret:
-                self.write(ret)
-                return
         try:
             fid = self.get_argument("fid")
+            user_id = self.get_argument("user_id")
+            result = self.get_argument("result")
         except Exception:
-            raise web.HTTPError(400, "Argument error")
+            self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
+            return
 
-        uid = self.uid
-        user = yield self.get_user(uid)
-        cid = yield self.get_matchflush(fid)
-        cuser = yield self.get_user(cid)
-        result = self.get_argument('result', 1)
+        user = yield self.get_user(user_id)
+        cuser_id = yield self.get_matchflush(fid)
+        cuser = yield self.get_user(cuser_id)
         # print 'result', result
         if int(result) == 1:
-            if str(uid) != str(cid):
+            if str(user_id) != str(cuser_id):
                 if cuser:
-                    now_rank, before_rank, last_rank = yield self.update_arenaresult(user, cid, E.true)
+                    now_rank, before_rank, last_rank = yield self.update_arenaresult(user, cuser, E.true)
                     if now_rank < before_rank:
                         before = before_rank
                         up = before - now_rank
@@ -206,32 +207,27 @@ class SetHandler(ApiHandler):
                         mail = D.ARENAMAIL
                         content = mail['content'] % (now_rank, up)
                         if awards:
-                            yield self.send_mails(mail['sender'], uid, mail['title'], content, awards)
+                            yield self.send_mails(mail['sender'], user_id, mail['title'], content, awards)
                         if now_rank == 1:
                             yield self.redis.rpush("message", pickle.dumps(
                                 [D.ARENATOPMESSAGE[0] % user['nickname'], D.ARENATOPMESSAGE[1] % int(time.time())]))
                         cuser = dict(now_rank=now_rank, before_rank=before, last_rank=last_rank, up=up, awards=awards)
                     else:
                         cuser = dict(now_rank=now_rank, before_rank=before_rank, last_rank=last_rank)
-                arenawintimes = yield self.redis.incr('arenawintimes:%s' % uid)
+                arenawintimes = yield self.redis.incr('arenawintimes:%s' % user_id)
                 if arenawintimes >= 3:
                     yield self.redis.rpush("message", pickle.dumps(
                         [D.ARENAWINMESSAGE[0] % user['nickname'], D.ARENAWINMESSAGE[1] % int(time.time())]))
-                yield self.set_arena(uid)
+                yield self.set_arena(user_id)
             ret = dict(user=cuser, timestamp=int(time.time()))
 
         else:
-            if str(uid) != str(cid):
-                yield self.update_arenaresult(user, cid, E.false)
-                yield self.redis.delete('arenawintimes:%s' % uid)
-
+            yield self.update_arenaresult(user, cuser, E.false)
+            yield self.redis.delete('arenawintimes:%s' % user_id)
             ret = dict(timestamp=int(time.time()))
-        yield self.redis.set('arenamark:%s' % cid, E.true)
+        yield self.redis.set('arenamark:%s' % cuser_id, E.true)
         reb = zlib.compress(escape.json_encode(ret))
         self.write(ret)
-        if uu:
-            yield self.set_uu(uu, ret)
-
 
 @handler
 class MatchHandler(ApiHandler):

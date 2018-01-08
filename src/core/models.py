@@ -311,9 +311,17 @@ class Gate(models.Model):
     winTime = models.PositiveIntegerField(_('winTime'), default=120)
     rageTime = models.PositiveIntegerField(_('rageTime'), default=40)
 
-    resource = models.PositiveIntegerField(_('resource'), default=500)
-    resourceLimit = models.PositiveIntegerField(_('resourceLimit'), default=1000)
-    resourceGrowSpeed = models.PositiveIntegerField(_('resourceGrowSpeed'), default=1)
+    #resource = models.PositiveIntegerField(_('resource'), default=500)
+    #resourceLimit = models.PositiveIntegerField(_('resourceLimit'), default=1000)
+    #resourceGrowSpeed = models.PositiveIntegerField(_('resourceGrowSpeed'), default=1)
+
+    supplyNow1p = models.PositiveIntegerField(_('supplyNow1p'), default=500)
+    supplyMax1p = models.PositiveIntegerField(_('supplyMax1p'), default=500)
+    supplyGrowSpeed1p = models.PositiveIntegerField(_('supplyGrowSpeed1p'), default=500)
+
+    supplyNow2p = models.PositiveIntegerField(_('supplyNow2p'), default=500)
+    supplyMax2p = models.PositiveIntegerField(_('supplyMax2p'), default=500)
+    supplyGrowSpeed2p = models.PositiveIntegerField(_('supplyGrowSpeed2p'), default=500)
 
     map = models.PositiveIntegerField(_('map'), default=1)
     barrie = models.TextField(_('barrie'), blank=True)
