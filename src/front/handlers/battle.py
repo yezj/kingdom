@@ -29,7 +29,7 @@ class GetHandler(ApiHandler):
         Param('access_token', True, str, '010208_0', '010208_0', 'access_token'),
         Param('idcard', True, str, '010208_0', '010208_0', 'idcard'),
         Param('user_id', True, str, '7', '7', 'user_id'),
-        Param('formationList', True, str, '[5,1,2,4,8]', '[5,1,2,4,8]', 'formationList'),
+        Param('heros1P', True, str, '[]', '[]', 'heros1P'),
     ], filters=[ps_filter], description="Battle get")
     def get(self):
         try:
@@ -38,32 +38,74 @@ class GetHandler(ApiHandler):
             access_token = self.get_argument("access_token")
             user_id = self.get_argument("user_id")
             idcard = self.get_argument("idcard")
-            formationList = self.get_argument("formationList")
+            heros1P = self.get_argument("heros1P")
 
         except Exception:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
 
-        query = """SELECT "playerLevel", avat, nickname, formations FROM core_user WHERE user_id=%s LIMIT 1"""
+        query = """SELECT "playerLevel", avat, nickname FROM core_user WHERE user_id=%s LIMIT 1"""
         res = yield self.sql.runQuery(query, (user_id,))
         if res:
-            playerLevel, avat, nickname, heros1P = res[0]
+            playerLevel, avat, nickname = res[0]
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return
 
         battleId = uuid.uuid4().hex
 
-        res = yield self.sql.runQuery("SELECT jgates FROM core_gate WHERE gate_id=%s LIMIT 1", (stage_id,))
+        res = yield self.sql.runQuery("""SELECT gate_id, type, "is1PLeft", "winCondition", "winTarget", "winTargetNum",
+                    "lostTarget", "lostTargetNum", "winTime", "rageTime", resource, "resourceLimit", "resourceGrowSpeed",
+                     map, barrie, "wave1P", "wave2P", "name_2P", "level_2P", "icon_2P", "herosNum1P", "herosPermit1P",
+                      "herosLevelPermit1P", "soldiersPermit1P", "heros2P", "initTeam1P", "initTeam2P" FROM core_gate
+                       WHERE gate_id=%s LIMIT 1""", (stage_id,))
         if res:
-            jgates, = res[0]
-            jgates = escape.json_decode(jgates)
-            jgates.update(dict(battleId=battleId,
-                               level_1P=playerLevel,
-                               icon_1P=avat,
-                               name_1P=nickname,
-                               heros1P=heros1P,
-                               timestamp=int(time.time())))
+            gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum, winTime, \
+            rageTime, resource, resourceLimit, resourceGrowSpeed, map, barrie, wave1P, wave2P, name_2P, level_2P, \
+            icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P, initTeam1P, \
+            initTeam2P = res[0]
+            # print 'jgates', jgates
+            # jgates = escape.json_decode(jgates)
+            jgates = dict(battleId=battleId,
+                          level_1P=playerLevel,
+                          icon_1P=avat,
+                          name_1P=nickname,
+                          heros1P=escape.json_decode(heros1P),
+                          gate_id=gate_id,
+                          type=type,
+                          is1PLeft=is1PLeft,
+                          winCondition=winCondition,
+                          winTarget=winTarget,
+                          winTargetNum=winTargetNum,
+                          lostTarget=lostTarget,
+                          lostTargetNum=lostTargetNum,
+                          winTime=winTime,
+                          rageTime=rageTime,
+                          resource=resource,
+                          resourceLimit=resourceLimit,
+                          resourceGrowSpeed=resourceGrowSpeed,
+                          map=map,
+                          barrie=escape.json_decode(barrie),
+                          wave1P=escape.json_decode(wave1P),
+                          wave2P=escape.json_decode(wave2P),
+                          name_2P=name_2P,
+                          level_2P=level_2P,
+                          icon_2P=icon_2P,
+                          herosNum1P=herosNum1P,
+                          herosPermit1P=escape.json_decode(herosPermit1P),
+                          herosLevelPermit1P=herosLevelPermit1P,
+                          soldiersPermit1P=escape.json_decode(soldiersPermit1P),
+                          heros2P=escape.json_decode(heros2P),
+                          initTeam1P=escape.json_decode(initTeam1P),
+                          initTeam2P=escape.json_decode(initTeam2P),
+                          timestamp=int(time.time())
+                          )
+            # jgates.update(dict(battleId=battleId,
+            #                    level_1P=playerLevel,
+            #                    icon_1P=avat,
+            #                    name_1P=nickname,
+            #                    heros1P=escape.json_decode(heros1P),
+            #                    timestamp=int(time.time())))
         else:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
             return

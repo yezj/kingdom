@@ -11,7 +11,7 @@ class ChannelAdmin(admin.ModelAdmin):
 
 
 class UserAdmin(admin.ModelAdmin):
-    #list_display = ('nickname', 'avat', 'xp', 'gold', 'rock')
+    # list_display = ('nickname', 'avat', 'xp', 'gold', 'rock')
     search_fields = ('nickname',)
 
 
@@ -20,9 +20,16 @@ class MailAdmin(admin.ModelAdmin):
     search_fields = ('title',)
 
 
+class GateAdmin(admin.ModelAdmin):
+    pass
 
+
+class ArenaAdmin(admin.ModelAdmin):
+    pass
 
 
 admin.site.register(Channel, ChannelAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Mail, MailAdmin)
+admin.site.register(Gate, GateAdmin)
+admin.site.register(Arena, ArenaAdmin)

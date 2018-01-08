@@ -150,7 +150,7 @@ class ActiveHandler(ApiHandler):
                          arenaOtherRank=arenaOtherRank,
                          arenaOtherPlace=arenaOtherPlace,
                          unlockSlotNum=0,
-                         heroList=escape.json_decode(hero_list),
+                         heroList=hero_list,
                          soldierList=escape.json_decode(soldierList),
                          formations=escape.json_decode(formations),
                          items=escape.json_decode(items),
@@ -192,17 +192,91 @@ class ActiveHandler(ApiHandler):
         self.write(users)
 
 
-# @handler
-# class SyncHandler(ApiHandler):
-#     @storage.databaseSafe
-#     @defer.inlineCallbacks
-#     @utils.signed
-#     @api('Sync', '/sync/', [
-#         Param('channel', False, str, 'putaogame', 'putaogame', 'channel'),
-#         Param('_sign', True, str, '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK', '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK',
-#               '_sign'),
-#     ], filters=[ps_filter], description="Sync")
-#     def post(self):
+@handler
+class SyncHandler(ApiHandler):
+    @utils.token
+    @storage.databaseSafe
+    @defer.inlineCallbacks
+    @api('Sync', '/sync/', [
+        Param('channel', False, str, 'test1', 'test1', 'channel'),
+        Param('idcard', True, str, '864c04bf73a445fd84da86a206060c48h20', '864c04bf73a445fd84da86a206060c48h20',
+              'idcard'),
+        Param('user_id', False, str, '1', '1', 'user_id'),
+        Param('access_token', False, str, '55526fcb39ad4e0323d32837021655300f957edc',
+              '55526fcb39ad4e0323d32837021655300f957edc', 'access_token'),
+        Param('zone', True, str, '0', '0', 'zone'),
+    ], filters=[ps_filter], description="Sync")
+    def get(self):
+        try:
+            channel = self.get_argument("channel", "test1")
+            idcard = self.get_argument("idcard")
+            zone = self.get_argument("zone")
+        except Exception:
+            raise web.HTTPError(400, "Argument error")
+        if idcard:
+            ahex, aid = idcard.split('h', 1)
+            query = """SELECT nickname, avat, "playerLevel", "playerXp", "goldcoin", gem, "honorPoint",\
+                  "arena5v5Rank", "arena5v5Place",  "arenaOtherRank", "arenaOtherPlace", "heroList", "soldierList",\
+                   formations, items, "headIconList", "titleList", achievement, "playerConfig", "buddyList",\
+                    "playerStatusInfo", jmails, "annalNormal", "annelCurrentGateNormal", "annalHero",\
+                     "annelCurrentGateHero", "annalEpic", "dungeonAnnelHero", "dungeonAnnelEpic",\
+                      "dungeonAnnelGatesNormal", "dungeonAnnelGatesHero", "dungeonAnnelGatesEpic"\
+                       FROM core_user WHERE hex=%s and id=%s LIMIT 1"""
+            params = (ahex, aid)
+            res = yield self.sql.runQuery(query, params)
+            if res:
+                nickname, avat, playerLevel, playerXp, goldcoin, gem, honorPoint, arena5v5Rank, arena5v5Place,\
+                arenaOtherRank, arenaOtherPlace, heroList, soldierList, formations, items, headIconList, titleList,\
+                achievement, playerConfig, buddyList, playerStatusInfo, jmails, annalNormal, annelCurrentGateNormal,\
+                annalHero, annelCurrentGateHero, annalEpic, dungeonAnnelHero, dungeonAnnelEpic, dungeonAnnelGatesNormal, \
+                dungeonAnnelGatesHero, dungeonAnnelGatesEpic = res[0]
+            else:
+                self.write(dict(err=E.ERR_USER_NOTFOUND, msg=E.errmsg(E.ERR_USER_NOTFOUND)))
+                return
+                # yield self.predis.hset('zone:%s:%s' % (zone, datetime.datetime.now().strftime('%Y%m%d')), aid, E.true)
+            hero_list = []
+            heroList = escape.json_decode(heroList)
+            for index, one in enumerate(heroList):
+                if int(one['unlock']) != 0:
+                    hero_list.append(one)
+            for index, one in enumerate(hero_list):
+                one.pop("unlock")
+            users = dict(avat=avat,
+                         playerLevel=playerLevel,
+                         playerXp=playerXp,
+                         goldcoin=goldcoin,
+                         gem=gem,
+                         honorPoint=honorPoint,
+                         arena5v5Rank=arena5v5Rank,
+                         arena5v5Place=arena5v5Place,
+                         arenaOtherRank=arenaOtherRank,
+                         arenaOtherPlace=arenaOtherPlace,
+                         unlockSlotNum=0,
+                         heroList=hero_list,
+                         soldierList=escape.json_decode(soldierList),
+                         formations=escape.json_decode(formations),
+                         items=escape.json_decode(items),
+                         headIconList=escape.json_decode(headIconList),
+                         titleList=escape.json_decode(titleList),
+                         achievement=escape.json_decode(achievement),
+                         playerConfig=escape.json_decode(playerConfig),
+                         buddyList=escape.json_decode(buddyList),
+                         playerStatusInfo=escape.json_decode(playerStatusInfo),
+                         jmails=escape.json_decode(jmails),
+                         annalNormal=escape.json_decode(annalNormal),
+                         annelCurrentGateNormal=escape.json_decode(annelCurrentGateNormal),
+                         annalHero=escape.json_decode(annalHero),
+                         annelCurrentGateHero=escape.json_decode(annelCurrentGateHero),
+                         annalEpic=escape.json_decode(annalEpic),
+                         dungeonAnnelHero=escape.json_decode(dungeonAnnelHero),
+                         dungeonAnnelEpic=escape.json_decode(dungeonAnnelEpic),
+                         dungeonAnnelGatesNormal=escape.json_decode(dungeonAnnelGatesNormal),
+                         dungeonAnnelGatesHero=escape.json_decode(dungeonAnnelGatesHero),
+                         dungeonAnnelGatesEpic=escape.json_decode(dungeonAnnelGatesEpic),
+                         )
+
+        self.write(users)
+
 #         uid = self.uid
 #         user = yield self.get_user(uid)
 #         notice = yield self.get_notice()

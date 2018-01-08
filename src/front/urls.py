@@ -8,6 +8,7 @@ from front.handlers import stage
 from front.handlers import battle
 from front.handlers import formation
 from front.handlers import hero
+from front.handlers import arena
 # from front.debug import gmprod
 # from front.debug import gmaccount
 # from front.debug import gmhero
@@ -18,7 +19,7 @@ url_patterns = [
     (r'/', home.HomeHandler),
     (r'/active/', home.ActiveHandler),
     (r'/startup/', home.StartupHandler),
-    # (r'/sync/', home.SyncHandler),
+    (r'/sync/', home.SyncHandler),
     # (r'/syncdb/', home.SyncdbHandler),
     # (r'/flushdb/', home.FlushdbHandler),
 

@@ -168,7 +168,7 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                 for i in range(5):
 
                     try:
-                        res = yield self.sql.runQuery(query, params)
+                        res = yield self.sql.runOperation(query, params)
                         print 'res', res
                         aid = res[0][0]
                         idcard = '%sh%s' % (ahex, aid)
@@ -177,8 +177,34 @@ class BaseHandler(web.RequestHandler, storage.DatabaseMixin):
                         log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
                         continue
 
+                query = """INSERT INTO core_arena(user_id, rank, timestamp) VALUE (%s, %s, %s)"""
+                params = (aid, '[25, 0]', int(time.time()))
+                for i in range(5):
+
+                    try:
+                        res = yield self.sql.runOperation(query, params)
+                        print 'res', res
+                        break
+                    except storage.IntegrityError:
+                        log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
+                        continue
+
         defer.returnValue(idcard)
 
+    @storage.databaseSafe
+    @defer.inlineCallbacks
+    def set_flush(self, key, value):
+        yield self.redis.setex("flush:%s" % key, 36000, pickle.dumps(value))
+
+    @storage.databaseSafe
+    @defer.inlineCallbacks
+    def get_flush(self, key):
+        value = yield self.redis.get("flush:%s" % key)
+        if value:
+            yield self.redis.delete("flush:%s" % key)
+            defer.returnValue(pickle.loads(value))
+        else:
+            defer.returnValue(None)
 
 @storage.databaseSafe
 @defer.inlineCallbacks
