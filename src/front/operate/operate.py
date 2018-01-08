@@ -10,27 +10,18 @@ from front.wiapi import *
 from front.handlers.base import ApiHandler, ApiJSONEncoder
 
 @handler
-class AccountHandler(ApiHandler):
+class TestHandler(ApiHandler):
 
     @storage.databaseSafe
-    @defer.inlineCallbacks
-    @api('Operate account', '/operate/account/', [
-        Param('bid', True, str, 1.11, 1.11, 'before id'),
-        Param('nid', True, str, 2.10, 2.10, 'now id'),
-        ], filters=[ps_filter], description="Operate account")
+    #@defer.inlineCallbacks
+    @api('Operate test', '/operate/test/', [
+        Param('formation', True, str, '[]', '[]', 'formation'),
+        ], filters=[ps_filter], description="Operate test")
     def get(self):
-        bid = self.get_argument('bid', None)
-        if bid:
-            bid = bid.split('.')[0]
-        nid = self.get_argument('nid', None)
-        if nid:
-            nid = nid.split('.')[0]
-        res = yield self.sql.runQuery("SELECT authstring FROM core_account WHERE user_id=%s OR user_id=%s", (bid, nid))
-        baccount = res[0][0]
-        naccount = res[1][0]
-        if baccount and naccount:
-            yield self.sql.runQuery("UPDATE core_account SET authstring=%s WHERE user_id=%s RETURNING id", (baccount, nid))
-            yield self.sql.runQuery("UPDATE core_account SET authstring=%s WHERE user_id=%s RETURNING id", (naccount, bid))
-            self.write("SUCCESS")
+        formation = self.get_argument('formation', None)
+        if formation:
+            formation = escape.json_decode(formation)
+            self.write(formation)
         else:
-            raise web.HTTPError(400, "Argument error")
+            self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
+            return

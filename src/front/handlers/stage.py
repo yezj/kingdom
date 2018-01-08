@@ -30,6 +30,7 @@ class GetHandler(ApiHandler):
             stage_id = self.get_argument("stage_id")
         except Exception:
             raise web.HTTPError(400, "Argument error")
+<<<<<<< HEAD
         jstages = dict(stage_id=stage_id,
                        battleId=uuid.uuid4().hex,
                        rs1=456897635,
@@ -45,6 +46,12 @@ class GetHandler(ApiHandler):
                        resourceLimit=1000,
                        resourceGrowSpeed=1,
                        timestamp=int(time.time()))
+=======
+        jstages = dict(stage_id=stage_id, battleId=uuid.uuid4().hex, rs1=456897635, rs2=12345, is1PLeft=False,
+                       name_1P=u"我要霸占你你秀发",
+                       name_2P=u"浅时光Bonns", level_1P=23, level_2P=35, icon_1P=301, icon_2P=401, resource=500,
+                       resourceLimit=1000, resourceGrowSpeed=1, timestamp=int(time.time()))
+>>>>>>> 5bfa9ffd6d151c5ab32a73d01e3a672325d8541f
 
         res = yield self.sql.runQuery("SELECT jgates FROM core_gate WHERE gate_id=%s LIMIT 1", (stage_id,))
         if res:
@@ -54,7 +61,20 @@ class GetHandler(ApiHandler):
             jgates = {}
 
         jgates.update(jstages)
+<<<<<<< HEAD
         #ret = dict(stage_id=stage_id, jstages=jgates, timestamp=int(time.time()))
+=======
+        print 11111, jgates
+        # print type(jgates), jgates,
+        # a = {u'resourceLimit': 1000, u'resource': 500, u'name_2P': '浅时光Bonns', u'icon_1P': 301, 'resourceGrowSpeed': 1,
+        #      u'level_2P': 35, u'battleId': 'fdc910b65673438dabd80f44762251f0', u'level_1P': 23,
+        #      u'name_1P': '我要霸占你你秀发',
+        #      u'is1PLeft': False, u'rs1': 456897635, u'rs2': 12345, u'icon_2P': 401}
+        # print jgates.items()
+        # a.update(jgates)
+        # print dict(jgates.items() + a.items())
+        # ret = dict(stage_id=stage_id, jstages=jgates, timestamp=int(time.time()))
+>>>>>>> 5bfa9ffd6d151c5ab32a73d01e3a672325d8541f
         # reb = zlib.compress(escape.json_encode(ret))
         self.write(jgates)
 

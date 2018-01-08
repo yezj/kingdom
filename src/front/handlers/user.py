@@ -30,7 +30,7 @@ class GetHandler(ApiHandler):
     @defer.inlineCallbacks
     @utils.signed
     @api('User get', '/user/get/', [
-        Param('channel', False, str, 'putaogame', 'putaogame', 'channel'),
+        Param('channel', False, str, 'test1', 'test1', 'channel'),
         Param('_sign', True, str, '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK', '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK', '_sign'),
         ], filters=[ps_filter], description="User get")
     def post(self):
@@ -44,7 +44,7 @@ class SetHandler(ApiHandler):
     @defer.inlineCallbacks
     @utils.signed
     @api('User set', '/user/set/', [
-        Param('channel', False, str, 'putaogame', 'putaogame', 'channel'),
+        Param('channel', False, str, 'test1', 'test1', 'channel'),
         Param('nickname', False, str, '帅哥', '帅哥', 'nickname'),
         Param('avat', False, str, '1', '1', 'avat'),
         Param('_sign', True, str, '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK', '4GRwMApTJ3VpZCcKcDEKUycxMScKcDIKcyK', '_sign'),
