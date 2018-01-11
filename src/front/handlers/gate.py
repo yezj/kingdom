@@ -189,7 +189,7 @@ class SetHandler(ApiHandler):
                      "level_2P", "icon_2P", "herosNum1P", "herosPermit1P", "herosLevelPermit1P", "soldiersPermit1P",
                       "heros2P", "initTeam1P", "initTeam2P", created_at) 
                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s %s, %s, %s, %s, %s, %s, %s, %s,
-                       %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"""
+                       %s, %s, %s, %s, %s, %s) RETURNING id"""
             params = (gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,
                       winTime, rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p,
                       supplyGrowSpeed2p, map, barrie, wave1P, wave2P,
