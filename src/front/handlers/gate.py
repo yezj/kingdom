@@ -52,13 +52,13 @@ class GetHandler(ApiHandler):
         res = yield self.sql.runQuery("""SELECT gate_id, type, "is1PLeft", "winCondition", "winTarget", "winTargetNum",
                     "lostTarget", "lostTargetNum", "winTime", "rageTime", "supplyNow1p", "supplyMax1p", "supplyGrowSpeed1p",
                     "supplyNow2p", "supplyMax2p", "supplyGrowSpeed2p", map, barrie, "wave1P", "wave2P", "name_2P", "level_2P", "icon_2P", "herosNum1P", "herosPermit1P",
-                      "herosLevelPermit1P", "soldiersPermit1P", "heros2P", "initTeam1P", "initTeam2P" FROM core_gate
+                      "herosLevelPermit1P", "soldiersPermit1P", "heros2P", "initTeam1P", "initTeam2P", "pathType", barricade FROM core_gate
                        WHERE gate_id=%s LIMIT 1""", (gate_id,))
         if res:
             gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum, winTime, \
             rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p, supplyGrowSpeed2p, map, barrie, wave1P, wave2P, name_2P, level_2P, \
             icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P, initTeam1P, \
-            initTeam2P = res[0]
+            initTeam2P, pathType, barricade = res[0]
             # print 'jgates', jgates
             # jgates = escape.json_decode(jgates)
             jgates = dict(gate_id=gate_id,
@@ -91,6 +91,8 @@ class GetHandler(ApiHandler):
                           heros2P=escape.json_decode(heros2P),
                           initTeam1P=escape.json_decode(initTeam1P),
                           initTeam2P=escape.json_decode(initTeam2P),
+                          pathType=pathType,
+                          barricade=barricade,
                           timestamp=int(time.time())
                           )
         else:
@@ -144,6 +146,9 @@ class SetHandler(ApiHandler):
         Param('heros2P', True, str, '[]', '[]', 'heros2P'),
         Param('initTeam1P', True, str, '[]', '[]', 'initTeam1P'),
         Param('initTeam2P', True, str, '[]', '[]', 'initTeam2P'),
+
+        Param('pathType', True, int, 1, 1, 'pathType'),
+        Param('barricade', True, int, 1, 1, 'barricade'),
     ], filters=[ps_filter], description="Batt")
     def get(self):
         try:
@@ -179,6 +184,8 @@ class SetHandler(ApiHandler):
             heros2P = self.get_argument("heros2P")
             initTeam1P = self.get_argument("initTeam1P")
             initTeam2P = self.get_argument("initTeam2P")
+            pathType = self.get_argument("pathType")
+            barricade = self.get_argument("barricade")
         except Exception:
             raise web.HTTPError(400, "Argument error")
         res = yield self.sql.runQuery("SELECT * FROM core_gate WHERE gate_id=%s LIMIT 1", (gate_id,))
@@ -187,14 +194,14 @@ class SetHandler(ApiHandler):
                     "lostTarget", "lostTargetNum", "winTime", "rageTime", "supplyNow1p", "supplyMax1p", "supplyGrowSpeed1p",
                     "supplyNow2p", "supplyMax2p", "supplyGrowSpeed2p", map, barrie, "wave1P", "wave2P", "name_2P",
                      "level_2P", "icon_2P", "herosNum1P", "herosPermit1P", "herosLevelPermit1P", "soldiersPermit1P",
-                      "heros2P", "initTeam1P", "initTeam2P", created_at) 
+                      "heros2P", "initTeam1P", "initTeam2P", "pathType", barricade, created_at) 
                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                       %s, %s, %s, %s, %s, %s) RETURNING id"""
+                       %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"""
             params = (gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,
                       winTime, rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p,
                       supplyGrowSpeed2p, map, barrie, wave1P, wave2P,
                       name_2P, level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
-                      heros2P, initTeam1P, initTeam2P, int(time.time()))
+                      heros2P, initTeam1P, initTeam2P, pathType, barricade, int(time.time()))
             print query % params
             for i in range(5):
                 try:
@@ -210,12 +217,12 @@ class SetHandler(ApiHandler):
                      "supplyMax2p"=%s, "supplyGrowSpeed2p"=%s, map=%s, barrie=%s, "wave1P"=%s, "wave2P"=%s,
                       "name_2P"=%s, "level_2P"=%s, "icon_2P"=%s, "herosNum1P"=%s, "herosPermit1P"=%s,
                       "herosLevelPermit1P"=%s, "soldiersPermit1P"=%s, "heros2P"=%s, "initTeam1P"=%s, "initTeam2P"=%s,
-                       created_at=%s WHERE gate_id=%s"""
+                      "pathType"=%s, "barricade"=%s, created_at=%s WHERE gate_id=%s"""
             params = (type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,
                       winTime, rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p,
                       supplyGrowSpeed2p, map, barrie, wave1P, wave2P,
                       name_2P, level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
-                      heros2P, initTeam1P, initTeam2P, int(time.time()), gate_id)
+                      heros2P, initTeam1P, initTeam2P, pathType, barricade, int(time.time()), gate_id)
             print query % params
             for i in range(5):
                 try:

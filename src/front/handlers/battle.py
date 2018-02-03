@@ -58,13 +58,14 @@ class GetHandler(ApiHandler):
                     "lostTarget", "lostTargetNum", "winTime", "rageTime", "supplyNow1p", "supplyMax1p", "supplyGrowSpeed1p",
                     "supplyNow2p", "supplyMax2p", "supplyGrowSpeed2p",
                      map, barrie, "wave1P", "wave2P", "name_2P", "level_2P", "icon_2P", "herosNum1P", "herosPermit1P",
-                      "herosLevelPermit1P", "soldiersPermit1P", "heros2P", "initTeam1P", "initTeam2P" FROM core_gate
+                      "herosLevelPermit1P", "soldiersPermit1P", "heros2P", "initTeam1P", "initTeam2P", "pathType", "barricade" FROM core_gate
                        WHERE gate_id=%s LIMIT 1""", (stage_id,))
+
         if res:
             gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum, winTime, \
             rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p, supplyGrowSpeed2p, map, barrie, wave1P, wave2P, name_2P, level_2P, \
             icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P, initTeam1P, \
-            initTeam2P = res[0]
+            initTeam2P, pathType, barricade = res[0]
             # print 'jgates', jgates
             # jgates = escape.json_decode(jgates)
             jgates = dict(battleId=battleId,
@@ -102,6 +103,8 @@ class GetHandler(ApiHandler):
                           heros2P=escape.json_decode(heros2P),
                           initTeam1P=escape.json_decode(initTeam1P),
                           initTeam2P=escape.json_decode(initTeam2P),
+                          pathType=pathType,
+                          barricade=barricade,
                           timestamp=int(time.time())
                           )
             # jgates.update(dict(battleId=battleId,
