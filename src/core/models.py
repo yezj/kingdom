@@ -340,6 +340,9 @@ class Gate(models.Model):
     heros2P = models.TextField(_('heros2P'), blank=True)
     initTeam1P = models.TextField(_('initTeam1P'), blank=True)
     initTeam2P = models.TextField(_('initTeam2P'), blank=True)
+
+    pathType = models.PositiveIntegerField(_('pathType'), default=1)
+    barricade = models.BooleanField(_('barricade'), default=True)
     created_at = models.PositiveIntegerField(_('Created_at'), default=0)
 
     class Meta:
