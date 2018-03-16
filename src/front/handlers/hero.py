@@ -132,7 +132,7 @@ class SetHandler(ApiHandler):
                     IS_EXISTED = False
             if unlock:
                 if IS_EXISTED and int(unlock) == 1:
-                    for one in D.HEROS:
+                    for one in D.HERO:
                         if "id" in one:
                             if int(one["id"]) == int(id) and int(one["able"]) == 1:
                                 heroList.append(
