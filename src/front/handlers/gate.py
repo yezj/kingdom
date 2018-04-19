@@ -110,7 +110,7 @@ class SetHandler(ApiHandler):
     # @utils.signed
     @api('Gate set', '/gate/set/', [
         Param('gate_id', True, str, '010208_0', '010208_0', 'gate_id'),
-        Param('type', True, str, 'Siege3', 'Siege3', 'type'),
+        Param('type', True, str, 'Siege', 'Siege', 'type'),
         Param('is1PLeft', True, int, 1, 1, 'is1PLeft'),
         Param('winCondition', True, int, 1, 1, 'winCondition'),
 
@@ -133,7 +133,7 @@ class SetHandler(ApiHandler):
         Param('barrie', True, str, '[]', '[]', 'barrie'),
         Param('wave1P', True, str, '[]', '[]', 'wave1P'),
         Param('wave2P', True, str, '[]', '[]', 'wave2P'),
-        Param('name_2P', True, str, 'Siege3', 'Siege3', 'name_2P'),
+        Param('name_2P', True, str, 'name_2P', 'name_2P', 'name_2P'),
         Param('level_2P', True, int, 1, 1, 'level_2P'),
         Param('icon_2P', True, int, 1, 1, 'icon_2P'),
 
@@ -200,7 +200,7 @@ class SetHandler(ApiHandler):
             params = (gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,
                       winTime, rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p,
                       supplyGrowSpeed2p, map, barrie, wave1P, wave2P,
-                      name_2P, level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
+                      escape.json_encode(name_2P), level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
                       heros2P, initTeam1P, initTeam2P, pathType, barricade, int(time.time()))
             print query % params
             for i in range(5):
