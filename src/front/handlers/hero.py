@@ -76,6 +76,10 @@ class SetHandler(ApiHandler):
         Param('grade', False, int, 0, 0, 'grade'),
         Param('skillLevel', False, str, '[7,3,1]', '[7,3,1]', 'skillLevel'),
         Param('talent', False, str, '[0,2,1,2]', '[0,2,1,2]', 'talent'),
+        Param('cardNum', False, int, 120, 120, 'cardNum'),
+        Param('soldierCooldownTime', False, int, 3600, 3600, 'soldierCooldownTime'),
+        Param('currentSoldierIndex', False, int, 0, 0, 'currentSoldierIndex'),
+        Param('leadingSoldierData', False, str, '{}', '{}', 'leadingSoldierData'),
         Param('idcard', True, str, '864c04bf73a445fd84da86a206060c48h20', '864c04bf73a445fd84da86a206060c48h20',
               'idcard'),
         Param('user_id', True, str, '1', '1', 'user_id'),
@@ -93,6 +97,11 @@ class SetHandler(ApiHandler):
             grade = self.get_argument("grade", None)
             skillLevel = self.get_argument("skillLevel", None)
             talent = self.get_argument("talent", None)
+            cardNum = self.get_argument("cardNum", None)
+            soldierCooldownTime = self.get_argument("soldierCooldownTime", None)
+            currentSoldierIndex = self.get_argument("currentSoldierIndex", None)
+            leadingSoldierData = self.get_argument("leadingSoldierData", None)
+
             idcard = self.get_argument("idcard")
         except Exception:
             self.write(dict(err=E.ERR_ARGUMENT, msg=E.errmsg(E.ERR_ARGUMENT)))
@@ -121,7 +130,14 @@ class SetHandler(ApiHandler):
                 heros.update(dict(skillLevel=skillLevel))
             if talent:
                 heros.update(dict(talent=talent))
-
+            if cardNum:
+                heros.update(dict(cardNum=cardNum))
+            if soldierCooldownTime:
+                heros.update(dict(soldierCooldownTime=soldierCooldownTime))
+            if currentSoldierIndex:
+                heros.update(dict(currentSoldierIndex=currentSoldierIndex))
+            if leadingSoldierData:
+                heros.update(dict(leadingSoldierData=leadingSoldierData))
             print 'heros', heros
             heroList, = res[0]
             heroList = escape.json_decode(heroList)

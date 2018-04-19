@@ -122,7 +122,17 @@ USERINIT = {
             "xp": 12000,
             "skillLevel": [7, 3, 1],
             "talent": [0, 2, 1, 2],
-            "goldSkin": True
+            "goldSkin": True,
+            "cardNum": 120,
+            "soldierCooldownTime": 3600,
+            "currentSoldierIndex": 0,
+            "leadingSoldierData": [{
+                "soldierId": 0,
+                "cardNum": 30,
+                "soldierLevel": 0,
+                "shapeId": 0
+            },
+            ]
         },
         {
             "id": 102,
@@ -130,7 +140,17 @@ USERINIT = {
             "xp": 600,
             "skillLevel": [3, 1, 0],
             "talent": [2],
-            "goldSkin": True
+            "goldSkin": True,
+            "cardNum": 120,
+            "soldierCooldownTime": 3600,
+            "currentSoldierIndex": 0,
+            "leadingSoldierData": [{
+                "soldierId": 0,
+                "cardNum": 30,
+                "soldierLevel": 2,
+                "shapeId": 121
+            },
+            ]
         },
         {
             "id": 103,
