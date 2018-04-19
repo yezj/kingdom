@@ -81,7 +81,7 @@ class GetHandler(ApiHandler):
                           barrie=escape.json_decode(barrie),
                           wave1P=escape.json_decode(wave1P),
                           wave2P=escape.json_decode(wave2P),
-                          name_2P=name_2P,
+                          name_2P=escape.json_decode(name_2P),
                           level_2P=level_2P,
                           icon_2P=icon_2P,
                           herosNum1P=herosNum1P,
