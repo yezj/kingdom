@@ -221,7 +221,7 @@ class SetHandler(ApiHandler):
             params = (type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,
                       winTime, rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p,
                       supplyGrowSpeed2p, map, barrie, wave1P, wave2P,
-                      name_2P, level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
+                      escape.json_encode(name_2P), level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
                       heros2P, initTeam1P, initTeam2P, pathType, barricade, int(time.time()), gate_id)
             print query % params
             for i in range(5):
