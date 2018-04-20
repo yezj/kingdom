@@ -61,7 +61,7 @@ class GetHandler(ApiHandler):
             initTeam2P, pathType, barricade = res[0]
             # print 'jgates', jgates
             # jgates = escape.json_decode(jgates)
-            print type(name_2P)
+            #print type(name_2P)
             #print type(escape.json_decode(name_2P))
 
             jgates = dict(gate_id=gate_id,
