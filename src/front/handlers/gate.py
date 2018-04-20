@@ -155,6 +155,9 @@ class SetHandler(ApiHandler):
         Param('barricade', True, int, 1, 1, 'barricade'),
     ], filters=[ps_filter], description="Batt")
     def get(self):
+        import sys
+        reload(sys)
+        sys.setdefaultencoding("utf-8")
         try:
             gate_id = self.get_argument("gate_id")
             type = self.get_argument("type")
