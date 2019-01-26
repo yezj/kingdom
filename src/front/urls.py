@@ -4,15 +4,15 @@ from twisted.internet.tcp import _AbortingMixin
 from wiapi import api_manager
 from front.handlers import home
 from front.handlers import gate
-from front.handlers import stage
-from front.handlers import battle
-from front.handlers import formation
-from front.handlers import hero
-from front.handlers import arena
-# from front.debug import gmprod
-# from front.debug import gmaccount
-# from front.debug import gmhero
-from operate import operate
+# from front.handlers import stage
+# from front.handlers import battle
+# from front.handlers import formation
+# from front.handlers import hero
+# from front.handlers import arena
+# # from front.debug import gmprod
+# # from front.debug import gmaccount
+# # from front.debug import gmhero
+# from operate import operate
 from local_settings import DEBUG
 
 url_patterns = [

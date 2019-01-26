@@ -31,73 +31,38 @@ class GetHandler(ApiHandler):
         except Exception:
             raise web.HTTPError(400, "Argument error")
 
-        # // "battleId":"id20170608_023_65678",
-        # // "rs1":456897635,
-        # // "rs2":12345,
-        # // "rs3":98765,
-        # // "is1PLeft":false,
-        #
-        # // "name_1P":"我要霸占你你秀发",
-        # // "name_2P":"浅时光Bonns",
-        # // "level_1P":23,
-        # // "level_2P":35,
-        # // "icon_1P":301,
-        # // "icon_2P":401,
-        #
-        # // "resource":500,
-        # // "resourceLimit":1000,
-        # // "resourceGrowSpeed":1,
-        fid = uuid.uuid4().hex
-
-        res = yield self.sql.runQuery("""SELECT gate_id, type, "is1PLeft", "winCondition", "winTarget", "winTargetNum",
-                    "lostTarget", "lostTargetNum", "winTime", "rageTime", "supplyNow1p", "supplyMax1p", "supplyGrowSpeed1p",
-                    "supplyNow2p", "supplyMax2p", "supplyGrowSpeed2p", map, barrie, "wave1P", "wave2P", "name_2P", "level_2P", "icon_2P", "herosNum1P", "herosPermit1P",
-                      "herosLevelPermit1P", "soldiersPermit1P", "heros2P", "initTeam1P", "initTeam2P", "pathType", barricade FROM core_gate
-                       WHERE gate_id=%s LIMIT 1""", (gate_id,))
+        res = yield self.sql.runQuery("""SELECT gate_id, vers, rs, "itemTypes",  props, "taskStep", tasks, scores, gird,
+                    "newGridTypes", "newGrid", portal, item, "itemBg", "wallH", "wallV", "taskBgItem", "wayDownOut",
+                     attach, diff, "taskType" FROM core_gate WHERE gate_id=%s LIMIT 1""", (gate_id,))
         if res:
-            gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum, winTime, \
-            rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p, supplyGrowSpeed2p, map, barrie, wave1P, wave2P, name_2P, level_2P, \
-            icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P, heros2P, initTeam1P, \
-            initTeam2P, pathType, barricade = res[0]
+            gate_id, vers, rs, itemTypes, props, taskStep, tasks, scores, gird, newGridTypes, newGrid, portal, item, \
+            itemBg, wallH, wallV, taskBgItem, wayDownOut, attach, diff, taskType = res[0]
             # print 'jgates', jgates
             # jgates = escape.json_decode(jgates)
-            #print type(name_2P)
-            #print type(escape.json_decode(name_2P))
+            # print type(name_2P)
+            # print type(escape.json_decode(name_2P))
 
             jgates = dict(gate_id=gate_id,
-                          type=type,
-                          is1PLeft=is1PLeft,
-                          winCondition=winCondition,
-                          winTarget=winTarget,
-                          winTargetNum=winTargetNum,
-                          lostTarget=lostTarget,
-                          lostTargetNum=lostTargetNum,
-                          winTime=winTime,
-                          rageTime=rageTime,
-                          supplyNow1p=supplyNow1p,
-                          supplyMax1p=supplyMax1p,
-                          supplyGrowSpeed1p=supplyGrowSpeed1p,
-                          supplyNow2p=supplyNow2p,
-                          supplyMax2p=supplyMax2p,
-                          supplyGrowSpeed2p=supplyGrowSpeed2p,
-                          map=map,
-                          barrie=escape.json_decode(barrie),
-                          wave1P=escape.json_decode(wave1P),
-                          wave2P=escape.json_decode(wave2P),
-                          name_2P=escape.to_unicode(name_2P),
-                          #name_2P=name_2P,
-                          level_2P=level_2P,
-                          icon_2P=icon_2P,
-                          herosNum1P=herosNum1P,
-                          herosPermit1P=escape.json_decode(herosPermit1P),
-                          herosLevelPermit1P=herosLevelPermit1P,
-                          soldiersPermit1P=escape.json_decode(soldiersPermit1P),
-                          heros2P=escape.json_decode(heros2P),
-                          initTeam1P=escape.json_decode(initTeam1P),
-                          initTeam2P=escape.json_decode(initTeam2P),
-                          pathType=pathType,
-                          barricade=barricade,
-                          timestamp=int(time.time())
+                          vers=vers,
+                          rs=escape.json_decode(rs),
+                          itemTypes=escape.json_decode(itemTypes),
+                          props=escape.json_decode(props),
+                          taskStep=taskStep,
+                          tasks=escape.json_decode(tasks),
+                          scores=escape.json_decode(scores),
+                          gird=escape.json_decode(gird),
+                          newGridTypes=escape.json_decode(newGridTypes),
+                          newGrid=escape.json_decode(newGrid),
+                          portal=escape.json_decode(portal),
+                          item=escape.json_decode(item),
+                          itemBg=escape.json_decode(itemBg),
+                          wallH=escape.json_decode(wallH),
+                          wallV=escape.json_decode(wallV),
+                          taskBgItem=escape.json_decode(taskBgItem),
+                          wayDownOut=escape.json_decode(wayDownOut),
+                          attach=escape.json_decode(attach),
+                          diff=diff,
+                          taskType=taskType,
                           )
         else:
             jgates = dict(timestamp=int(time.time()))
@@ -114,101 +79,72 @@ class SetHandler(ApiHandler):
     # @utils.signed
     @api('Gate set', '/gate/set/', [
         Param('gate_id', True, str, '010208_0', '010208_0', 'gate_id'),
-        Param('type', True, str, 'Siege', 'Siege', 'type'),
-        Param('is1PLeft', True, int, 1, 1, 'is1PLeft'),
-        Param('winCondition', True, int, 1, 1, 'winCondition'),
+        Param('vers', True, str, '1.0', '1.0', 'vers'),
+        Param('rs', True, str, '[]', '[]', 'rs'),
+        Param('itemTypes', True, str, '[]', '[]', 'itemTypes'),
+        Param('props', True, str, '[]', '[]', 'props'),
 
-        Param('winTarget', True, int, -1, -1, 'winTarget'),
-        Param('winTargetNum', True, int, 0, 0, 'winTargetNum'),
-        Param('lostTarget', True, int, -1, -1, 'lostTarget'),
-        Param('lostTargetNum', True, int, 0, 0, 'lostTargetNum'),
-        Param('winTime', True, int, 120, 120, 'winTime'),
-        Param('rageTime', True, int, 40, 40, 'rageTime'),
-        Param('supplyNow1p', True, int, 500, 500, 'supplyNow1p'),
-        Param('supplyMax1p', True, int, 1000, 1000, 'supplyMax1p'),
-        Param('supplyGrowSpeed1p', True, int, 1, 1, 'supplyGrowSpeed1p'),
+        Param('taskStep', True, int, 0, 0, 'taskStep'),
+        Param('tasks', True, str, '[]', '[]', 'tasks'),
+        Param('scores', True, str, '[]', '[]', 'scores'),
+        Param('gird', True, str, '[]', '[]', 'gird'),
+        Param('newGridTypes', True, str, '[]', '[]', 'newGridTypes'),
+        Param('newGrid', True, str, '[]', '[]', 'newGrid'),
+        Param('portal', True, str, '[]', '[]', 'portal'),
+        Param('item', True, str, '[]', '[]', 'item'),
 
-        Param('supplyNow2p', True, int, 500, 500, 'supplyNow2p'),
-        Param('supplyMax2p', True, int, 1000, 1000, 'supplyMax2p'),
-        Param('supplyGrowSpeed2p', True, int, 1, 1, 'supplyGrowSpeed2p'),
+        Param('itemBg', True, str, '[]', '[]', 'itemBg'),
+        Param('wallH', True, str, '[]', '[]', 'wallH'),
+        Param('wallV', True, str, '[]', '[]', 'wallV'),
 
-        Param('map', True, int, 1, 1, 'map'),
+        Param('taskBgItem', True, str, '[]', '[]', 'taskBgItem'),
+        Param('wayDownOut', True, str, '[]', '[]', 'wayDownOut'),
+        Param('attach', True, str, '[]', '[]', 'attach'),
+        Param('diff', True, str, 'h', 'h', 'diff'),
+        Param('taskType', True, str, '0', '0', 'taskType'),
 
-        Param('barrie', True, str, '[]', '[]', 'barrie'),
-        Param('wave1P', True, str, '[]', '[]', 'wave1P'),
-        Param('wave2P', True, str, '[]', '[]', 'wave2P'),
-        Param('name_2P', True, str, 'name_2P', 'name_2P', 'name_2P'),
-        Param('level_2P', True, int, 1, 1, 'level_2P'),
-        Param('icon_2P', True, int, 1, 1, 'icon_2P'),
-
-        Param('herosNum1P', True, int, 1, 1, 'herosNum1P'),
-        Param('herosPermit1P', True, str, '[]', '[]', 'herosPermit1P'),
-
-        Param('herosLevelPermit1P', True, int, 1, 1, 'herosLevelPermit1P'),
-        Param('soldiersPermit1P', True, str, '[]', '[]', 'soldiersPermit1P'),
-
-        Param('heros2P', True, str, '[]', '[]', 'heros2P'),
-        Param('initTeam1P', True, str, '[]', '[]', 'initTeam1P'),
-        Param('initTeam2P', True, str, '[]', '[]', 'initTeam2P'),
-
-        Param('pathType', True, int, 1, 1, 'pathType'),
-        Param('barricade', True, int, 1, 1, 'barricade'),
-    ], filters=[ps_filter], description="Batt")
+    ], filters=[ps_filter], description="Gate set")
     def get(self):
         import sys
         reload(sys)
         sys.setdefaultencoding("utf-8")
         try:
             gate_id = self.get_argument("gate_id")
-            type = self.get_argument("type")
-            is1PLeft = self.get_argument("is1PLeft")
-            winCondition = self.get_argument("winCondition")
-            winTarget = self.get_argument("winTarget")
-            winTargetNum = self.get_argument("winTargetNum")
-            lostTarget = self.get_argument("lostTarget")
-            lostTargetNum = self.get_argument("lostTargetNum")
-            winTime = self.get_argument("winTime")
-            rageTime = self.get_argument("rageTime")
-            supplyNow1p = self.get_argument("supplyNow1p")
-            supplyMax1p = self.get_argument("supplyMax1p")
-            supplyGrowSpeed1p = self.get_argument("supplyGrowSpeed1p")
+            vers = self.get_argument("vers")
+            rs = self.get_argument("rs")
+            itemTypes = self.get_argument("itemTypes")
+            props = self.get_argument("props")
 
-            supplyNow2p = self.get_argument("supplyNow2p")
-            supplyMax2p = self.get_argument("supplyMax2p")
-            supplyGrowSpeed2p = self.get_argument("supplyGrowSpeed2p")
+            taskStep = self.get_argument("taskStep")
+            tasks = self.get_argument("tasks")
+            scores = self.get_argument("scores")
+            gird = self.get_argument("gird")
+            newGridTypes = self.get_argument("newGridTypes")
+            newGrid = self.get_argument("newGrid")
+            portal = self.get_argument("portal")
+            item = self.get_argument("item")
 
-            map = self.get_argument("map")
-            barrie = self.get_argument("barrie")
-            wave1P = self.get_argument("wave1P")
-            wave2P = self.get_argument("wave2P")
-            level_2P = self.get_argument("level_2P")
-            name_2P = self.get_argument("name_2P")
-            icon_2P = self.get_argument("icon_2P")
-            herosNum1P = self.get_argument("herosNum1P")
-            herosPermit1P = self.get_argument("herosPermit1P")
-            herosLevelPermit1P = self.get_argument("herosLevelPermit1P")
-            soldiersPermit1P = self.get_argument("soldiersPermit1P")
-            heros2P = self.get_argument("heros2P")
-            initTeam1P = self.get_argument("initTeam1P")
-            initTeam2P = self.get_argument("initTeam2P")
-            pathType = self.get_argument("pathType")
-            barricade = self.get_argument("barricade")
+            itemBg = self.get_argument("itemBg")
+            wallH = self.get_argument("wallH")
+            wallV = self.get_argument("wallV")
+
+            taskBgItem = self.get_argument("taskBgItem")
+            wayDownOut = self.get_argument("wayDownOut")
+            attach = self.get_argument("attach")
+            diff = self.get_argument("diff")
+            taskType = self.get_argument("taskType")
+
         except Exception:
             raise web.HTTPError(400, "Argument error")
         res = yield self.sql.runQuery("SELECT * FROM core_gate WHERE gate_id=%s LIMIT 1", (gate_id,))
         if not res:
-            query = """INSERT INTO core_gate (gate_id, type, "is1PLeft", "winCondition", "winTarget", "winTargetNum",
-                    "lostTarget", "lostTargetNum", "winTime", "rageTime", "supplyNow1p", "supplyMax1p", "supplyGrowSpeed1p",
-                    "supplyNow2p", "supplyMax2p", "supplyGrowSpeed2p", map, barrie, "wave1P", "wave2P", "name_2P",
-                     "level_2P", "icon_2P", "herosNum1P", "herosPermit1P", "herosLevelPermit1P", "soldiersPermit1P",
-                      "heros2P", "initTeam1P", "initTeam2P", "pathType", barricade, created_at) 
-                      VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                       %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"""
-            params = (gate_id, type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,
-                      winTime, rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p,
-                      supplyGrowSpeed2p, map, barrie, wave1P, wave2P,
-                      name_2P, level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
-                      heros2P, initTeam1P, initTeam2P, pathType, barricade, int(time.time()))
+            query = """INSERT INTO core_gate (gate_id, vers, rs, "itemTypes", props, "taskStep", tasks, scores, gird,
+                    "newGridTypes", "newGrid", portal, item, "itemBg", "wallH", "wallV", "taskBgItem", "wayDownOut",
+                     attach, diff, "taskType", created, modified) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                      %s, %s, %s, %s, %s, %s, %s, %s, %s, now(), now()) RETURNING id"""
+            params = (
+                gate_id, vers, rs, itemTypes, props, taskStep, tasks, scores, gird, newGridTypes, newGrid, portal, item,
+                itemBg, wallH, wallV, taskBgItem, wayDownOut, attach, diff, taskType)
             print query % params
             for i in range(5):
                 try:
@@ -218,18 +154,13 @@ class SetHandler(ApiHandler):
                     log.msg("SQL integrity error, retry(%i): %s" % (i, (query % params)))
                     continue
         else:
-            query = """UPDATE core_gate SET type=%s, "is1PLeft"=%s, "winCondition"=%s, "winTarget"=%s,
-                    "winTargetNum"=%s, "lostTarget"=%s, "lostTargetNum"=%s, "winTime"=%s, "rageTime"=%s, "supplyNow1p"=%s,
-                     "supplyMax1p"=%s, "supplyGrowSpeed1p"=%s, "supplyNow2p"=%s,
-                     "supplyMax2p"=%s, "supplyGrowSpeed2p"=%s, map=%s, barrie=%s, "wave1P"=%s, "wave2P"=%s,
-                      "name_2P"=%s, "level_2P"=%s, "icon_2P"=%s, "herosNum1P"=%s, "herosPermit1P"=%s,
-                      "herosLevelPermit1P"=%s, "soldiersPermit1P"=%s, "heros2P"=%s, "initTeam1P"=%s, "initTeam2P"=%s,
-                      "pathType"=%s, "barricade"=%s, created_at=%s WHERE gate_id=%s"""
-            params = (type, is1PLeft, winCondition, winTarget, winTargetNum, lostTarget, lostTargetNum,
-                      winTime, rageTime, supplyNow1p, supplyMax1p, supplyGrowSpeed1p, supplyNow2p, supplyMax2p,
-                      supplyGrowSpeed2p, map, barrie, wave1P, wave2P,
-                      name_2P, level_2P, icon_2P, herosNum1P, herosPermit1P, herosLevelPermit1P, soldiersPermit1P,
-                      heros2P, initTeam1P, initTeam2P, pathType, barricade, int(time.time()), gate_id)
+            query = """UPDATE core_gate SET vers=%s, rs=%s, "itemTypes"=%s, props=%s, "taskStep"=%s, tasks=%s,
+                    scores=%s, gird=%s, "newGridTypes"=%s, "newGrid"=%s, portal=%s, item=%s,
+                     "itemBg"=%s, "wallH"=%s, "wallV"=%s, "taskBgItem"=%s, "wayDownOut"=%s, attach=%s, diff=%s,
+                      "taskType"=%s WHERE gate_id=%s"""
+            params = (
+                vers, rs, itemTypes, props, taskStep, tasks, scores, gird, newGridTypes, newGrid, portal, item, itemBg,
+                wallH, wallV, taskBgItem, wayDownOut, attach, diff, taskType, gate_id)
             print query % params
             for i in range(5):
                 try:

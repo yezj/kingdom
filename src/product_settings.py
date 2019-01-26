@@ -1,14 +1,14 @@
 DATA_HOST = '127.0.0.1'
-DATA_NAME = 'ptkingdom9'
+DATA_NAME = 'paladin'
 DATA_USER = 'deploy'
 DATA_PASSWORD = '4wxto.kNAE.cujML97'
 DATA_DBID = 9
 
-PDATA_HOST = '10.136.51.109'
-PDATA_NAME = 'ptkzone'
-PDATA_USER = 'deploy'
-PDATA_PASSWORD = 'asdf12345678'
-PDATA_DBID = 0
+# PDATA_HOST = '10.136.51.109'
+# PDATA_NAME = 'ptkzone'
+# PDATA_USER = 'deploy'
+# PDATA_PASSWORD = 'asdf12345678'
+# PDATA_DBID = 0
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -24,6 +24,6 @@ CDN_URL = 'http://cdn.putaogame.com/ptkingdom/'
 DEBUG = True
 DOMAIN = ''
 
-PUB_DATA_HOST = '10.136.51.109'
-PUB_DATA_DBID = 1
-ZONE_ID = 9
+# PUB_DATA_HOST = '10.136.51.109'
+# PUB_DATA_DBID = 1
+# ZONE_ID = 9
